@@ -1,1 +1,11 @@
-/* Replace with your SQL commands */
+CREATE TABLE IF NOT EXISTS usersBooks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  bookId INT NOT NULL,
+  usersId INT NOT NULL,
+  status VARCHAR(50) NOT NULL,
+  notes MEDIUMTEXT DEFAULT NULL,
+  startDate DATE NOT NULL,
+  endDate DATE DEFAULT NULL,
+  FOREIGN KEY (bookId) REFERENCES books(id),
+  FOREIGN KEY (usersId) REFERENCES users(id)
+);
