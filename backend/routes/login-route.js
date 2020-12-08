@@ -3,8 +3,8 @@ const { app, User, sequelize, bcrypt, jwt } = require("../server");
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ where: { userName: username } });
-  // check if user found and then check if password was valid with bcrypt
 
+  // check if user found and then check if password was valid with bcrypt
   if (user) {
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
