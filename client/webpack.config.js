@@ -30,6 +30,18 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    contentBase: path.join(__dirname, "/public/build"),
+    port: 3001,
+    historyApiFallback: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost: 3000",
+        secure: false,
+        changeOrigin: true,
+      },
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public", "index.html"),

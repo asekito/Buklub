@@ -1,12 +1,50 @@
 import * as React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import BookList from "./components/BookList";
+import Randomizer from "./components/Randomizer";
+import Home from "./components/Home";
+import ReadList from "./components/BookReview";
 
-export interface Props {
-  userName: string;
-  lang: string;
-}
-
-export const App = (props: Props) => (
-  <h1>
-    Hi {props.userName} from React! Welcome to {props.lang}!
-  </h1>
+export const App = () => (
+  <div>
+    <h1>Welcome to BukLub!</h1>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/book-list'>Book List</Link>
+            </li>
+            <li>
+              <Link to='/book-randomizer'>Randomizer</Link>
+            </li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path='/book-read-list'>
+            <ReadList />
+          </Route>
+          <Route path='/book-list'>
+            <BookList />
+          </Route>
+          <Route path='/book-randomizer'>
+            <Randomizer />
+          </Route>
+          <Route path='/'>
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  </div>
 );
+
+// export default App;
+
+// export interface Props {
+//   userName: string;
+//   lang: string;
+// }
