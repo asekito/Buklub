@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS books (
   title VARCHAR(100) NOT NULL,
   author VARCHAR(100) NOT NULL,
   totalPages INT DEFAULT NULL
-)
+);
