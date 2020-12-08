@@ -4,6 +4,7 @@ import BookList from "./components/BookList";
 import Randomizer from "./components/Randomizer";
 import Home from "./components/Home";
 import ReadList from "./components/BookReview";
+import Registration from "./components/User-Auth/Registration";
 
 export const App = () => (
   <div>
@@ -21,9 +22,15 @@ export const App = () => (
             <li>
               <Link to='/book-randomizer'>Randomizer</Link>
             </li>
+            <li>
+              <Link to='/register'>Sign Up</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
+          <Route path='/register'>
+            <Registration />
+          </Route>
           <Route path='/book-read-list'>
             <ReadList />
           </Route>
