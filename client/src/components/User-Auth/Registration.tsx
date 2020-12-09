@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useParams } from "react-router-dom";
+import fetchCommand from "../../../utils/fetching";
 
 const Registration = () => {
   const [user, setUser] = React.useState({
@@ -6,14 +8,56 @@ const Registration = () => {
     firstname: "",
     lastname: "",
     password: "",
+    passwordConfirmation: "",
   });
 
-  const onChangeForPasswordVerificiation = () => {};
-  const handleChange = async (e: any) => {
+  const submitHandler = (e: any) => {
+    e.preventDefault();
+    if (
+      !user.firstname ||
+      !user.lastname ||
+      !user.username ||
+      !user.password ||
+      !user.passwordConfirmation
+    ) {
+      return alert("Make sure all fields are filled out.");
+    }
+
+    if (user.password !== user.passwordConfirmation) {
+      return alert("Check if the passwords match.");
+    }
+
+    if (user.password.search(/[a-z]/i) < 0) {
+      return alert("Password must have at least one alphabetical character.");
+    }
+
+    if (user.password.search(/[0-9]/) < 0) {
+      return alert("Password must have at least one numerical character.");
+    }
+
+    if (user.password.length < 5) {
+      return alert(
+        "Password must have be at least 5 or greater charactesr long."
+      );
+    }
+
+    const obj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    };
+
+    fetchCommand("/api/test", obj).then((data) => {
+      console.log(data);
+    });
+  };
+
+  const handleChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
-    await setUser({ ...user, [name]: value });
-    console.log(user);
+    setUser({ ...user, [name]: value });
   };
 
   return (
@@ -21,16 +65,41 @@ const Registration = () => {
       <h1>Registration Page</h1>
       <form>
         <label>Firstname</label>
-        <input type='text' name='firstname' onChange={handleChange} />
+        <input
+          type='text'
+          name='firstname'
+          minLength={1}
+          onChange={handleChange}
+        />
         <label>Lastname</label>
-        <input type='text' name='lastname' onChange={handleChange} />
+        <input
+          type='text'
+          name='lastname'
+          minLength={1}
+          onChange={handleChange}
+        />
         <label>Username</label>
-        <input type='text' name='username' onChange={handleChange} />
+        <input
+          type='text'
+          name='username'
+          minLength={5}
+          onChange={handleChange}
+        />
         <label>Password</label>
-        <input type='password' name='password' onChange={handleChange} />
+        <input
+          type='password'
+          name='password'
+          minLength={6}
+          onChange={handleChange}
+        />
         <label>Re-Type Password</label>
-        <input type='password' name='passwordVerification' />
-        <input type='submit' />
+        <input
+          type='password'
+          name='passwordConfirmation'
+          minLength={6}
+          onChange={handleChange}
+        />
+        <input type='submit' onClick={(e) => submitHandler(e)} />
       </form>
     </div>
   );
@@ -41,7 +110,7 @@ type UserRegistration = {
   lastname: string;
   username: string;
   password: string;
-  re_type_password: string;
+  passwordConfirmation: string;
 };
 
 export default Registration;
