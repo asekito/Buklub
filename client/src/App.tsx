@@ -7,6 +7,7 @@ import ReadList from "./components/BookReview";
 import Registration from "./components/User-Auth/Registration";
 import Login from "./components/User-Auth/Login";
 import fetchCommand from "../utils/fetching";
+// import Logout from "./components/User-Auth/________"
 
 export const App = () => {
   React.useEffect(() => {
@@ -22,7 +23,14 @@ export const App = () => {
       body: JSON.stringify({ token: localStorage.getItem("user") }),
     })
       .then((response) => {
-        console.log(response);
+        if (response.response) {
+          // do something?
+        }
+
+        if (!response.response) {
+          // do something?
+        }
+
         if (response.error) {
           throw response.error;
         }
@@ -30,6 +38,7 @@ export const App = () => {
       .catch((err) => {
         if (err.expiredAt) {
           localStorage.removeItem("user");
+          window.location.reload();
         }
       });
   }, []);
@@ -46,20 +55,27 @@ export const App = () => {
                   <Link to='/login'>Login</Link>
                 </li>
               )}
-              <li>
-                <Link to='/register'>Sign Up</Link>
-              </li>
+              {localStorage.getItem("user") ? null : (
+                <li>
+                  <Link to='/register'>Sign Up</Link>
+                </li>
+              )}
               <li>
                 <Link to='/'>Home</Link>
               </li>
               <li>
                 <Link to='/book-randomizer'>Randomizer</Link>
               </li>
-              {localStorage.getItem("user") ? null : (
+              {localStorage.getItem("user") ? (
                 <li>
                   <Link to='/book-list'>Book List</Link>
                 </li>
-              )}
+              ) : null}
+              {localStorage.getItem("user") ? (
+                <li>
+                  <Link to='/'>Logout</Link>
+                </li>
+              ) : null}
             </ul>
           </nav>
           <Switch>

@@ -23,7 +23,7 @@ app.post("/api/login", async (req, res) => {
     const accessToken = jwt.sign(
       { username: user.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" } // expires in 6 hours
+      { expiresIn: "1h" } // expires in 6 hours
     );
 
     return res.send({ auth: true, token: accessToken });
