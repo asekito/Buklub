@@ -7,54 +7,60 @@ import ReadList from "./components/BookReview";
 import Registration from "./components/User-Auth/Registration";
 import Login from "./components/User-Auth/Login";
 
-export const App = () => (
-  <div>
-    <h1>Welcome to BukLub!</h1>
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/book-list'>Book List</Link>
-            </li>
-            <li>
-              <Link to='/book-randomizer'>Randomizer</Link>
-            </li>
-            <li>
-              <Link to='/register'>Sign Up</Link>
-            </li>
-            <li>
-              <Link to='/login'>Login</Link>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/register'>
-            <Registration />
-          </Route>
-          <Route path='/book-read-list'>
-            <ReadList />
-          </Route>
-          <Route path='/book-list'>
-            <BookList />
-          </Route>
-          <Route path='/book-randomizer'>
-            <Randomizer />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  </div>
-);
+export const App = () => {
+  const [authenticated, setAuthenticated] = React.useState(false);
+
+  // check if token present return without login page and link to profile page instead
+
+  return (
+    <div>
+      <h1>Welcome to BukLub!</h1>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to='/'>Home</Link>
+              </li>
+              {/* <li>
+                <Link to='/book-list'>Book List</Link>
+              </li> */}
+              <li>
+                <Link to='/book-randomizer'>Randomizer</Link>
+              </li>
+              <li>
+                <Link to='/register'>Sign Up</Link>
+              </li>
+              <li>
+                <Link to='/login'>Login</Link>
+              </li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/register'>
+              <Registration />
+            </Route>
+            <Route path='/book-read-list'>
+              <ReadList />
+            </Route>
+            {/* <Route path='/book-list'>
+              <BookList />
+            </Route> */}
+            <Route path='/book-randomizer'>
+              <Randomizer />
+            </Route>
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+};
 
 // export default App;
 

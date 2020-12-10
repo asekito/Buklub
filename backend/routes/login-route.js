@@ -10,17 +10,22 @@ app.post("/api/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName: username } });
 
+    if (!user) {
+      throw new Error("Incorrect username or password.");
+    }
+
     const validPassword = bcrypt.compareSync(password, user.password);
 
-    if (user || !validPassword) {
+    if (!user || !validPassword) {
       throw new Error("Incorrect username or password.");
     }
 
     const accessToken = jwt.sign(
       { username: user.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: 21600 } // expires in 6 hours
+      { expiresIn: 100 } // expires in 6 hours
     );
+
     return res.send({ auth: true, token: accessToken });
   } catch (err) {
     return res
