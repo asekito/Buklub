@@ -11,6 +11,15 @@ app.post("/api/create-account", async (req, res) => {
       );
     }
 
+    if (
+      typeof username !== "string" ||
+      typeof password !== "string" ||
+      typeof firstname !== "string" ||
+      typeof lastname !== "string"
+    ) {
+      throw new Error("Type error for one or more fields.");
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 8);
     const user = await User.findOne({ where: { username: username } });
 
