@@ -15,32 +15,34 @@ export const App = () => {
       ? localStorage.getItem("user")
       : null;
 
-    fetchCommand("/api/auth-check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: localStorage.getItem("user") }),
-    })
-      .then((response) => {
-        if (response.response) {
-          // do something?
-        }
-
-        if (!response.response) {
-          // do something?
-        }
-
-        if (response.error) {
-          throw response.error;
-        }
+    if (token) {
+      fetchCommand("/api/auth-check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: token }),
       })
-      .catch((err) => {
-        if (err.expiredAt) {
-          localStorage.removeItem("user");
-          window.location.reload();
-        }
-      });
+        .then((response) => {
+          if (response.response) {
+            // do something?
+          }
+
+          if (!response.response) {
+            // do something?
+          }
+
+          if (response.error) {
+            throw response.error;
+          }
+        })
+        .catch((err) => {
+          if (err.expiredAt) {
+            localStorage.removeItem("user");
+            window.location.reload();
+          }
+        });
+    }
   }, []);
 
   return (

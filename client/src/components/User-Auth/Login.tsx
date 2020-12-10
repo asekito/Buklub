@@ -5,7 +5,36 @@ import { useHistory } from "react-router-dom";
 const Login = () => {
   const history = useHistory();
 
-  // check if token present return without login page and link to profile page instead -- redirect ya dig
+  React.useEffect(() => {
+    const token = localStorage.getItem("user")
+      ? localStorage.getItem("user")
+      : null;
+    if (token) {
+      fetchCommand("/api/auth-check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: token }),
+      })
+        .then((r) => {
+          if (r.error) {
+            throw r.error;
+          }
+
+          if (r.response) {
+            history.push("/");
+          }
+        })
+        .catch((err) => {
+          if (err.expiredAt) {
+            localStorage.removeItem("user");
+            window.location.reload();
+            history.push("/login");
+          }
+        });
+    }
+  });
 
   const [loginInfo, setLoginInfo] = React.useState({
     username: "",
@@ -38,7 +67,8 @@ const Login = () => {
         if (data.auth) {
           localStorage.setItem("user", data.token);
           alert("Login successful");
-          return history.push("/");
+          history.push("/");
+          window.location.reload();
         }
       })
       .catch((err) => {
