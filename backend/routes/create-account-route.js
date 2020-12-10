@@ -2,20 +2,23 @@ const { app, User, sequelize, bcrypt, jwt } = require("../server");
 
 // account creation
 app.post("/api/create-account", async (req, res) => {
-  const { username, password, firstname, lastname } = req.body;
-
   try {
+    const { username, password, firstname, lastname } = req.body;
+
+    if (!username || !password || !firstname || !lastname) {
+      throw new Error(
+        "One or more account creation fields were not properly filled out."
+      );
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 8);
     const user = await User.findOne({ where: { username: username } });
 
     if (user) {
-      return res
-        .status(401)
-        .send({ auth: false, error: ["Already existing user."] });
+      throw new Error("Account username already exists.");
     }
 
     const transaction = await sequelize.transaction();
-
     const newUser = await User.create(
       {
         userName: username,
@@ -36,9 +39,8 @@ app.post("/api/create-account", async (req, res) => {
 
     return res.status(200).send({ auth: true, token: token });
   } catch (err) {
+    const transaction = await sequelize.transaction();
     await transaction.rollback();
-    return res
-      .status(500)
-      .send({ auth: false, error: ["Error registering user. Try again."] });
+    return res.status(401).json({ auth: false, error: err.toString() });
   }
 });
