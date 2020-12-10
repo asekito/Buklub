@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect, useHistory } from "react-router-dom";
 import fetchCommand from "../../../utils/fetching";
 
 const Registration = () => {
@@ -10,6 +10,7 @@ const Registration = () => {
     password: "",
     passwordConfirmation: "",
   });
+  const history = useHistory();
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -37,8 +38,12 @@ const Registration = () => {
 
     if (user.password.length < 5) {
       return alert(
-        "Password must have be at least 5 or greater charactesr long."
+        "Password must have be at least 5 or greater characters long."
       );
+    }
+
+    if (user.username.length < 5) {
+      return alert("Username must be at least 5 or greater characters long.");
     }
 
     const obj = {
@@ -49,8 +54,14 @@ const Registration = () => {
       body: JSON.stringify(user),
     };
 
-    fetchCommand("/api/test", obj).then((data) => {
-      console.log(data);
+    fetchCommand("/api/create-account", obj).then((data) => {
+      if ((data.auth = false)) {
+        alert(data.error);
+        return location.reload();
+      } else {
+        alert("Account creation was successful!");
+        return history.push("/login");
+      }
     });
   };
 
