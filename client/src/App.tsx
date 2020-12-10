@@ -6,11 +6,33 @@ import Home from "./components/Home";
 import ReadList from "./components/BookReview";
 import Registration from "./components/User-Auth/Registration";
 import Login from "./components/User-Auth/Login";
+import fetchCommand from "../utils/fetching";
 
 export const App = () => {
-  const [authenticated, setAuthenticated] = React.useState(false);
+  React.useEffect(() => {
+    const token = localStorage.getItem("user")
+      ? localStorage.getItem("user")
+      : null;
 
-  // check if token present return without login page and link to profile page instead
+    fetchCommand("/api/auth-check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: localStorage.getItem("user") }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.error) {
+          throw response.error;
+        }
+      })
+      .catch((err) => {
+        if (err.expiredAt) {
+          localStorage.removeItem("user");
+        }
+      });
+  }, []);
 
   return (
     <div>
@@ -19,21 +41,25 @@ export const App = () => {
         <div>
           <nav>
             <ul>
-              <li>
-                <Link to='/'>Home</Link>
-              </li>
-              {/* <li>
-                <Link to='/book-list'>Book List</Link>
-              </li> */}
-              <li>
-                <Link to='/book-randomizer'>Randomizer</Link>
-              </li>
+              {localStorage.getItem("user") ? null : (
+                <li>
+                  <Link to='/login'>Login</Link>
+                </li>
+              )}
               <li>
                 <Link to='/register'>Sign Up</Link>
               </li>
               <li>
-                <Link to='/login'>Login</Link>
+                <Link to='/'>Home</Link>
               </li>
+              <li>
+                <Link to='/book-randomizer'>Randomizer</Link>
+              </li>
+              {localStorage.getItem("user") ? null : (
+                <li>
+                  <Link to='/book-list'>Book List</Link>
+                </li>
+              )}
             </ul>
           </nav>
           <Switch>
@@ -46,15 +72,17 @@ export const App = () => {
             <Route path='/book-read-list'>
               <ReadList />
             </Route>
-            {/* <Route path='/book-list'>
-              <BookList />
-            </Route> */}
             <Route path='/book-randomizer'>
               <Randomizer />
             </Route>
             <Route path='/'>
               <Home />
             </Route>
+            {localStorage.getItem("user") ? null : (
+              <Route path='/book-list'>
+                <BookList />
+              </Route>
+            )}
           </Switch>
         </div>
       </Router>

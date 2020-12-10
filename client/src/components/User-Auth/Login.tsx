@@ -3,13 +3,14 @@ import fetchCommand from "../../../utils/fetching";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
+  const history = useHistory();
+
+  // check if token present return without login page and link to profile page instead -- redirect ya dig
+
   const [loginInfo, setLoginInfo] = React.useState({
     username: "",
     password: "",
   });
-
-  const history = useHistory();
-
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setLoginInfo({ ...loginInfo, [name]: value });
@@ -35,7 +36,7 @@ const Login = () => {
         }
 
         if (data.auth) {
-          localStorage.setItem("user", JSON.stringify(data.token));
+          localStorage.setItem("user", data.token);
           alert("Login successful");
           return history.push("/");
         }
@@ -48,9 +49,13 @@ const Login = () => {
       });
   };
 
+  const testClick = () => {
+    console.log(localStorage.getItem("user"));
+  };
+
   return (
     <div>
-      <h1>Login page</h1>
+      <h1 onClick={testClick}>Login page</h1>
       <form>
         <label>Username</label>
         <input
