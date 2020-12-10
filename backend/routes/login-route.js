@@ -1,25 +1,35 @@
 const { app, User, sequelize, bcrypt, jwt } = require("../server");
 
 app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({ where: { userName: username } });
+  try {
+    const { username, password } = req.body;
 
-  // check if user found and then check if password was valid with bcrypt
-  if (user) {
+    if (!username || !password) {
+      throw new Error("One or more fields have incorrect inputs.");
+    }
+
+    const user = await User.findOne({ where: { userName: username } });
+
+    if (!user) {
+      throw new Error("Incorrect username or password.");
+    }
+
     const validPassword = bcrypt.compareSync(password, user.password);
-    if (!validPassword) {
-      return res
-        .status(401)
-        .send({ auth: false, token: null, error: "Incorrect password." });
+
+    if (!user || !validPassword) {
+      throw new Error("Incorrect username or password.");
     }
 
     const accessToken = jwt.sign(
       { username: user.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: 21600 } // expires in 6 hours
+      { expiresIn: "1h" } // expires in 6 hours
     );
+
     return res.send({ auth: true, token: accessToken });
-  } else {
-    return res.status(401).send({ auth: false, error: ["User not found"] });
+  } catch (err) {
+    return res
+      .status(401)
+      .send({ auth: false, token: null, error: err.toString() });
   }
 });

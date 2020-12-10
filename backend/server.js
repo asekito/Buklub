@@ -16,3 +16,4 @@ module.exports = { app, User, sequelize, bcrypt, jwt };
 
 require("./routes/create-account-route");
 require("./routes/login-route");
+require("./routes/auth-token-check");

@@ -11,6 +11,15 @@ app.post("/api/create-account", async (req, res) => {
       );
     }
 
+    if (
+      typeof username !== "string" ||
+      typeof password !== "string" ||
+      typeof firstname !== "string" ||
+      typeof lastname !== "string"
+    ) {
+      throw new Error("Type error for one or more fields.");
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 8);
     const user = await User.findOne({ where: { username: username } });
 
@@ -31,10 +40,11 @@ app.post("/api/create-account", async (req, res) => {
 
     await transaction.commit();
 
+    //notreally used
     const token = jwt.sign(
       { id: newUser.id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: 21600 }
+      { expiresIn: 100 }
     );
 
     return res.status(200).send({ auth: true, token: token });
