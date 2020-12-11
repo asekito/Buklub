@@ -14,6 +14,6 @@ app.listen(3000, () => {
 
 module.exports = { app, User, sequelize, bcrypt, jwt };
 
-require("./routes/create-account-route");
-require("./routes/login-route");
-require("./routes/auth-token-check");
+require("./routes/Auth/create-account-route");
+require("./routes/Auth/login-route");
+require("./routes/Auth/auth-token-check");

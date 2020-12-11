@@ -1,4 +1,4 @@
-const { app, User, sequelize, bcrypt, jwt } = require("../server");
+const { app, User, sequelize, bcrypt, jwt } = require("../../server");
 
 app.post("/api/login", async (req, res) => {
   try {
