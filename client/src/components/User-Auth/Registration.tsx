@@ -12,37 +12,37 @@ const Registration = () => {
   });
   const history = useHistory();
 
-  const submitHandler = (e: any) => {
+  const submitHandler = (e: any, inputUser: UserRegistration): void => {
     e.preventDefault();
     if (
-      !user.firstname ||
-      !user.lastname ||
-      !user.username ||
-      !user.password ||
-      !user.passwordConfirmation
+      !inputUser.firstname ||
+      !inputUser.lastname ||
+      !inputUser.username ||
+      !inputUser.password ||
+      !inputUser.passwordConfirmation
     ) {
       return alert("Make sure all fields are filled out.");
     }
 
-    if (user.password !== user.passwordConfirmation) {
+    if (inputUser.password !== inputUser.passwordConfirmation) {
       return alert("Check if the passwords match.");
     }
 
-    if (user.password.search(/[a-z]/i) < 0) {
+    if (inputUser.password.search(/[a-z]/i) < 0) {
       return alert("Password must have at least one alphabetical character.");
     }
 
-    if (user.password.search(/[0-9]/) < 0) {
+    if (inputUser.password.search(/[0-9]/) < 0) {
       return alert("Password must have at least one numerical character.");
     }
 
-    if (user.password.length < 5) {
+    if (inputUser.password.length < 5) {
       return alert(
         "Password must have be at least 5 or greater characters long."
       );
     }
 
-    if (user.username.length < 5) {
+    if (inputUser.username.length < 5) {
       return alert("Username must be at least 5 or greater characters long.");
     }
 
@@ -51,7 +51,7 @@ const Registration = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(inputUser),
     };
 
     fetchCommand("/api/create-account", obj).then((data) => {
@@ -110,18 +110,18 @@ const Registration = () => {
           minLength={6}
           onChange={handleChange}
         />
-        <input type='submit' onClick={(e) => submitHandler(e)} />
+        <input type='submit' onClick={(e) => submitHandler(e, user)} />
       </form>
     </div>
   );
 };
 
-type UserRegistration = {
+interface UserRegistration {
   firstname: string;
   lastname: string;
   username: string;
   password: string;
   passwordConfirmation: string;
-};
+}
 
 export default Registration;
