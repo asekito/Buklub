@@ -1,11 +1,10 @@
 import * as React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import BookList from "./components/BookList";
-import Randomizer from "./components/Randomizer";
 import Home from "./components/Home";
-import ReadList from "./components/BookReview";
-import Registration from "./components/User-Auth/Registration";
 import Login from "./components/User-Auth/Login";
+import Randomizer from "./components/Randomizer";
+import ReadListProfile from "./components/ReadListProfile";
+import Registration from "./components/User-Auth/Registration";
 import { authCheck } from "../utils/token-check";
 // import fetchCommand from "../utils/fetching";
 // import Logout from "./components/User-Auth/________"
@@ -25,7 +24,7 @@ export const App = () => {
 
   return (
     <div>
-      <h1>Welcome to BukLub!</h1>
+      <h1>BukLub</h1>
       <Router>
         <div>
           <nav>
@@ -48,7 +47,7 @@ export const App = () => {
               </li>
               {localStorage.getItem("user") ? (
                 <li>
-                  <Link to='/book-list'>Book List</Link>
+                  <Link to='/read-list'>Read List Profile</Link>
                 </li>
               ) : null}
               {localStorage.getItem("user") ? (
@@ -63,20 +62,17 @@ export const App = () => {
             <Route path='/register'>
               <Registration />
             </Route>
-            <Route path='/book-read-list'>
-              <ReadList />
-            </Route>
+            {localStorage.getItem("user") ? (
+              <Route path='/read-list'>
+                <ReadListProfile />
+              </Route>
+            ) : null}
             <Route path='/book-randomizer'>
               <Randomizer />
             </Route>
             <Route path='/'>
               <Home />
             </Route>
-            {localStorage.getItem("user") ? null : (
-              <Route path='/book-list'>
-                <BookList />
-              </Route>
-            )}
           </Switch>
         </div>
       </Router>
@@ -90,3 +86,8 @@ export const App = () => {
 //   userName: string;
 //   lang: string;
 // }
+
+{
+  /* {localStorage.getItem("user") ? null : (
+)} */
+}
