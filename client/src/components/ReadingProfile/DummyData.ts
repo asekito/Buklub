@@ -35,5 +35,3 @@ export const dummyDataBookWishList = [
   { Title: "All About Love", Author: "Bell Hooks" },
   { Title: "Desert Solitaire", Author: "Edward Abbey" },
 ];
-
-//testing commit squash
