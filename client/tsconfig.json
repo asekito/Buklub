@@ -3,6 +3,7 @@
     "jsx": "react",
     "module": "commonjs",
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "outDir": "./public/build/",
     "preserveConstEnums": true,
     "removeComments": true,

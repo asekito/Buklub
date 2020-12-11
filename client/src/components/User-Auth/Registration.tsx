@@ -12,7 +12,10 @@ const Registration = () => {
   });
   const history = useHistory();
 
-  const submitHandler = (e: any, inputUser: UserRegistration): void => {
+  const submitHandler = (
+    e: React.MouseEvent,
+    inputUser: UserRegistration
+  ): void => {
     e.preventDefault();
     if (
       !inputUser.firstname ||
@@ -65,7 +68,7 @@ const Registration = () => {
     });
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
