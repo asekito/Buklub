@@ -6,44 +6,22 @@ import Home from "./components/Home";
 import ReadList from "./components/BookReview";
 import Registration from "./components/User-Auth/Registration";
 import Login from "./components/User-Auth/Login";
-import fetchCommand from "../utils/fetching";
+import { authCheck } from "../utils/token-check";
+// import fetchCommand from "../utils/fetching";
 // import Logout from "./components/User-Auth/________"
 
 export const App = () => {
   React.useEffect(() => {
-    const token = localStorage.getItem("user")
-      ? localStorage.getItem("user")
-      : null;
-
-    if (token) {
-      fetchCommand("/api/auth-check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: token }),
-      })
-        .then((response) => {
-          if (response.response) {
-            // do something?
-          }
-
-          if (!response.response) {
-            // do something?
-          }
-
-          if (response.error) {
-            throw response.error;
-          }
-        })
-        .catch((err) => {
-          if (err.expiredAt) {
-            localStorage.removeItem("user");
-            window.location.reload();
-          }
-        });
-    }
+    authCheck();
   }, []);
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("user");
+    if (token) {
+      localStorage.removeItem("user");
+      window.location.reload();
+    }
+  };
 
   return (
     <div>
@@ -74,9 +52,7 @@ export const App = () => {
                 </li>
               ) : null}
               {localStorage.getItem("user") ? (
-                <li>
-                  <Link to='/'>Logout</Link>
-                </li>
+                <li onClick={handleLogout}>Logout</li>
               ) : null}
             </ul>
           </nav>
