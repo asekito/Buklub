@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS userBookDetail (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userID INT NOT NULL,
+  bookID INT NOT NULL,
+  bookRating FLOAT NOT NULL,
+  status INT DEFAULT NULL,
+  favorite INT DEFAULT 0,
+  timesRead INT DEFAULT 0,
+  FOREIGN KEY (userID) REFERENCES users(id),
+  FOREIGN KEY (bookID) REFERENCES books(id)
+);
