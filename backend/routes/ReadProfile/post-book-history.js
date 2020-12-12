@@ -41,6 +41,8 @@ app.post("/api/literary-history", async (req, res) => {
     }
 
     // check if book already exists for user
+    // if already exists return to user existing book there
+
     const transaction = await sequelize.transaction();
 
     const test = await UserBookDetail.create(
