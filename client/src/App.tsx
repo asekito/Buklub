@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/User-Auth/Login";
 import Randomizer from "./components/Randomizer";
-import ReadListProfile from "./components/ReadListProfile";
+import ReadListProfile from "./components/ReadingProfile/ReadListProfile";
 import Registration from "./components/User-Auth/Registration";
 import { authCheck } from "../utils/token-check";
 // import fetchCommand from "../utils/fetching";
