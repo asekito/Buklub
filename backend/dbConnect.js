@@ -44,4 +44,34 @@ const User = sequelize.define(
   }
 );
 
-module.exports = { sequelize, User };
+const UserBookDetail = sequelize.define(
+  "userBookDetails",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    bookID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    bookRating: DataTypes.FLOAT,
+    status: DataTypes.INTEGER,
+    favorite: DataTypes.INTEGER,
+    timesRead: DataTypes.INTEGER,
+    notes: DataTypes.TEXT,
+    startDate: DataTypes.DATE,
+    endDate: DataTypes.DATE,
+  },
+  {
+    timestamps: false,
+  }
+);
+
+module.exports = { sequelize, User, UserBookDetail };
