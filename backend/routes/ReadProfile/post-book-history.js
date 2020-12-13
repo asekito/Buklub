@@ -48,9 +48,11 @@ app.post("/api/literary-history", async (req, res) => {
     const test = await UserBookDetail.create(
       {
         userID: user.id,
-        bookID: 1,
-        bookRating: 8.0,
-        status: 1,
+        bookID: bookId,
+        bookRating: bookRating,
+        status: status,
+        favorite: favorite,
+        timesRead: timesRead,
         notes: notes,
         startDate: startDate,
         endDate: endDate,

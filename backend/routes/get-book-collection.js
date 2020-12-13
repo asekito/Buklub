@@ -31,9 +31,15 @@ app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
         where: {
           title: data.volumeInfo.title,
           author: data.volumeInfo.authors[0],
-          totalPage: data.volumeInfo.pageCount,
-          summary: data.volumeInfo.description,
-          publisher: data.volumeInfo.publisher,
+          totalPages: !!data.volumeInfo.pageCount
+            ? data.volumeInfo.pageCount
+            : -1,
+          summary: !!data.volumeInfo.description
+            ? data.volumeInfo.description
+            : null,
+          publisher: !!data.volumeInfo.publisher
+            ? data.volumeInfo.publisher
+            : null,
           publishDate: data.volumeInfo.publishedDate,
           smallThumbNailImage: !!data.volumeInfo.imageLinks
             ? data.volumeInfo.imageLinks.smallThumbnail
@@ -47,11 +53,12 @@ app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
       if (potentialDuplicate) {
         return;
       }
+      const pageCount = data.volumeInfo.pageCount;
 
       await Book.create({
         title: data.volumeInfo.title,
         author: data.volumeInfo.authors[0],
-        totalPage: data.volumeInfo.pageCount,
+        totalPages: !!data.volumeInfo.pageCount ? pageCount : -1,
         summary: data.volumeInfo.description,
         publisher: data.volumeInfo.publisher,
         publishDate: data.volumeInfo.publishedDate,
