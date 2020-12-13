@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
     host: "localhost",
     dialect: "mysql",
     port: process.env.DB_PORT,
-    // logging: false,
+    logging: false,
   }
 );
 
@@ -84,6 +84,7 @@ const Book = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    googleBookID: DataTypes.STRING,
     title: DataTypes.STRING,
     author: DataTypes.STRING,
     totalPages: DataTypes.INTEGER,

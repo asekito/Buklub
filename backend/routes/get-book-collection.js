@@ -36,7 +36,8 @@ app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
     addGoogleBooksIntoDb(googleData);
 
     if (googleData.length > 0) {
-      return res.status(201).send({ body: googleData });
+      const returnData = googleData.map((data) => data.volumeInfo);
+      return res.status(201).send({ body: returnData });
     } else {
       throw new Error("Could not find book matching criteria.");
     }
@@ -45,26 +46,30 @@ app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
   }
 });
 
-const addGoogleBooksIntoDb = (bookArray) => {
-  bookArray.forEach(async (data, n) => {
-    const pageCount = data.volumeInfo.pageCount;
-    Book.findOrCreate({
-      where: {
-        title: data.volumeInfo.title,
-        author: data.volumeInfo.authors[0],
-        totalPages: !!data.volumeInfo.pageCount ? pageCount : -1,
-        summary: data.volumeInfo.description || "",
-        publisher: !!data.volumeInfo.publisher
-          ? data.volumeInfo.publisher
-          : null,
-        publishDate: data.volumeInfo.publishedDate,
-        smallThumbNailImage: !!data.volumeInfo.imageLinks
-          ? data.volumeInfo.imageLinks.smallThumbnail
-          : null,
-        thumbnailImageLink: !!data.volumeInfo.imageLinks
-          ? data.volumeInfo.imageLinks.thumbnail
-          : null,
-      },
-    });
-  });
+const addGoogleBooksIntoDb = async (bookArray) => {
+  const data = await Promise.all(
+    bookArray.map(async (data, n) => {
+      const pageCount = data.volumeInfo.pageCount;
+      Book.findOrCreate({
+        where: { googleBookID: data.id },
+        defaults: {
+          title: data.volumeInfo.title,
+          author: data.volumeInfo.authors[0],
+          googleBookID: data.id,
+          totalPages: !!data.volumeInfo.pageCount ? pageCount : -1,
+          summary: data.volumeInfo.description || null,
+          publisher: !!data.volumeInfo.publisher
+            ? data.volumeInfo.publisher
+            : null,
+          publishDate: data.volumeInfo.publishedDate,
+          smallThumbNailImage: !!data.volumeInfo.imageLinks
+            ? data.volumeInfo.imageLinks.smallThumbnail
+            : null,
+          thumbnailImageLink: !!data.volumeInfo.imageLinks
+            ? data.volumeInfo.imageLinks.thumbnail
+            : null,
+        },
+      });
+    })
+  );
 };
