@@ -7,6 +7,7 @@ const BookSearch = () => {
     title: "",
     author: "",
   });
+  const [searchResult, setSearchResult] = React.useState([]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -25,8 +26,16 @@ const BookSearch = () => {
     fetchCommand(
       `/api/book-search/book?title=${titleEncoded}&author=${authorEncoded}`,
       { method: "GET" }
-    ).then((data) => console.log(data));
+    )
+      .then((data) => {
+        if (data.error) {
+          throw data.error;
+        }
+        setSearchResult(data.body);
+      })
+      .catch((err) => alert(err));
   };
+
   return (
     <div>
       <h1>Book Search</h1>
@@ -51,6 +60,24 @@ const BookSearch = () => {
           onClick={(e) => clickHandler(e, search)}
         />
       </form>
+      {searchResult.length > 0 ? (
+        <div>
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Total Pages</th>
+            </tr>
+            {searchResult.map((data: BookFromDb) => (
+              <tr>
+                <td>{data.title}</td>
+                <td>{data.author}</td>
+                <td>{data.totalPages > 0 ? data.totalPages : "Unknown"}</td>
+              </tr>
+            ))}
+          </table>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -61,3 +88,16 @@ type search = {
   title: string;
   author: string;
 };
+
+interface BookFromDb {
+  id: number;
+  googleBookID: string;
+  title: string;
+  author: string;
+  publishDate: string;
+  publisher: string;
+  smallThumbNailImage: string;
+  summary: string;
+  thumbnailImageLink: string;
+  totalPages: number;
+}
