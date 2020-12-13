@@ -27,6 +27,27 @@ app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
       .then((res) => res.items);
 
     googleData.forEach(async (data, n) => {
+      const potentialDuplicate = await Book.findOne({
+        where: {
+          title: data.volumeInfo.title,
+          author: data.volumeInfo.authors[0],
+          totalPage: data.volumeInfo.pageCount,
+          summary: data.volumeInfo.description,
+          publisher: data.volumeInfo.publisher,
+          publishDate: data.volumeInfo.publishedDate,
+          smallThumbNailImage: !!data.volumeInfo.imageLinks
+            ? data.volumeInfo.imageLinks.smallThumbnail
+            : null,
+          thumbnailImageLink: !!data.volumeInfo.imageLinks
+            ? data.volumeInfo.imageLinks.thumbnail
+            : null,
+        },
+      });
+
+      if (potentialDuplicate) {
+        return;
+      }
+
       await Book.create({
         title: data.volumeInfo.title,
         author: data.volumeInfo.authors[0],
