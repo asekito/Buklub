@@ -1,4 +1,5 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
+const { Op } = Sequelize;
 require("dotenv").config();
 
 const sequelize = new Sequelize(
@@ -74,4 +75,25 @@ const UserBookDetail = sequelize.define(
   }
 );
 
-module.exports = { sequelize, User, UserBookDetail };
+const Book = sequelize.define(
+  "books",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: DataTypes.STRING,
+    author: DataTypes.STRING,
+    totalPages: DataTypes.INTEGER,
+    summary: DataTypes.STRING,
+    publisher: DataTypes.STRING,
+    publishDate: DataTypes.DATE,
+    smallThumbNailImage: DataTypes.STRING,
+    thumbnailImageLink: DataTypes.STRING,
+  },
+  { timestamps: false }
+);
+
+module.exports = { sequelize, User, UserBookDetail, Book, Op };
