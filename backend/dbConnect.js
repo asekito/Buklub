@@ -87,7 +87,7 @@ const Book = sequelize.define(
     title: DataTypes.STRING,
     author: DataTypes.STRING,
     totalPages: DataTypes.INTEGER,
-    summary: DataTypes.STRING,
+    summary: DataTypes.TEXT,
     publisher: DataTypes.STRING,
     publishDate: DataTypes.DATE,
     smallThumbNailImage: DataTypes.STRING,

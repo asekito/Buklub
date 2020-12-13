@@ -16,6 +16,4 @@ After installation of the program run the following commands:
 - **switch to another terminal window/tab**
 - cd backend/
 - cd npm run develop
-- **switch to another terminal window/tab**
-- db-migrate up
 - Go to `localhost:3001`
