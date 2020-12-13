@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import BookSearch from "./components/BookSearch";
 import Home from "./components/Home";
 import Login from "./components/User-Auth/Login";
 import Randomizer from "./components/Randomizer";
@@ -31,23 +32,26 @@ export const App = () => {
             <ul>
               {localStorage.getItem("user") ? null : (
                 <li>
-                  <Link to='/login'>Login</Link>
+                  <Link to="/login">Login</Link>
                 </li>
               )}
               {localStorage.getItem("user") ? null : (
                 <li>
-                  <Link to='/register'>Sign Up</Link>
+                  <Link to="/register">Sign Up</Link>
                 </li>
               )}
               <li>
-                <Link to='/'>Home</Link>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to='/book-randomizer'>Randomizer</Link>
+                <Link to="/book-search">Book Search</Link>
+              </li>
+              <li>
+                <Link to="/book-randomizer">Randomizer</Link>
               </li>
               {localStorage.getItem("user") ? (
                 <li>
-                  <Link to='/read-list'>Read List Profile</Link>
+                  <Link to="/read-list">Read List Profile</Link>
                 </li>
               ) : null}
               {localStorage.getItem("user") ? (
@@ -56,21 +60,24 @@ export const App = () => {
             </ul>
           </nav>
           <Switch>
-            <Route path='/login'>
+            <Route path="/login">
               <Login />
             </Route>
-            <Route path='/register'>
+            <Route path="/register">
               <Registration />
             </Route>
+            <Route path="/book-search">
+              <BookSearch />
+            </Route>
             {localStorage.getItem("user") ? (
-              <Route path='/read-list'>
+              <Route path="/read-list">
                 <ReadListProfile />
               </Route>
             ) : null}
-            <Route path='/book-randomizer'>
+            <Route path="/book-randomizer">
               <Randomizer />
             </Route>
-            <Route path='/'>
+            <Route path="/">
               <Home />
             </Route>
           </Switch>

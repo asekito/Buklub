@@ -1,9 +1,15 @@
 const { app, sequelize, jwt, Book, Op } = require("../server");
 const fetch = require("node-fetch");
 
-app.get("/api/book-search/title/:title/author/:author", async (req, res) => {
+app.get("/api/book-search/book", async (req, res) => {
   try {
-    const { title, author } = req.params;
+    const { title, author } = req.query;
+
+    if (title.length === 0 && author.length === 0) {
+      return res.status(400).send({
+        error: "Need to have at least title or author fields for search.",
+      });
+    }
 
     const existingInDatabase = await Book.findAll({
       where: {

@@ -89,19 +89,19 @@ const Login = () => {
       <form>
         <label>Username</label>
         <input
-          type='text'
-          name='username'
-          className='login-input'
+          type="text"
+          name="username"
+          className="login-input"
           onChange={(e) => handleChange(e)}
         />
         <label>Password</label>
         <input
-          type='password'
-          name='password'
-          className='login-input'
+          type="password"
+          name="password"
+          className="login-input"
           onChange={(e) => handleChange(e)}
         />
-        <input type='submit' onClick={(e) => handleSubmit(e)} />
+        <input type="submit" onClick={(e) => handleSubmit(e)} />
       </form>
     </div>
   );
