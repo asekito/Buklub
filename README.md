@@ -6,7 +6,7 @@ For people looking to watch their reading progression, bookworms and everything 
 
 In order to get the app started, you'll need:
 
-- [ ] Docker Desktop
+- [] Docker Desktop
 
 After installation of the program run the following commands:
 
