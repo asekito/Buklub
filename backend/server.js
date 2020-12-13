@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const { sequelize, User, UserBookDetail } = require("./dbConnect");
+const { sequelize, User, UserBookDetail, Book, Op } = require("./dbConnect");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -12,9 +12,19 @@ app.listen(3000, () => {
   console.log("Listening on post 3000");
 });
 
-module.exports = { app, User, sequelize, bcrypt, jwt, UserBookDetail };
+module.exports = {
+  app,
+  User,
+  sequelize,
+  bcrypt,
+  jwt,
+  UserBookDetail,
+  Book,
+  Op,
+};
 
 require("./routes/Auth/create-account-route");
 require("./routes/Auth/login-route");
 require("./routes/Auth/auth-token-check");
 require("./routes/ReadProfile/post-book-history");
+require("./routes/add-book-collection");
