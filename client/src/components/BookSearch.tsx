@@ -45,6 +45,7 @@ const BookSearch = () => {
           type="text"
           placeholder="Book Title"
           name="title"
+          autoComplete="off"
           onChange={(e) => changeHandler(e)}
         />
         <label htmlFor="authorSearch">Author</label>
@@ -52,6 +53,7 @@ const BookSearch = () => {
           type="text"
           placeholder="Book Author"
           name="author"
+          autoComplete="off"
           onChange={(e) => changeHandler(e)}
         />
         <input

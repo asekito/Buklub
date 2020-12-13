@@ -1,11 +1,22 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import BookSearch from "./components/BookSearch";
-import Home from "./components/Home";
-import Login from "./components/User-Auth/Login";
-import Randomizer from "./components/Randomizer";
-import ReadListProfile from "./components/ReadingProfile/ReadListProfile";
-import Registration from "./components/User-Auth/Registration";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+// import BookSearch from "./components/BookSearch";
+const BookSearch = React.lazy(() => import("./components/BookSearch"));
+// import Home from "./components/Home";
+const Home = React.lazy(() => import("./components/Home"));
+// import Login from "./components/User-Auth/Login";
+const Login = React.lazy(() => import("./components/User-Auth/Login"));
+// import Randomizer from "./components/Randomizer";
+const Randomizer = React.lazy(() => import("./components/Randomizer"));
+// import ReadListProfile from "./components/ReadingProfile/ReadListProfile";
+const ReadListProfile = React.lazy(
+  () => import("./components/ReadingProfile/ReadListProfile")
+);
+// import Registration from "./components/User-Auth/Registration";
+const Registration = React.lazy(
+  () => import("./components/User-Auth/Registration")
+);
 import { authCheck } from "../utils/token-check";
 // import fetchCommand from "../utils/fetching";
 // import Logout from "./components/User-Auth/________"
@@ -15,73 +26,21 @@ export const App = () => {
     authCheck();
   }, []);
 
-  const handleLogout = () => {
-    const token = localStorage.getItem("user");
-    if (token) {
-      localStorage.removeItem("user");
-      window.location.reload();
-    }
-  };
-
   return (
     <div>
       <h1>BukLub</h1>
       <Router>
-        <div>
-          <nav>
-            <ul>
-              {localStorage.getItem("user") ? null : (
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-              )}
-              {localStorage.getItem("user") ? null : (
-                <li>
-                  <Link to="/register">Sign Up</Link>
-                </li>
-              )}
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/book-search">Book Search</Link>
-              </li>
-              <li>
-                <Link to="/book-randomizer">Randomizer</Link>
-              </li>
-              {localStorage.getItem("user") ? (
-                <li>
-                  <Link to="/read-list">Read List Profile</Link>
-                </li>
-              ) : null}
-              {localStorage.getItem("user") ? (
-                <li onClick={handleLogout}>Logout</li>
-              ) : null}
-            </ul>
-          </nav>
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Registration />
-            </Route>
-            <Route path="/book-search">
-              <BookSearch />
-            </Route>
-            {localStorage.getItem("user") ? (
-              <Route path="/read-list">
-                <ReadListProfile />
-              </Route>
-            ) : null}
-            <Route path="/book-randomizer">
-              <Randomizer />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
+        <NavBar />
+        <Switch>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Registration} />
+            <Route exact path="/" component={Home} />
+            <Route path="/book-search" component={BookSearch} />
+            <Route path="/book-randomizer" component={Randomizer} />
+            <Route path="/read-list" component={ReadListProfile} />
+          </React.Suspense>
+        </Switch>
       </Router>
     </div>
   );

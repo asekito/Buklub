@@ -1,22 +1,28 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.tsx",
-  target: "web",
+  entry: path.join(__dirname, "./src/index.tsx"),
+  // target: "web",
   mode: "development",
   output: {
-    path: path.resolve(__dirname, "./public/build"),
-    filename: "bundle.js",
+    path: path.join(__dirname, "./public/build"),
+    filename: "[name].bundle.js",
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
         loader: "awesome-typescript-loader",
       },
       {
@@ -45,7 +51,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public", "index.html"),
+      title: "BukLub",
+      template: "./public/index.html",
     }),
     new MiniCssExtractPlugin({
       filename: "./src/style.css",

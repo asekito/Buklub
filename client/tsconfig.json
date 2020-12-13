@@ -9,6 +9,6 @@
     "removeComments": true,
     "sourceMap": true,
     "target": "ES5"
-  },
-  "include": ["src/index.tsx"]
+  }
+  // "include": ["src/index.tsx"]
 }
