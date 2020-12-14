@@ -3,4 +3,5 @@ DROP COLUMN summary,
 DROP COLUMN publisher,
 DROP COLUMN smallThumbNailImage,
 DROP COLUMN thumbnailImageLink,
-DROP COLLATE publishDate;
+DROP COLUMN publishDate,
+DROP COLUMN googleBookID;
