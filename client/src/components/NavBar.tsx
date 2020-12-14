@@ -38,7 +38,9 @@ const NavBar = () => {
           </li>
         ) : null}
         {localStorage.getItem("user") ? (
-          <li onClick={handleLogout}>Logout</li>
+          <li onClick={handleLogout}>
+            <a href="">Logout</a>
+          </li>
         ) : null}
       </ul>
     </nav>

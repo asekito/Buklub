@@ -2,11 +2,11 @@ import * as React from "react";
 import fetchCommand from "../../utils/fetching";
 
 const BookSearch = () => {
-  // remember to encode the params yo
   const [search, setSearch] = React.useState({
     title: "",
     author: "",
   });
+
   const [searchResult, setSearchResult] = React.useState([]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,6 @@ const BookSearch = () => {
         if (data.error) {
           throw data.error;
         }
-        console.log(data.body);
         setSearchResult(data.body);
       })
       .catch((err) => alert(err));
