@@ -24,7 +24,9 @@ const BookSearch = () => {
     const titleEncoded = encodeURI(title);
     const authorEncoded = encodeURI(author);
     fetchCommand(
-      `/api/book-search/book?title=${titleEncoded}&author=${authorEncoded}`,
+      `/api/book-search/book?title=${titleEncoded}&author=${
+        authorEncoded || ""
+      }`,
       { method: "GET" }
     )
       .then((data) => {
@@ -65,18 +67,22 @@ const BookSearch = () => {
       {searchResult.length > 0 ? (
         <div>
           <table>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Total Pages</th>
-            </tr>
-            {searchResult.map((data: BookFromDb) => (
+            <thead>
               <tr>
-                <td>{data.title}</td>
-                <td>{data.author}</td>
-                <td>{data.totalPages > 0 ? data.totalPages : "Unknown"}</td>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Total Pages</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {searchResult.map((data: BookFromDb) => (
+                <tr>
+                  <td>{data.title}</td>
+                  <td>{data.authors}</td>
+                  <td>{data.pageCount > 0 ? data.pageCount : "Unknown"}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       ) : null}
@@ -95,11 +101,11 @@ interface BookFromDb {
   id: number;
   googleBookID: string;
   title: string;
-  author: string;
-  publishDate: string;
+  authors: string;
+  publishedDate: string;
   publisher: string;
-  smallThumbNailImage: string;
-  summary: string;
-  thumbnailImageLink: string;
-  totalPages: number;
+  smallThumbnail: string;
+  description: string;
+  thumbnail: string;
+  pageCount: number;
 }

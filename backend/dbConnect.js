@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
     host: "localhost",
     dialect: "mysql",
     port: process.env.DB_PORT,
-    logging: false,
+    // logging: false,
   }
 );
 
@@ -86,13 +86,13 @@ const Book = sequelize.define(
     },
     googleBookID: DataTypes.STRING,
     title: DataTypes.STRING,
-    author: DataTypes.STRING,
-    totalPages: DataTypes.INTEGER,
-    summary: DataTypes.TEXT,
+    authors: DataTypes.STRING,
+    pageCount: DataTypes.INTEGER,
+    description: DataTypes.TEXT,
     publisher: DataTypes.STRING,
-    publishDate: DataTypes.DATE,
-    smallThumbNailImage: DataTypes.STRING,
-    thumbnailImageLink: DataTypes.STRING,
+    publishedDate: DataTypes.DATE,
+    smallThumbnail: DataTypes.STRING,
+    thumbnail: DataTypes.STRING,
   },
   { timestamps: false }
 );

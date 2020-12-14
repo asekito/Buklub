@@ -1,7 +1,7 @@
 ALTER TABLE books
-ADD COLUMN summary VARCHAR(255),
+ADD COLUMN description VARCHAR(255),
 ADD COLUMN publisher VARCHAR(255),
-ADD COLUMN publishDate date,
-ADD COLUMN smallThumbNailImage VARCHAR(255),
-ADD COLUMN thumbnailImageLink VARCHAR(255),
+ADD COLUMN publishedDate date,
+ADD COLUMN smallThumbnail VARCHAR(255),
+ADD COLUMN thumbnail VARCHAR(255),
 ADD COLUMN googleBookID VARCHAR(255);

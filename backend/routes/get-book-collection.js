@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 app.get("/api/book-search/book", async (req, res) => {
   try {
     const { title, author } = req.query;
+    console.log(req.query);
 
     if (title.length === 0 && author.length === 0) {
       return res.status(400).send({
@@ -16,7 +17,7 @@ app.get("/api/book-search/book", async (req, res) => {
         title: {
           [Op.substring]: title,
         },
-        author: {
+        authors: {
           [Op.substring]: author,
         },
       },
@@ -29,7 +30,7 @@ app.get("/api/book-search/book", async (req, res) => {
     const googleData = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURI(
         title
-      )}+inauthor:${encodeURI(author)}&key=${process.env.BOOK_API_KEY}`
+      )}+inauthor:${encodeURI(author) || ""}&key=${process.env.BOOK_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -60,18 +61,18 @@ const addGoogleBooksIntoDb = async (bookArray) => {
         where: { googleBookID: data.id },
         defaults: {
           title: data.volumeInfo.title,
-          author: data.volumeInfo.authors[0],
+          authors: data.volumeInfo.authors[0],
           googleBookID: data.id,
-          totalPages: !!data.volumeInfo.pageCount ? pageCount : -1,
-          summary: data.volumeInfo.description || null,
+          pageCount: !!data.volumeInfo.pageCount ? pageCount : -1,
+          description: data.volumeInfo.description || null,
           publisher: !!data.volumeInfo.publisher
             ? data.volumeInfo.publisher
             : null,
-          publishDate: data.volumeInfo.publishedDate,
-          smallThumbNailImage: !!data.volumeInfo.imageLinks
+          publishedDate: data.volumeInfo.publishedDate,
+          smallThumbnail: !!data.volumeInfo.imageLinks
             ? data.volumeInfo.imageLinks.smallThumbnail
             : null,
-          thumbnailImageLink: !!data.volumeInfo.imageLinks
+          thumbnail: !!data.volumeInfo.imageLinks
             ? data.volumeInfo.imageLinks.thumbnail
             : null,
         },
