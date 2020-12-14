@@ -33,6 +33,7 @@ const BookSearch = () => {
         if (data.error) {
           throw data.error;
         }
+        console.log(data.body);
         setSearchResult(data.body);
       })
       .catch((err) => alert(err));
@@ -69,19 +70,41 @@ const BookSearch = () => {
           <table>
             <thead>
               <tr>
+                <th></th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Description</th>
                 <th>Total Pages</th>
+                <th>Publisher</th>
+                <th>Published Date</th>
               </tr>
             </thead>
             <tbody>
-              {searchResult.map((data: BookFromDb) => (
-                <tr>
-                  <td>{data.title}</td>
-                  <td>{data.authors}</td>
-                  <td>{data.pageCount > 0 ? data.pageCount : "Unknown"}</td>
-                </tr>
-              ))}
+              {searchResult.map((data: BookFromDb) => {
+                let smallLink = "";
+                let link = "";
+
+                if (data.imageLinks) {
+                  smallLink = data.imageLinks.smallThumbnail;
+                  link = data.imageLinks.thumbnail;
+                } else {
+                  smallLink = data.smallThumbnail;
+                  link = data.thumbnail;
+                }
+                return (
+                  <tr>
+                    <img src={link} alt="book-image" />
+                    <td>{data.title}</td>
+                    <td>{data.authors}</td>
+                    <td>{data.description ? data.description : ""}</td>
+                    <td>{data.pageCount > 0 ? data.pageCount : "Unknown"}</td>
+                    <td>{data.publisher ? data.publisher : "Unknown"}</td>
+                    <td>
+                      {data.publishedDate ? data.publishedDate : "Unknown"}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -108,4 +131,5 @@ interface BookFromDb {
   description: string;
   thumbnail: string;
   pageCount: number;
+  imageLinks?: { smallThumbnail: string; thumbnail: string };
 }
