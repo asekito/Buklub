@@ -1,9 +1,14 @@
 import * as React from "react";
 import { dummyDataBookWishList, dummyDataBookHistory } from "./DummyData";
+const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
+// import AddToLiteraryHistory from "./AddToLiteraryHistory";
 
-const ReadListProfile = () => {
+// interface
+
+const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
   // rest in a paginated page with all info
+  const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
 
   return (
     <div>
@@ -28,7 +33,13 @@ const ReadListProfile = () => {
             </tr>
           ))}
         </table>
-        <button>Add Book</button>
+        {addToHistory ? (
+          <AddToLiteraryHistory
+            addToHistory={addToHistory}
+            setAddToHistory={setAddToHistory}
+          />
+        ) : null}
+        <button onClick={() => setAddToHistory(!addToHistory)}>Add Book</button>
       </div>
       <div>
         <h3>Wish List</h3>

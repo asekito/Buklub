@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "outDir": "./public/build/",
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "ES5"
+    "target": "esnext"
   }
   // "include": ["src/index.tsx"]
 }
