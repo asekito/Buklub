@@ -28,7 +28,7 @@ app.get("/api/book-search/book", async (req, res) => {
     }
 
     const googleData = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURI(
+      `https://www.googleapis.com/books/v1/volumes?q=${encodeURI(
         title
       )}+inauthor:${encodeURI(author) || ""}&key=${process.env.BOOK_API_KEY}`
     )
