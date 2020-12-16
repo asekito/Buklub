@@ -42,11 +42,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     setLiteraryHistoryBook({ ...literaryHistoryBook, [name]: value });
   };
 
-  // const changeHandlerSelect = (e: React.ChangeEvent<HTMLSelectElement) => {
-  //   const { name, value } = e.target;
-  //   setLiteraryHistoryBook({ ...literaryHistoryBook, [name]: value });
-  // };
-
   const submitHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log(literaryHistoryBook);
