@@ -1,7 +1,6 @@
 import * as React from "react";
 
 interface Props {
-  // setAddToHistory: React.SetStateAction<boolean>;
   addToHistory: boolean;
   setAddToHistory: React.Dispatch<boolean>;
 }
@@ -36,6 +35,8 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     startDate: "",
     endDate: "",
   });
+
+  const [potentialBooks, setPotentialBooks] = React.useState([]);
 
   const changeHandler = (e: any) => {
     const { name, value } = e.target;
