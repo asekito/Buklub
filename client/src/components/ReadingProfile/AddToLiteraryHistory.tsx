@@ -36,6 +36,8 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     endDate: "",
   });
 
+  const [search, setSearch] = React.useState<string>("");
+
   const [potentialBooks, setPotentialBooks] = React.useState([]);
 
   const changeHandler = (e: any) => {
@@ -43,10 +45,20 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     setLiteraryHistoryBook({ ...literaryHistoryBook, [name]: value });
   };
 
+  const bookSearchHandler = (e: any) => {
+    const { value } = e.target;
+    setSearch(value);
+  };
+
   const submitHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log(literaryHistoryBook);
   };
+
+  // material ui in the future for the drop down!!!
+  React.useEffect(() => {
+    console.log("new book here");
+  }, [search]); // drop down when searching for book
 
   return (
     <div>
@@ -58,7 +70,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           placeholder="Search for a book"
           name="book"
           autoComplete="off"
-          onChange={(e) => changeHandler(e)}
+          onChange={(e) => bookSearchHandler(e)}
         />
 
         <label htmlFor="status">Status</label>
