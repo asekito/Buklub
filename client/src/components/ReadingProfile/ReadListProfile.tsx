@@ -1,14 +1,45 @@
 import * as React from "react";
 import { dummyDataBookWishList, dummyDataBookHistory } from "./DummyData";
+import fetchCommand from "../../../utils/fetching";
+import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 // import AddToLiteraryHistory from "./AddToLiteraryHistory";
 
 // interface
 
 const ReadListProfile: React.FC = () => {
+  console.log("loaded");
   // just grab top 10 of database for this page
   // rest in a paginated page with all info
   const [addToHistory, setAddToHistory] = React.useState<boolean>(true);
+  const history = useHistory();
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("user")
+      ? localStorage.getItem("user")
+      : null;
+    if (token) {
+      fetchCommand("/api/auth-check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: token }),
+      })
+        .then((r) => {
+          if (r.error) {
+            throw r.error;
+          }
+        })
+        .catch((err) => {
+          if (err.expiredAt) {
+            localStorage.removeItem("user");
+            window.location.reload();
+            history.push("/login");
+          }
+        });
+    }
+  });
 
   return (
     <div>
