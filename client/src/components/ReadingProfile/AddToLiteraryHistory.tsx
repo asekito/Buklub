@@ -1,7 +1,7 @@
 import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+// import { TextField } from "@material-ui/core";
+// import { Autocomplete } from "@material-ui/lab";
 
 interface Props {
   addToHistory: boolean;
@@ -74,6 +74,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   // material ui in the future for the drop down!!!
   React.useEffect(() => {
     if (bookSearch.length > 1 || authorSearch.length > 1) {
+      // const abortController = new AbortController();
       const title = encodeURI(bookSearch);
       const author = encodeURI(authorSearch);
       fetchCommand(`/api/book-search/book/?title=${title}&author=${author}`, {
@@ -86,8 +87,16 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           await setPotentialBooks(res.body);
         })
         .catch((err) => console.log(err));
+      // abortController.abort();
+      console.log(potentialBooks);
     }
-    console.log(potentialBooks);
+  }, [bookSearch]);
+
+  React.useEffect(() => {
+    if (bookSearch.length === 0) {
+      setPotentialBooks([]);
+      setBookSearch("");
+    }
   }, [bookSearch]);
 
   return (
@@ -95,7 +104,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       <h1>Add a book</h1>
       <form id="book-add">
         <label htmlFor="book">Book</label>
-        <Autocomplete
+        {/* <Autocomplete
           freeSolo
           // options={potentialBooks.map((b: IBook) => b.title)}
           options={potentialBooks}
@@ -114,8 +123,33 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           renderInput={(params) => (
             <TextField {...params} label="Search for a book" name="book" />
           )}
+        /> */}
+
+        <input
+          name="book"
+          onChange={(e) => setBookSearch(e.target.value)}
+          autoComplete="off"
         />
-        {/* <input onChange={(e) => setBookSearch(e.target.value)} /> */}
+        <div>
+          {potentialBooks.length > 0 ? (
+            <ul>
+              {potentialBooks.map((b: IBook, i) => (
+                <li
+                  key={b.id}
+                  onClick={() =>
+                    setLiteraryHistoryBook({
+                      ...literaryHistoryBook,
+                      bookID: b.id,
+                    })
+                  }
+                >
+                  <button type="button">{b.title}</button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+
         <label htmlFor="status">Status</label>
         <select
           name="status"
@@ -220,17 +254,17 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           <option value="1">Yes</option>
           <option value="0">No</option>
         </select>
-        {/* <div> */}
-        <label htmlFor="notes"></label>
-        <textarea
-          name="notes"
-          cols={50}
-          rows={10}
-          form="book-add"
-          placeholder="Notes"
-          onChange={(e) => changeHandler(e)}
-        />
-        {/* </div> */}
+        <div>
+          <label htmlFor="notes"></label>
+          <textarea
+            name="notes"
+            cols={50}
+            rows={10}
+            form="book-add"
+            placeholder="Notes"
+            onChange={(e) => changeHandler(e)}
+          />
+        </div>
         <label htmlFor="startDate">Start Date</label>
         <input
           type="date"
