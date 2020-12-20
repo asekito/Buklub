@@ -16,22 +16,26 @@ const ReadListProfile: React.FC = () => {
       <div>
         <h3>Literary History</h3>
         <table>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Rating</th>
-            <th>Status</th>
-            <th>Number of completed reads</th>
-          </tr>
-          {dummyDataBookHistory.map((book) => (
+          <thead>
             <tr>
-              <td>{book.Title}</td>
-              <td>{book.Author}</td>
-              <td>{book.Rating}</td>
-              <td>{book.Status}</td>
-              <td>{book.Reads}</td>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Rating</th>
+              <th>Status</th>
+              <th>Number of completed reads</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {dummyDataBookHistory.map((book) => (
+              <tr>
+                <td>{book.Title}</td>
+                <td>{book.Author}</td>
+                <td>{book.Rating}</td>
+                <td>{book.Status}</td>
+                <td>{book.Reads}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         <button onClick={() => setAddToHistory(!addToHistory)}>Add Book</button>
         {addToHistory ? (
@@ -44,27 +48,33 @@ const ReadListProfile: React.FC = () => {
       <div>
         <h3>Wish List</h3>
         <table>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-          </tr>
-          {dummyDataBookWishList.map((book) => (
+          <thead>
             <tr>
-              <td>{book.Title}</td>
-              <td>{book.Author}</td>
+              <th>Title</th>
+              <th>Author</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {dummyDataBookWishList.map((book) => (
+              <tr>
+                <td>{book.Title}</td>
+                <td>{book.Author}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         <button>Add Book</button>
       </div>
       <div>
         <h3>Favorites</h3>
         <table>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Rating</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
         </table>
       </div>
     </div>
