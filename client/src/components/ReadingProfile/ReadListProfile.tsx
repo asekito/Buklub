@@ -5,8 +5,6 @@ import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 // import AddToLiteraryHistory from "./AddToLiteraryHistory";
 
-// interface
-
 const ReadListProfile: React.FC = () => {
   console.log("loaded");
   // just grab top 10 of database for this page
