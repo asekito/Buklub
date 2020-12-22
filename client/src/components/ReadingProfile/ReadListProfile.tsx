@@ -1,6 +1,7 @@
 import * as React from "react";
 import { dummyDataBookWishList, dummyDataBookHistory } from "./DummyData";
 import fetchCommand from "../../../utils/fetching";
+import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 // import AddToLiteraryHistory from "./AddToLiteraryHistory";
@@ -16,27 +17,27 @@ const ReadListProfile: React.FC = () => {
     const token = localStorage.getItem("user")
       ? localStorage.getItem("user")
       : null;
-    if (token) {
-      fetchCommand("/api/auth-check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: token }),
+
+    fetchCommand("/api/auth-check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token }),
+    })
+      .then((r) => {
+        if (r.error) {
+          throw r.error;
+        }
+
+        if (!r.response) {
+          throw new Error("No token.");
+        }
       })
-        .then((r) => {
-          if (r.error) {
-            throw r.error;
-          }
-        })
-        .catch((err) => {
-          if (err.expiredAt) {
-            localStorage.removeItem("user");
-            window.location.reload();
-            history.push("/login");
-          }
-        });
-    }
+      .catch((err) => {
+        localStorage.removeItem("user");
+        history.push("/login");
+      });
   });
 
   return (

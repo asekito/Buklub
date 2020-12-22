@@ -10,10 +10,7 @@ In order to get the app started, you'll need:
 
 After installation of the program run the following commands:
 
-- npm install (home directory)
-- cd client/
-- npm run start:dev
-- **switch to another terminal window/tab**
-- cd backend/
-- cd npm run develop
-- Go to `localhost:3001`
+- `npm install` both in the `client` and the `backend` directory
+- cd into the `backend/` directory
+- `npm run start-all`
+- Go to http://localhost:3001

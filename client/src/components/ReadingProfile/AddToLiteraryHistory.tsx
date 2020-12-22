@@ -68,10 +68,9 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
   const submitHandler = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(bookSearch);
+    console.log(literaryHistoryBook);
   };
 
-  // material ui in the future for the drop down!!!
   React.useEffect(() => {
     if (bookSearch.length > 1 || authorSearch.length > 1) {
       // const abortController = new AbortController();
@@ -88,7 +87,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         })
         .catch((err) => console.log(err));
       // abortController.abort();
-      console.log(potentialBooks);
     }
   }, [bookSearch]);
 
@@ -127,7 +125,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
         <input
           name="book"
-          onChange={(e) => setBookSearch(e.target.value)}
+          onChange={(e) => bookSearchHandler(e)}
           autoComplete="off"
         />
         <div>

@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "nodemon server.js",
     "start:database": "docker-compose up",
-    "develop": "concurrently \"npm run start:database\" \"npm run start:server\""
+    "develop": "concurrently \"npm run start:database\" \"npm run start:server\"",
+    "start-all": "concurrently \"cd ../client && npm run start:dev\" \"npm run develop\""
   },
   "keywords": [],
   "author": "",

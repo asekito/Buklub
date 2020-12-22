@@ -11,7 +11,7 @@ const ReadListProfile = React.lazy(
 const Registration = React.lazy(
   () => import("./components/User-Auth/Registration")
 );
-import { authCheck } from "../utils/token-check";
+import authCheck from "../utils/token-check";
 
 export const App = () => {
   React.useEffect(() => {

@@ -1,7 +1,7 @@
 import fetchCommand from "./fetching";
 
 //maybe eventual callback?
-export const authCheck = () => {
+export default function authCheck() {
   const token = localStorage.getItem("user")
     ? localStorage.getItem("user")
     : null;
@@ -34,4 +34,4 @@ export const authCheck = () => {
         }
       });
   }
-};
+}
