@@ -14,31 +14,8 @@ const ReadListProfile: React.FC = () => {
   const history = useHistory();
 
   React.useEffect(() => {
-    const token = localStorage.getItem("user")
-      ? localStorage.getItem("user")
-      : null;
-
-    fetchCommand("/api/auth-check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: token }),
-    })
-      .then((r) => {
-        if (r.error) {
-          throw r.error;
-        }
-
-        if (!r.response) {
-          throw new Error("No token.");
-        }
-      })
-      .catch((err) => {
-        localStorage.removeItem("user");
-        history.push("/login");
-      });
-  });
+    authCheck(history, "login");
+  }, []);
 
   return (
     <div>

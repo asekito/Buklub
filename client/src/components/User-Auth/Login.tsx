@@ -1,40 +1,14 @@
 import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
+import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const history = useHistory();
 
   React.useEffect(() => {
-    const token = localStorage.getItem("user")
-      ? localStorage.getItem("user")
-      : null;
-    if (token) {
-      fetchCommand("/api/auth-check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: token }),
-      })
-        .then((r) => {
-          if (r.error) {
-            throw r.error;
-          }
-
-          if (r.response) {
-            history.push("/");
-          }
-        })
-        .catch((err) => {
-          if (err.expiredAt) {
-            localStorage.removeItem("user");
-            window.location.reload();
-            history.push("/login");
-          }
-        });
-    }
-  });
+    authCheck(history, "login");
+  }, []);
 
   const [loginInfo, setLoginInfo] = React.useState({
     username: "",
