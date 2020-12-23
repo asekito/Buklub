@@ -34,6 +34,7 @@ app.get("/api/literary-history", async (req, res) => {
         {
           model: Book,
           attributes: [
+            "title",
             "authors",
             "pageCount",
             "description",
@@ -44,30 +45,15 @@ app.get("/api/literary-history", async (req, res) => {
           ],
           through: {
             where: {
-              wishlist: 1,
+              wishlist: null,
             },
-            // attributes: [
-            //   "id",
-            //   "bookRating",
-            //   "status",
-            //   "favorite",
-            //   "timesRead",
-            //   "notes",
-            //   "startDate",
-            //   "endDate",
-            //   "wishlist",
-            // ],
           },
         },
       ],
       order: [[Book, "title", "asc"]],
     });
 
-    if (
-      litHistory.length === 0 ||
-      !litHistory[0]["books.authors"] ||
-      !litHistory[0]["books.title"]
-    ) {
+    if (litHistory.length === 0 || !litHistory[0]["books.title"]) {
       return res.status(201).send({ response: false, body: [] });
     }
 
