@@ -8,11 +8,11 @@ const {
 } = require("../../server.js");
 
 app.post("/api/literary-history", async (req, res) => {
-  // validations of items here
   try {
     const {
-      bookId,
-      bookRating,
+      userID,
+      bookID,
+      rating,
       status,
       favorite,
       timesRead,
@@ -21,6 +21,8 @@ app.post("/api/literary-history", async (req, res) => {
       endDate,
       token,
     } = req.body;
+
+    // -----------------------**** validation of request object itmes here *******-------------------------///
 
     if (!token) {
       throw new Error("Authorization denied [PR-01]");
@@ -42,14 +44,28 @@ app.post("/api/literary-history", async (req, res) => {
 
     // check if book already exists for user
     // if already exists return to user existing book there
+    const existingBook = await UserBookDetail.findOne({
+      where: {
+        userID: user.id,
+        bookID: bookID,
+      },
+    });
+
+    if (existingBook) {
+      return res.status(201).send({
+        response: true,
+        alreadyExists: true,
+        item: existingBook,
+      });
+    }
 
     const transaction = await sequelize.transaction();
 
-    const test = await UserBookDetail.create(
+    const newBook = await UserBookDetail.create(
       {
         userID: user.id,
-        bookID: bookId,
-        bookRating: bookRating,
+        bookID: bookID,
+        bookRating: rating,
         status: status,
         favorite: favorite,
         timesRead: timesRead,
@@ -61,7 +77,7 @@ app.post("/api/literary-history", async (req, res) => {
     );
     await transaction.commit();
 
-    return res.status(200);
+    return res.status(200).send({ response: true }); // maybe send the saved data back to the client side? What to do with it? idk
   } catch (error) {
     const transaction = await sequelize.transaction();
     await transaction.rollback();

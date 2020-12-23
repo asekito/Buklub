@@ -96,5 +96,7 @@ const Book = sequelize.define(
   },
   { timestamps: false }
 );
+// UserBookDetail.hasMany(Book, { foreignKey: "bookID" });
+// Book.belongsToMany(UserBookDetail);
 
 module.exports = { sequelize, User, UserBookDetail, Book, Op };

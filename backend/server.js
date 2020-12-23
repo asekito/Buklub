@@ -27,4 +27,5 @@ require("./routes/Auth/create-account-route");
 require("./routes/Auth/login-route");
 require("./routes/Auth/auth-token-check");
 require("./routes/ReadProfile/post-book-history");
+require("./routes/ReadProfile/get-books-history");
 require("./routes/get-book-collection");
