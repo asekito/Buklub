@@ -1,3 +1,5 @@
+import { responsiveFontSizes } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
 // import { TextField } from "@material-ui/core";
@@ -70,7 +72,31 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
   const submitHandler = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(literaryHistoryBook);
+    const token = localStorage.getItem("user");
+    fetchCommand("/api/literary-history", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...literaryHistoryBook, token: token }),
+    })
+      .then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+
+        if (res.response) {
+          // cool idk what to do right here but we'll do something!
+        }
+
+        if (res.response && res.alreadyExists) {
+          alert("You already have this book in your literary history.");
+          // console.log(res.item);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   React.useEffect(() => {
