@@ -8,7 +8,6 @@ const {
 } = require("../../server.js");
 
 app.post("/api/literary-history", async (req, res) => {
-  // validations of items here
   try {
     const {
       userID,
@@ -22,6 +21,8 @@ app.post("/api/literary-history", async (req, res) => {
       endDate,
       token,
     } = req.body;
+
+    // -----------------------**** validation of request object itmes here *******-------------------------///
 
     if (!token) {
       throw new Error("Authorization denied [PR-01]");

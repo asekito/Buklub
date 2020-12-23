@@ -21,6 +21,16 @@ const ReadListProfile: React.FC = () => {
     getUid().then((res) => setUid(res.uid));
   }, []);
 
+  React.useEffect(() => {
+    const token = localStorage.getItem("user");
+    fetchCommand(`/api/literary-history`, {
+      method: "GET",
+      headers: {
+        auth: token,
+      },
+    }).then((res) => res);
+  }, []);
+
   return (
     <div>
       <h1>Read List</h1>
