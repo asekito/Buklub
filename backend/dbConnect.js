@@ -69,6 +69,7 @@ const UserBookDetail = sequelize.define(
     notes: DataTypes.TEXT,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
+    wishlist: DataTypes.INTEGER,
   },
   {
     timestamps: false,

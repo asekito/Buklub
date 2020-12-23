@@ -11,7 +11,6 @@ const {
 app.get("/api/literary-history", async (req, res) => {
   // authentication token check
   // add pagination at some point ye
-
   try {
     const { auth } = req.headers;
     if (!auth) {
@@ -31,13 +30,47 @@ app.get("/api/literary-history", async (req, res) => {
         id: user,
       },
       attributes: ["id", "userName"],
-      include: [{ model: Book }],
+      include: [
+        {
+          model: Book,
+          attributes: [
+            "authors",
+            "pageCount",
+            "description",
+            "publisher",
+            "publishedDate",
+            "smallThumbnail",
+            "thumbnail",
+          ],
+          through: {
+            where: {
+              wishlist: 1,
+            },
+            // attributes: [
+            //   "id",
+            //   "bookRating",
+            //   "status",
+            //   "favorite",
+            //   "timesRead",
+            //   "notes",
+            //   "startDate",
+            //   "endDate",
+            //   "wishlist",
+            // ],
+          },
+        },
+      ],
       order: [[Book, "title", "asc"]],
     });
 
-    if (!litHistory.length) {
+    if (
+      litHistory.length === 0 ||
+      !litHistory[0]["books.authors"] ||
+      !litHistory[0]["books.title"]
+    ) {
       return res.status(201).send({ response: false, body: [] });
     }
+
     const formattedBody = formatBookHistoryObject(litHistory);
 
     return res.send({ response: true, body: formattedBody });
@@ -72,6 +105,7 @@ const formatBookHistoryObject = (bookHistory) => {
       bookDetailBookNotes: b["books.userBookDetails.notes"],
       bookDetailBookStartDate: b["books.userBookDetails.startDate"],
       bookDetailBookEndDate: b["books.userBookDetails.endDate"],
+      bookDetailBookWishlist: b["books.userBookDetails.wishlist"],
     };
   });
 };
