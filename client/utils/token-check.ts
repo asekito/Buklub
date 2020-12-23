@@ -1,37 +1,33 @@
 import fetchCommand from "./fetching";
+import { History } from "history";
 
 //maybe eventual callback?
-export const authCheck = () => {
+export default async function authCheck(history: History, endpoint: string) {
   const token = localStorage.getItem("user")
     ? localStorage.getItem("user")
     : null;
 
-  if (token) {
-    fetchCommand("/api/auth-check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: token }),
+  const test = await fetchCommand("/api/auth-check", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token: token }),
+  })
+    .then((response) => {
+      if (!response.response) {
+        throw new Error("No valid token.");
+      }
+      if (response.error) {
+        throw response.error;
+      }
+      return response;
     })
-      .then((response) => {
-        if (response.response) {
-          // do something?
-        }
+    .catch((err) => {
+      localStorage.removeItem("user");
+      // window.location.reload();
+      history.push(`/${endpoint}`);
+    });
 
-        if (!response.response) {
-          // do something?
-        }
-
-        if (response.error) {
-          throw response.error;
-        }
-      })
-      .catch((err) => {
-        if (err.expiredAt) {
-          localStorage.removeItem("user");
-          window.location.reload();
-        }
-      });
-  }
-};
+  return test;
+}

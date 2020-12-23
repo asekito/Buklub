@@ -4,7 +4,6 @@ const fetch = require("node-fetch");
 app.get("/api/book-search/book", async (req, res) => {
   try {
     const { title, author } = req.query;
-    console.log(req.query);
 
     if (title.length === 0 && author.length === 0) {
       return res.status(400).send({
@@ -12,15 +11,18 @@ app.get("/api/book-search/book", async (req, res) => {
       });
     }
 
+    let whereClause = {};
+
+    if (title.length > 0) {
+      whereClause.title = { [Op.substring]: title };
+    }
+
+    if (author.length > 0) {
+      whereClause.authors = { [Op.substring]: author };
+    }
+
     const existingInDatabase = await Book.findAll({
-      where: {
-        title: {
-          [Op.substring]: title,
-        },
-        authors: {
-          [Op.substring]: author,
-        },
-      },
+      where: whereClause,
     });
 
     if (existingInDatabase.length > 0) {
@@ -28,23 +30,24 @@ app.get("/api/book-search/book", async (req, res) => {
     }
 
     const googleData = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURI(
+      `https://www.googleapis.com/books/v1/volumes?q=${encodeURI(
         title
       )}+inauthor:${encodeURI(author) || ""}&key=${process.env.BOOK_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {
         if (res.totalItems > 0) {
+          addGoogleBooksIntoDb(res.items);
           return res.items;
         }
-        return [];
       });
 
-    addGoogleBooksIntoDb(googleData);
+    const test = await Book.findAll({
+      where: whereClause,
+    });
 
-    if (googleData.length > 0) {
-      const returnData = googleData.map((data) => data.volumeInfo);
-      return res.status(201).send({ body: returnData });
+    if (test.length > 0) {
+      return res.status(201).send({ body: test });
     } else {
       throw new Error("Could not find book matching criteria.");
     }
@@ -61,7 +64,7 @@ const addGoogleBooksIntoDb = async (bookArray) => {
         where: { googleBookID: data.id },
         defaults: {
           title: data.volumeInfo.title,
-          authors: data.volumeInfo.authors[0],
+          authors: data.volumeInfo.authors ? data.volumeInfo.authors[0] : null,
           googleBookID: data.id,
           pageCount: !!data.volumeInfo.pageCount ? pageCount : -1,
           description: data.volumeInfo.description || null,

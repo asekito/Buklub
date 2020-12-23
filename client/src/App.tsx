@@ -11,11 +11,14 @@ const ReadListProfile = React.lazy(
 const Registration = React.lazy(
   () => import("./components/User-Auth/Registration")
 );
-import { authCheck } from "../utils/token-check";
+import authCheck from "../utils/token-check";
+import { useHistory } from "react-router-dom";
 
 export const App = () => {
+  const history = useHistory();
+
   React.useEffect(() => {
-    authCheck();
+    authCheck(history, "");
   }, []);
 
   return (
