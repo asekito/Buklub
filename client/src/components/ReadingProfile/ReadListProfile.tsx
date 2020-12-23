@@ -24,6 +24,7 @@ interface IBookItems {
   bookDetailBookTimesRead: number;
   bookDetailBookRating: number;
   bookDetailBookNotes: string;
+  bookDetailBookStatusLabel: string;
   bookDetailBookStartDate: string;
   bookDetailBookEndDate: string;
 }
@@ -71,18 +72,20 @@ const ReadListProfile: React.FC = () => {
               <th>Title</th>
               <th>Author</th>
               <th>Rating</th>
+              <th>Favorite</th>
+              <th>Times Read</th>
               <th>Status</th>
-              <th>Number of completed reads</th>
             </tr>
           </thead>
           <tbody>
-            {dummyDataBookHistory.map((book) => (
+            {litHistoryBooks.map((b) => (
               <tr>
-                <td>{book.Title}</td>
-                <td>{book.Author}</td>
-                <td>{book.Rating}</td>
-                <td>{book.Status}</td>
-                <td>{book.Reads}</td>
+                <td>{b.title}</td>
+                <td>{b.authors}</td>
+                <td>{b.bookDetailBookRating}</td>
+                <td>{b.bookDetailBookFavorite ? "Yes" : "No"}</td>
+                <td>{b.bookDetailBookTimesRead}</td>
+                <td>{b.bookDetailBookStatusLabel}</td>
               </tr>
             ))}
           </tbody>

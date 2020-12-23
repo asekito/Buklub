@@ -64,6 +64,9 @@ const formatBookHistoryObject = (bookHistory) => {
       bookDetailID: b["books.userBookDetails.id"],
       bookDetailBookRating: b["books.userBookDetails.bookRating"],
       bookDetailBookStatus: b["books.userBookDetails.status"],
+      bookDetailBookStatusLabel: determineStatusLabel(
+        b["books.userBookDetails.status"]
+      ),
       bookDetailBookFavorite: b["books.userBookDetails.favorite"],
       bookDetailBookTimesRead: b["books.userBookDetails.timesRead"],
       bookDetailBookNotes: b["books.userBookDetails.notes"],
@@ -71,4 +74,23 @@ const formatBookHistoryObject = (bookHistory) => {
       bookDetailBookEndDate: b["books.userBookDetails.endDate"],
     };
   });
+};
+
+const determineStatusLabel = (status) => {
+  let result = "";
+  switch (status) {
+    case 0:
+      result = "In-Progress";
+      break;
+    case 1:
+      result = "Completed";
+      break;
+    case 2:
+      result = "Abandoned";
+      break;
+    case 3:
+      result = "On-Hold";
+      break;
+  }
+  return result;
 };
