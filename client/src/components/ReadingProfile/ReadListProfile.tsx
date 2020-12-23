@@ -4,6 +4,7 @@ import fetchCommand from "../../../utils/fetching";
 import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
+const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
 // import AddToLiteraryHistory from "./AddToLiteraryHistory";
 interface IBookItems {
   userID: number;
@@ -36,6 +37,7 @@ const ReadListProfile: React.FC = () => {
     []
   );
   const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
+  const [addToWishlist, setAddToWishlist] = React.useState<boolean>(true);
   const [uid, setUid] = React.useState<number>(-1);
   const history = useHistory();
 
@@ -117,7 +119,15 @@ const ReadListProfile: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <button>Add Book</button>
+        <button onClick={() => setAddToWishlist(!addToWishlist)}>
+          Add Book
+        </button>
+        {addToWishlist ? (
+          <AddToWishlist
+            addToWishlist={addToWishlist}
+            setAddToWishlist={setAddToWishlist}
+          />
+        ) : null}
       </div>
       <div>
         <h3>Favorites</h3>
