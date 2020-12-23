@@ -6,6 +6,7 @@ import fetchCommand from "../../../utils/fetching";
 interface Props {
   addToHistory: boolean;
   setAddToHistory: React.Dispatch<boolean>;
+  uid: number;
 }
 
 interface IBookHistory {
@@ -36,6 +37,7 @@ interface IBook {
 const AddToLiteraryHistory: React.FC<Props> = ({
   addToHistory,
   setAddToHistory,
+  uid,
 }) => {
   const [
     literaryHistoryBook,
@@ -72,6 +74,10 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   };
 
   React.useEffect(() => {
+    setLiteraryHistoryBook({ ...literaryHistoryBook, userID: uid });
+  }, [uid]);
+
+  React.useEffect(() => {
     if (bookSearch.length > 1 || authorSearch.length > 1) {
       // const abortController = new AbortController();
       const title = encodeURI(bookSearch);
@@ -102,27 +108,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       <h1>Add a book</h1>
       <form id="book-add">
         <label htmlFor="book">Book</label>
-        {/* <Autocomplete
-          freeSolo
-          // options={potentialBooks.map((b: IBook) => b.title)}
-          options={potentialBooks}
-          renderOption={(option: IBook) => option.title}
-          getOptionLabel={(option: IBook) => option.title}
-          noOptionsText={"Nothing"}
-          onChange={(e, val: IBook) => {
-            if (val.id) {
-              setLiteraryHistoryBook({
-                ...literaryHistoryBook,
-                bookID: val.id,
-              });
-            }
-          }}
-          onInputChange={(e, inputVal) => setBookSearch(inputVal)}
-          renderInput={(params) => (
-            <TextField {...params} label="Search for a book" name="book" />
-          )}
-        /> */}
-
         <input
           name="book"
           onChange={(e) => bookSearchHandler(e)}

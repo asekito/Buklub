@@ -7,14 +7,18 @@ const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 // import AddToLiteraryHistory from "./AddToLiteraryHistory";
 
 const ReadListProfile: React.FC = () => {
-  console.log("loaded");
   // just grab top 10 of database for this page
   // rest in a paginated page with all info
-  const [addToHistory, setAddToHistory] = React.useState<boolean>(true);
+  const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
+  const [uid, setUid] = React.useState<number>(-1);
   const history = useHistory();
 
   React.useEffect(() => {
-    authCheck(history, "login");
+    const getUid = async () => {
+      const result = await authCheck(history, "login");
+      return result;
+    };
+    getUid().then((res) => setUid(res.uid));
   }, []);
 
   return (
@@ -49,6 +53,7 @@ const ReadListProfile: React.FC = () => {
           <AddToLiteraryHistory
             addToHistory={addToHistory}
             setAddToHistory={setAddToHistory}
+            uid={uid}
           />
         ) : null}
       </div>
