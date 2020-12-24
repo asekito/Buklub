@@ -5,7 +5,6 @@ import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
-// import AddToLiteraryHistory from "./AddToLiteraryHistory";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -54,7 +53,7 @@ const ReadListProfile: React.FC = () => {
 
   return (
     <div>
-      <h1 onClick={() => console.log(litHistoryBooks, wishlist)}>Read List</h1>
+      <h1>Read List</h1>
       <div>
         <h3>Literary History</h3>
         <table>
