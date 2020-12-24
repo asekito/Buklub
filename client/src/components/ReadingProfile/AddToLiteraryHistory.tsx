@@ -105,6 +105,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           name="book"
           onChange={(e) => bookSearchHandler(e)}
           autoComplete="off"
+          id="add-search"
         />
         <div>
           {potentialBooks.length > 0 ? (
@@ -112,12 +113,17 @@ const AddToLiteraryHistory: React.FC<Props> = ({
               {potentialBooks.map((b, i) => (
                 <li
                   key={b.id}
-                  onClick={() =>
+                  onClick={() => {
                     setLiteraryHistoryBook({
                       ...literaryHistoryBook,
                       bookID: b.id,
-                    })
-                  }
+                    });
+                    setPotentialBooks([]);
+                    setBookSearch("");
+                    (document.getElementById(
+                      "add-search"
+                    ) as HTMLFormElement).value = b.title;
+                  }}
                 >
                   <button type="button">{b.title}</button>
                 </li>

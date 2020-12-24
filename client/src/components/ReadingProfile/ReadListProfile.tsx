@@ -15,7 +15,7 @@ const ReadListProfile: React.FC = () => {
   );
   const [wishlist, setWishlist] = React.useState<IBookItems[]>([]);
   const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
-  const [addToWishlist, setAddToWishlist] = React.useState<boolean>(true);
+  const [addToWishlist, setAddToWishlist] = React.useState<boolean>(false);
   const [uid, setUid] = React.useState<number>(-1);
   const history = useHistory();
 
@@ -70,7 +70,7 @@ const ReadListProfile: React.FC = () => {
           </thead>
           <tbody>
             {litHistoryBooks.map((b) => (
-              <tr>
+              <tr key={b.bookDetailID}>
                 <td>{b.title}</td>
                 <td>{b.authors}</td>
                 <td>{b.bookDetailBookRating}</td>
@@ -101,7 +101,7 @@ const ReadListProfile: React.FC = () => {
           </thead>
           <tbody>
             {wishlist.map((b) => (
-              <tr>
+              <tr key={b.bookDetailID}>
                 <td>{b.title}</td>
                 <td>{b.authors}</td>
               </tr>

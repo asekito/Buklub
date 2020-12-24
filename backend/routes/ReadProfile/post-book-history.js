@@ -19,6 +19,7 @@ app.post("/api/literary-history", async (req, res) => {
       notes,
       startDate,
       endDate,
+      wishlist,
       token,
     } = req.body;
 
@@ -72,6 +73,7 @@ app.post("/api/literary-history", async (req, res) => {
         notes: notes,
         startDate: startDate,
         endDate: endDate,
+        wishlist: wishlist || null,
       },
       { transaction }
     );

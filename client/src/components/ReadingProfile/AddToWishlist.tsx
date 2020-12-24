@@ -37,6 +37,18 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
     setBookSearch(value);
   };
 
+  const submitHandler = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem("user");
+    fetchCommand("/api/literary-history", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...bookWish, token: token }),
+    }).then((res) => console.log(res));
+  };
+
   return (
     <div>
       <h1>Add to Wishlist</h1>
@@ -46,6 +58,7 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
           name="book"
           onChange={(e) => bookSearchHandler(e)}
           autoComplete="off"
+          id="wish-search"
         />
         <div>
           {potentialBooks.length > 0 ? (
@@ -53,13 +66,19 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
               {potentialBooks.map((b, i) => (
                 <li
                   key={b.id}
-                  onClick={() =>
+                  onClick={(e: React.MouseEvent) => {
                     setBookWish({
                       title: b.title,
                       authors: b.authors,
                       bookID: b.id,
-                    })
-                  }
+                      wishlist: 1,
+                    });
+                    setPotentialBooks([]);
+                    setBookSearch("");
+                    (document.getElementById(
+                      "wish-search"
+                    ) as HTMLFormElement).value = b.title;
+                  }}
                 >
                   <button type="button">{`${b.title} By ${b.authors}`}</button>
                 </li>
@@ -67,7 +86,7 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
             </ul>
           ) : null}
         </div>
-        <input type="submit" />
+        <input type="submit" onClick={(e) => submitHandler(e)} />
       </form>
     </div>
   );
@@ -84,4 +103,5 @@ interface IBookWish {
   bookID: number;
   title: string;
   authors: string | [];
+  wishlist: number;
 }
