@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   entry: path.join(__dirname, "./src/index.tsx"),
@@ -31,8 +32,19 @@ module.exports = {
         loader: "source-map-loader",
       },
       {
-        test: /\.css$/,
-        loader: "css-loader",
+        test: /\.s[ac]ss$/i,
+        use: [
+          "style-loader",
+          // {
+          //   loader: "@teamsupercell/typings-for-css-modules-loader",
+          // },
+          "css-loader",
+          // {
+          //   loader: "css-loader",
+          //   options: { modules: true },
+          // },
+          "sass-loader",
+        ],
       },
     ],
   },
@@ -57,5 +69,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "./src/style.css",
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 };

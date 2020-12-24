@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import "../assets/Nav.scss";
 
 const NavBar = () => {
   const handleLogout = () => {
@@ -12,29 +13,41 @@ const NavBar = () => {
 
   return (
     <nav>
-      <ul>
+      <ul className="navlist">
         {localStorage.getItem("user") ? null : (
           <li>
-            <Link to="/login">Login</Link>
+            <Link className="nav-item" to="/login">
+              Login
+            </Link>
           </li>
         )}
         {localStorage.getItem("user") ? null : (
           <li>
-            <Link to="/register">Sign Up</Link>
+            <Link className="nav-item" to="/register">
+              Sign Up
+            </Link>
           </li>
         )}
         <li>
-          <Link to="/">Home</Link>
+          <Link className="nav-item" to="/">
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/book-search">Book Search</Link>
+          <Link className="nav-item" to="/book-search">
+            Book Search
+          </Link>
         </li>
         <li>
-          <Link to="/book-randomizer">Randomizer</Link>
+          <Link className="nav-item" to="/book-randomizer">
+            Randomizer
+          </Link>
         </li>
         {localStorage.getItem("user") ? (
           <li>
-            <Link to="/read-list">Read List Profile</Link>
+            <Link className="nav-item" to="/read-list">
+              Read List Profile
+            </Link>
           </li>
         ) : null}
         {localStorage.getItem("user") ? (

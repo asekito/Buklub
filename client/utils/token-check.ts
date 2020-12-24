@@ -26,7 +26,9 @@ export default async function authCheck(history: History, endpoint: string) {
     .catch((err) => {
       localStorage.removeItem("user");
       // window.location.reload();
-      history.push(`/${endpoint}`);
+      if (endpoint) {
+        history.push(`/${endpoint}`);
+      }
     });
 
   return test;
