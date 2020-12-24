@@ -61,12 +61,13 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
                     })
                   }
                 >
-                  <button type="button">{b.title}</button>
+                  <button type="button">{`${b.title} By ${b.authors}`}</button>
                 </li>
               ))}
             </ul>
           ) : null}
         </div>
+        <input type="submit" />
       </form>
     </div>
   );
