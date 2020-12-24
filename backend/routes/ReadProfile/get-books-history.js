@@ -114,3 +114,5 @@ const determineStatusLabel = (status) => {
   }
   return result;
 };
+
+module.exports = { formatBookHistoryObject, determineStatusLabel };

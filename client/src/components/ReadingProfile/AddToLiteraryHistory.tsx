@@ -1,40 +1,7 @@
-import { responsiveFontSizes } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
 // import { TextField } from "@material-ui/core";
 // import { Autocomplete } from "@material-ui/lab";
-
-interface Props {
-  addToHistory: boolean;
-  setAddToHistory: React.Dispatch<boolean>;
-  uid: number;
-}
-
-interface IBookHistory {
-  userID: number;
-  bookID: number | string;
-  rating: number;
-  status: number;
-  timesRead: number;
-  favorite: number;
-  notes?: string;
-  startDate?: string;
-  endDate?: string;
-}
-
-interface IBook {
-  id: number;
-  title: string;
-  authors: string | [];
-  description: string;
-  googleBookID: string;
-  pageCount: number;
-  publishedDate: string;
-  publisher: string;
-  smallThumbnail: string;
-  thumbnail: string;
-}
 
 const AddToLiteraryHistory: React.FC<Props> = ({
   addToHistory,
@@ -58,7 +25,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
   const [bookSearch, setBookSearch] = React.useState<string>("");
   const [authorSearch, setAuthorSearch] = React.useState<string>("");
-  const [potentialBooks, setPotentialBooks] = React.useState([]);
+  const [potentialBooks, setPotentialBooks] = React.useState<IBook[]>([]);
 
   const changeHandler = (e: any) => {
     const { name, value } = e.target;
@@ -138,19 +105,25 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           name="book"
           onChange={(e) => bookSearchHandler(e)}
           autoComplete="off"
+          id="add-search"
         />
         <div>
           {potentialBooks.length > 0 ? (
             <ul>
-              {potentialBooks.map((b: IBook, i) => (
+              {potentialBooks.map((b, i) => (
                 <li
                   key={b.id}
-                  onClick={() =>
+                  onClick={() => {
                     setLiteraryHistoryBook({
                       ...literaryHistoryBook,
                       bookID: b.id,
-                    })
-                  }
+                    });
+                    setPotentialBooks([]);
+                    setBookSearch("");
+                    (document.getElementById(
+                      "add-search"
+                    ) as HTMLFormElement).value = b.title;
+                  }}
                 >
                   <button type="button">{b.title}</button>
                 </li>
@@ -295,3 +268,34 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 };
 
 export default AddToLiteraryHistory;
+
+interface Props {
+  addToHistory: boolean;
+  setAddToHistory: React.Dispatch<boolean>;
+  uid: number;
+}
+
+interface IBookHistory {
+  userID: number;
+  bookID: number | string;
+  rating: number;
+  status: number;
+  timesRead: number;
+  favorite: number;
+  notes?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface IBook {
+  id: number;
+  title: string;
+  authors: string | [];
+  description: string;
+  googleBookID: string;
+  pageCount: number;
+  publishedDate: string;
+  publisher: string;
+  smallThumbnail: string;
+  thumbnail: string;
+}

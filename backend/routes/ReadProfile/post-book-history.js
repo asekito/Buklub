@@ -19,16 +19,17 @@ app.post("/api/literary-history", async (req, res) => {
       notes,
       startDate,
       endDate,
+      wishlist,
       token,
     } = req.body;
-
-    // -----------------------**** validation of request object itmes here *******-------------------------///
 
     if (!token) {
       throw new Error("Authorization denied [PR-01]");
     } else {
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     }
+
+    // -----------------------**** validation of request object itmes here *******-------------------------///
 
     const decodedToken = jwt.decode(token, process.env.ACCESS_TOKEN_SECRET);
 
@@ -72,6 +73,7 @@ app.post("/api/literary-history", async (req, res) => {
         notes: notes,
         startDate: startDate,
         endDate: endDate,
+        wishlist: wishlist || null,
       },
       { transaction }
     );
