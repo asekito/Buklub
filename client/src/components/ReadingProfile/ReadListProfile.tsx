@@ -1,5 +1,4 @@
 import * as React from "react";
-import { dummyDataBookWishList } from "./DummyData";
 import fetchCommand from "../../../utils/fetching";
 import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
