@@ -10,11 +10,11 @@
   bottom: 460px;
 }
 
-#login-form.input[type="submit"] {
+.login.input[type="submit"] {
   width: 6em;
 }
 
-#login-form > label {
+.login > label {
   color: white;
   margin: 1em 0px 0px 0px;
 }
@@ -24,6 +24,8 @@ input.login-input {
   text-align: center;
   outline: none;
   margin: 0px 0px 1em;
+  border: none;
+  border-radius: 6px;
 }
 
 .bubble-1 {

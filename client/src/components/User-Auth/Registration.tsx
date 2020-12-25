@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import fetchCommand from "../../../utils/fetching";
+import "../../assets/Registration.scss";
 
 const Registration = () => {
   const [user, setUser] = React.useState({
@@ -78,54 +79,44 @@ const Registration = () => {
     <div className="container">
       <h1>Create an Account</h1>
       <form className="registration form">
-        <label>
-          Firstname
-          <input
-            type="text"
-            name="firstname"
-            minLength={1}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-        </label>
-        <label>
-          Lastname
-          <input
-            type="text"
-            name="lastname"
-            minLength={1}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-        </label>
-        <label>
-          Username
-          <input
-            type="text"
-            name="username"
-            minLength={5}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            name="password"
-            minLength={6}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Re-Type Password
-          <input
-            type="password"
-            name="passwordConfirmation"
-            minLength={6}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Firstname</label>
+        <input
+          type="text"
+          name="firstname"
+          minLength={1}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <label>Lastname</label>
+        <input
+          type="text"
+          name="lastname"
+          minLength={1}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          minLength={5}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          minLength={6}
+          onChange={handleChange}
+        />
+        <label>Re-Type Password</label>
+        <input
+          type="password"
+          name="passwordConfirmation"
+          minLength={6}
+          onChange={handleChange}
+        />
         <input type="submit" onClick={(e) => submitHandler(e, user)} />
       </form>
     </div>
