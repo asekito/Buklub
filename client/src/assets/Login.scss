@@ -1,0 +1,31 @@
+.container {
+  margin: 1em 8em;
+  text-align: -webkit-center;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25em;
+  border-radius: 31em;
+  height: 24.6em;
+  place-content: center;
+  background: darkred;
+}
+
+#login-form.input[type="submit"] {
+  width: 6em;
+}
+
+#login-form > label {
+  color: white;
+  margin: 1em 0px 0px 0px;
+}
+
+input.login-input {
+  height: 1.3em;
+  text-align: center;
+  outline: none;
+  margin: 0px 0px 1em;
+}

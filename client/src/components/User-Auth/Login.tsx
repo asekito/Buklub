@@ -2,6 +2,7 @@ import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
 import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
+import "../../assets/Login.scss";
 
 const Login = () => {
   const history = useHistory();
@@ -53,20 +54,17 @@ const Login = () => {
       });
   };
 
-  const testClick = () => {
-    console.log(localStorage.getItem("user"));
-  };
-
   return (
-    <div>
-      <h1 onClick={testClick}>Login page</h1>
-      <form>
+    <div className="container">
+      <h1>Login page</h1>
+      <form id="login-form">
         <label>Username</label>
         <input
           type="text"
           name="username"
           className="login-input"
           onChange={(e) => handleChange(e)}
+          autoComplete="off"
         />
         <label>Password</label>
         <input
@@ -75,7 +73,7 @@ const Login = () => {
           className="login-input"
           onChange={(e) => handleChange(e)}
         />
-        <input type="submit" onClick={(e) => handleSubmit(e)} />
+        <input type="submit" value="Login" onClick={(e) => handleSubmit(e)} />
       </form>
     </div>
   );
