@@ -59,7 +59,7 @@ const Login = () => {
       <h1>Login</h1>
       <div className="bubble-1" />
       <div className="bubble-2" />
-      <form id="login-form">
+      <form className="login form">
         <label>Username</label>
         <input
           type="text"

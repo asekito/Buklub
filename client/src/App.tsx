@@ -41,15 +41,3 @@ export const App = () => {
     </div>
   );
 };
-
-// export default App;
-
-// export interface Props {
-//   userName: string;
-//   lang: string;
-// }
-
-{
-  /* {localStorage.getItem("user") ? null : (
-)} */
-}

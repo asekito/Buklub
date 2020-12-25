@@ -4,7 +4,7 @@ $font-family: "Poppins";
 
 body {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   background-color: #fbfbfb;
 }
 
@@ -24,4 +24,15 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  margin: 1em 8em;
+  text-align: -webkit-center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
