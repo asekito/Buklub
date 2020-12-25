@@ -1,6 +1,12 @@
-.grid-container {
+.grid-container-history {
   display: grid;
-  grid-template-columns: 32em 12em 6em 5em 8em 8em;
+  grid-template-columns: 32em 12em 6em 6em 8em 8em;
+  justify-content: center;
+}
+
+.grid-container-wishlist {
+  display: grid;
+  grid-template-columns: 32em 12em;
   justify-content: center;
 }
 
