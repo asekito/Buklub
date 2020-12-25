@@ -13,6 +13,9 @@
   place-content: center;
   background: darkred;
   animation: pulse-dot 3s infinite;
+  position: relative;
+  left: 10px;
+  bottom: 460px;
 }
 
 #login-form.input[type="submit"] {
@@ -35,10 +38,10 @@ input.login-input {
   background: darkseagreen;
   width: 15em;
   height: 15em;
-  position: fixed;
+  position: relative;
   border-radius: 15em;
-  right: 333px;
-  top: 140px;
+  left: 86px;
+  top: -50px;
   z-index: -1;
   animation: bubble1animate 5s infinite;
 }
@@ -47,10 +50,10 @@ input.login-input {
   background: cadetblue;
   width: 14em;
   height: 14em;
-  position: fixed;
+  position: relative;
   border-radius: 15em;
-  left: 318px;
-  bottom: 293px;
+  left: -152px;
+  bottom: 94px;
   z-index: -1;
   animation: bubble2animate 5s infinite;
 }
