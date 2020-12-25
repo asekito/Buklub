@@ -13,6 +13,7 @@ const Registration = React.lazy(
 );
 import authCheck from "../utils/token-check";
 import { useHistory } from "react-router-dom";
+import "./assets/App.scss";
 
 export const App = () => {
   const history = useHistory();
@@ -22,8 +23,7 @@ export const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>BukLub</h1>
+    <div id="app">
       <Router>
         <NavBar />
         <Switch>

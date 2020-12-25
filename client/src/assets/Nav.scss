@@ -1,3 +1,10 @@
+#navigation-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 8em;
+}
+
 .navlist {
   list-style: none;
   display: flex;
@@ -7,4 +14,12 @@
 .nav-item {
   text-decoration: none;
   color: black;
+  padding: 5px 15px;
+}
+
+.nav-item:hover {
+  color: #60dc69;
+  padding: 5px 15px;
+  border-bottom: 3px solid #60dc69;
+  padding: 5px 15px;
 }
