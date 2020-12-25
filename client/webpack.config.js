@@ -33,18 +33,11 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          "style-loader",
-          // {
-          //   loader: "@teamsupercell/typings-for-css-modules-loader",
-          // },
-          "css-loader",
-          // {
-          //   loader: "css-loader",
-          //   options: { modules: true },
-          // },
-          "sass-loader",
-        ],
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: ["file-loader"],
       },
     ],
   },

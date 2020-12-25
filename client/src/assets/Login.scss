@@ -1,0 +1,88 @@
+.login {
+  width: 25em;
+  border-radius: 31em;
+  height: 24.6em;
+  place-content: center;
+  background: darkred;
+  animation: pulse-dot 3s infinite;
+  position: relative;
+  left: 10px;
+  bottom: 460px;
+}
+
+.login.input[type="submit"] {
+  width: 6em;
+}
+
+.login > label {
+  color: white;
+  margin: 1em 0px 0px 0px;
+}
+
+input.login-input {
+  height: 1.3em;
+  text-align: center;
+  outline: none;
+  margin: 0px 0px 1em;
+  border: none;
+  border-radius: 6px;
+}
+
+.bubble-1 {
+  background: darkseagreen;
+  width: 15em;
+  height: 15em;
+  position: relative;
+  border-radius: 15em;
+  left: 86px;
+  top: -50px;
+  z-index: -1;
+  animation: bubble1animate 5s infinite;
+}
+
+.bubble-2 {
+  background: cadetblue;
+  width: 14em;
+  height: 14em;
+  position: relative;
+  border-radius: 15em;
+  left: -152px;
+  bottom: 94px;
+  z-index: -1;
+  animation: bubble2animate 5s infinite;
+}
+
+@keyframes bubble1animate {
+  0% {
+    transform: translate(10px, 5%);
+  }
+  50% {
+    transform: translate(15px, 10%);
+  }
+  100% {
+    transform: translate(10px, 5%);
+  }
+}
+@keyframes bubble2animate {
+  0% {
+    transform: translate(20px, 5%);
+  }
+  50% {
+    transform: translate(10px, 10%);
+  }
+  100% {
+    transform: translate(20px, 5%);
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.98);
+  }
+}

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useParams, Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import fetchCommand from "../../../utils/fetching";
+import "../../assets/Registration.scss";
 
 const Registration = () => {
   const [user, setUser] = React.useState({
@@ -75,45 +76,48 @@ const Registration = () => {
   };
 
   return (
-    <div>
-      <h1>Registration Page</h1>
-      <form>
+    <div className="container">
+      <h1>Create an Account</h1>
+      <form className="registration form">
         <label>Firstname</label>
         <input
-          type='text'
-          name='firstname'
+          type="text"
+          name="firstname"
           minLength={1}
           onChange={handleChange}
+          autoComplete="off"
         />
         <label>Lastname</label>
         <input
-          type='text'
-          name='lastname'
+          type="text"
+          name="lastname"
           minLength={1}
           onChange={handleChange}
+          autoComplete="off"
         />
         <label>Username</label>
         <input
-          type='text'
-          name='username'
+          type="text"
+          name="username"
           minLength={5}
           onChange={handleChange}
+          autoComplete="off"
         />
         <label>Password</label>
         <input
-          type='password'
-          name='password'
+          type="password"
+          name="password"
           minLength={6}
           onChange={handleChange}
         />
         <label>Re-Type Password</label>
         <input
-          type='password'
-          name='passwordConfirmation'
+          type="password"
+          name="passwordConfirmation"
           minLength={6}
           onChange={handleChange}
         />
-        <input type='submit' onClick={(e) => submitHandler(e, user)} />
+        <input type="submit" onClick={(e) => submitHandler(e, user)} />
       </form>
     </div>
   );

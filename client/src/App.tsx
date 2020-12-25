@@ -11,8 +11,10 @@ const ReadListProfile = React.lazy(
 const Registration = React.lazy(
   () => import("./components/User-Auth/Registration")
 );
+import Loading from "./components/Loading";
 import authCheck from "../utils/token-check";
 import { useHistory } from "react-router-dom";
+import "./assets/App.scss";
 
 export const App = () => {
   const history = useHistory();
@@ -22,12 +24,11 @@ export const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>BukLub</h1>
+    <div id="app">
       <Router>
         <NavBar />
         <Switch>
-          <React.Suspense fallback={<div>Loading...</div>}>
+          <React.Suspense fallback={<Loading />}>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Registration} />
             <Route exact path="/" component={Home} />
@@ -40,15 +41,3 @@ export const App = () => {
     </div>
   );
 };
-
-// export default App;
-
-// export interface Props {
-//   userName: string;
-//   lang: string;
-// }
-
-{
-  /* {localStorage.getItem("user") ? null : (
-)} */
-}

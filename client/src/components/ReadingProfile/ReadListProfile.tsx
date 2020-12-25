@@ -4,6 +4,7 @@ import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
+import "../../assets/ReadListProfile.scss";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -51,34 +52,30 @@ const ReadListProfile: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Read List</h1>
+    <div className="container">
+      {/* <h1>Read List</h1> */}
       <div>
         <h3>Literary History</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Rating</th>
-              <th>Favorite</th>
-              <th>Times Read</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {litHistoryBooks.map((b) => (
-              <tr key={b.bookDetailID}>
-                <td>{b.title}</td>
-                <td>{b.authors}</td>
-                <td>{b.bookDetailBookRating}</td>
-                <td>{b.bookDetailBookFavorite ? "Yes" : "No"}</td>
-                <td>{b.bookDetailBookTimesRead}</td>
-                <td>{b.bookDetailBookStatusLabel}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid-container-history">
+          <div className="grid-item header">Title</div>
+          <div className="grid-item header">Author</div>
+          <div className="grid-item header">Rating</div>
+          <div className="grid-item header">Favorite</div>
+          <div className="grid-item header">Times Read</div>
+          <div className="grid-item header">Status</div>
+        </div>
+        {litHistoryBooks.map((b) => (
+          <div className="grid-container-history" key={b.bookDetailID}>
+            <div className="grid-item title">{b.title}</div>
+            <div className="grid-item">{b.authors}</div>
+            <div className="grid-item">{b.bookDetailBookRating}</div>
+            <div className="grid-item">
+              {b.bookDetailBookFavorite ? "Yes" : "No"}
+            </div>
+            <div className="grid-item">{b.bookDetailBookTimesRead}</div>
+            <div className="grid-item">{b.bookDetailBookStatusLabel}</div>
+          </div>
+        ))}
         <button onClick={() => setAddToHistory(!addToHistory)}>Add Book</button>
         {addToHistory ? (
           <AddToLiteraryHistory
@@ -90,22 +87,17 @@ const ReadListProfile: React.FC = () => {
       </div>
       <div>
         <h3>Wish List</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-            </tr>
-          </thead>
-          <tbody>
-            {wishlist.map((b) => (
-              <tr key={b.bookDetailID}>
-                <td>{b.title}</td>
-                <td>{b.authors}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid-container-wishlist">
+          <div className="grid-item">Title</div>
+          <div className="grid-item">Author</div>
+        </div>
+
+        {wishlist.map((b) => (
+          <div className="grid-container-wishlist" key={b.bookDetailID}>
+            <div className="grid-item">{b.title}</div>
+            <div className="grid-item">{b.authors}</div>
+          </div>
+        ))}
         <button onClick={() => setAddToWishlist(!addToWishlist)}>
           Add Book
         </button>

@@ -1,0 +1,26 @@
+.grid-container-history {
+  display: grid;
+  grid-template-columns: 32em 12em 6em 6em 8em 8em;
+  justify-content: center;
+}
+
+.grid-container-wishlist {
+  display: grid;
+  grid-template-columns: 32em 12em;
+  justify-content: center;
+}
+
+.grid-item.title {
+  text-align: left;
+}
+
+.grid-item {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 1em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.grid-item.header {
+  font-weight: 600;
+}
