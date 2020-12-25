@@ -1,0 +1,33 @@
+table.literary-history-table {
+  width: 100%;
+  table-layout: fixed;
+  column-gap: 0px;
+  border-spacing: 0 4px;
+}
+
+th {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: -internal-center;
+}
+
+td {
+  text-align: center;
+  padding: 8px 20px;
+}
+
+td.td-title {
+  text-align: left;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+tr {
+  background: #bbbbbb;
+}

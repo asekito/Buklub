@@ -1,5 +1,5 @@
 import * as React from "react";
-import gear from "../assets/gear.png";
+import gear from "../assets/images/gear.png";
 import "../assets/App.scss";
 
 const Loading = () => (

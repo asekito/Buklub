@@ -4,6 +4,7 @@ import authCheck from "../../../utils/token-check";
 import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
+import "../../assets/ReadListProfile.scss";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -51,11 +52,11 @@ const ReadListProfile: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>Read List</h1>
       <div>
         <h3>Literary History</h3>
-        <table>
+        <table className="literary-history-table">
           <thead>
             <tr>
               <th>Title</th>
@@ -69,7 +70,7 @@ const ReadListProfile: React.FC = () => {
           <tbody>
             {litHistoryBooks.map((b) => (
               <tr key={b.bookDetailID}>
-                <td>{b.title}</td>
+                <td className="td-title">{b.title}</td>
                 <td>{b.authors}</td>
                 <td>{b.bookDetailBookRating}</td>
                 <td>{b.bookDetailBookFavorite ? "Yes" : "No"}</td>
@@ -100,7 +101,7 @@ const ReadListProfile: React.FC = () => {
           <tbody>
             {wishlist.map((b) => (
               <tr key={b.bookDetailID}>
-                <td>{b.title}</td>
+                <td className="td-title">{b.title}</td>
                 <td>{b.authors}</td>
               </tr>
             ))}
