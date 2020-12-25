@@ -12,6 +12,7 @@
   height: 24.6em;
   place-content: center;
   background: darkred;
+  animation: pulse-dot 3s infinite;
 }
 
 #login-form.input[type="submit"] {
@@ -28,4 +29,63 @@ input.login-input {
   text-align: center;
   outline: none;
   margin: 0px 0px 1em;
+}
+
+.bubble-1 {
+  background: darkseagreen;
+  width: 15em;
+  height: 15em;
+  position: fixed;
+  border-radius: 15em;
+  right: 333px;
+  top: 140px;
+  z-index: -1;
+  animation: bubble1animate 5s infinite;
+}
+
+.bubble-2 {
+  background: cadetblue;
+  width: 14em;
+  height: 14em;
+  position: fixed;
+  border-radius: 15em;
+  left: 318px;
+  bottom: 293px;
+  z-index: -1;
+  animation: bubble2animate 5s infinite;
+}
+
+@keyframes bubble1animate {
+  0% {
+    transform: translate(10px, 5%);
+  }
+  50% {
+    transform: translate(15px, 10%);
+  }
+  100% {
+    transform: translate(10px, 5%);
+  }
+}
+@keyframes bubble2animate {
+  0% {
+    transform: translate(20px, 5%);
+  }
+  50% {
+    transform: translate(10px, 10%);
+  }
+  100% {
+    transform: translate(20px, 5%);
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.98);
+  }
 }

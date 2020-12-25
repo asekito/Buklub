@@ -56,7 +56,9 @@ const Login = () => {
 
   return (
     <div className="container">
-      <h1>Login page</h1>
+      <h1>Login</h1>
+      <div className="bubble-1" />
+      <div className="bubble-2" />
       <form id="login-form">
         <label>Username</label>
         <input
