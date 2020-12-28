@@ -71,13 +71,15 @@ const AddToWishlist: React.FC<IAddWishlist> = ({
       </button>
       <h1>Add to Wishlist</h1>
       <form id="wishlist-add">
-        <label htmlFor="book">Book</label>
-        <input
-          name="book"
-          onChange={(e) => bookSearchHandler(e)}
-          autoComplete="off"
-          id="wish-search"
-        />
+        <div className="book-search">
+          <label htmlFor="book">Book</label>
+          <input
+            name="book"
+            onChange={(e) => bookSearchHandler(e)}
+            autoComplete="off"
+            id="wish-search"
+          />
+        </div>
         <div className="potential-books">
           {potentialBooks.length > 0 ? (
             <ul>
