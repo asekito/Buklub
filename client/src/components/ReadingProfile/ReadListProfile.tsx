@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(() => import("./AddToLiteraryHistory"));
 const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
 import "../../assets/ReadListProfile.scss";
+import Modal from "@material-ui/core/Modal";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -55,7 +56,12 @@ const ReadListProfile: React.FC = () => {
     <div className="container">
       {/* <h1>Read List</h1> */}
       <div>
-        <h3>Literary History</h3>
+        <div>
+          <h3>Literary History</h3>
+          <button onClick={() => setAddToHistory(!addToHistory)}>
+            Add Book
+          </button>
+        </div>
         <div className="grid-container-history">
           <div className="grid-item header">Title</div>
           <div className="grid-item header">Author</div>
@@ -76,17 +82,28 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item">{b.bookDetailBookStatusLabel}</div>
           </div>
         ))}
-        <button onClick={() => setAddToHistory(!addToHistory)}>Add Book</button>
-        {addToHistory ? (
+        {/* {addToHistory ? (
           <AddToLiteraryHistory
             addToHistory={addToHistory}
             setAddToHistory={setAddToHistory}
             uid={uid}
           />
-        ) : null}
+        ) : null} */}
+        <Modal open={addToHistory} onClose={setAddToHistory}>
+          <AddToLiteraryHistory
+            addToHistory={addToHistory}
+            setAddToHistory={setAddToHistory}
+            uid={uid}
+          />
+        </Modal>
       </div>
       <div>
-        <h3>Wish List</h3>
+        <div>
+          <h3>Wish List</h3>
+          <button onClick={() => setAddToWishlist(!addToWishlist)}>
+            Add Book
+          </button>
+        </div>
         <div className="grid-container-wishlist">
           <div className="grid-item">Title</div>
           <div className="grid-item">Author</div>
@@ -98,9 +115,7 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item">{b.authors}</div>
           </div>
         ))}
-        <button onClick={() => setAddToWishlist(!addToWishlist)}>
-          Add Book
-        </button>
+
         {addToWishlist ? (
           <AddToWishlist
             addToWishlist={addToWishlist}
