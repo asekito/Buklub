@@ -120,6 +120,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             id="add-search"
             placeholder="Search for a book"
           />
+          *
         </div>
         <div className="potential-books add-book-hx">
           {potentialBooks.length > 0 ? (
@@ -149,7 +150,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         </div>
 
         <div className="add-book-hx status">
-          <label htmlFor="status">Status</label>
+          <label htmlFor="status">Status*</label>
           <select
             name="status"
             value={literaryHistoryBook.status}
