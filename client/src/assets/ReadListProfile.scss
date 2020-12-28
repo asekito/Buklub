@@ -1,17 +1,20 @@
 .grid-container-history {
   display: grid;
-  grid-template-columns: 9.7em 20em 10.8em 5.5em 5.2em 7.1em;
+  // grid-template-columns: 9.7em 20em 10.8em 5.5em 5.2em 7.1em;
+  grid-template-columns: 9.7em 22em 13.8em 5.5em 5.2em 7.1em;
   justify-content: center;
 }
 
 .grid-container-wishlist {
   display: grid;
-  grid-template-columns: 8em 26em 12em;
+  grid-template-columns: 8em 22em 12em;
   justify-content: center;
 }
 
-.grid-item.title {
+.grid-item.title,
+.grid-item.author {
   text-align: left;
+  white-space: pre-wrap;
 }
 
 .grid-item {
@@ -28,11 +31,22 @@
 
 .add-book.btn {
   border: none;
-  background: darkred;
-  color: white;
+  background: darkseagreen;
+
   padding: 0.4em 0.7em;
   border-radius: 10px;
   margin-bottom: 1em;
   cursor: pointer;
   outline: none;
+}
+
+.grid-container-history > div > img,
+.grid-container-wishlist > div > img {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  height: 100px;
+}
+
+.history-container {
+  margin: 0 0 5em;
 }

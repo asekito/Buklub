@@ -74,7 +74,7 @@ const ReadListProfile: React.FC = () => {
 
   return (
     <div className="container">
-      <div>
+      <div className="history-container">
         <div>
           <h3>Literary History</h3>
           <button
@@ -99,10 +99,10 @@ const ReadListProfile: React.FC = () => {
             onClick={(e) => bookClickHandler(b)}
           >
             <div className="grid-item">
-              <img src={b.smallThumbnail} height={75} />
+              <img src={b.smallThumbnail} />
             </div>
             <div className="grid-item title">{b.title}</div>
-            <div className="grid-item">{b.authors}</div>
+            <div className="grid-item author">{b.authors}</div>
             <div className="grid-item">{b.bookDetailBookRating}</div>
             <div className="grid-item">
               {b.bookDetailBookFavorite ? "Yes" : "No"}
@@ -111,7 +111,7 @@ const ReadListProfile: React.FC = () => {
           </div>
         ))}
       </div>
-      <div>
+      <div className="history-container">
         <div>
           <h3>Wish List</h3>
           <button
@@ -130,10 +130,10 @@ const ReadListProfile: React.FC = () => {
         {wishlist.map((b) => (
           <div className="grid-container-wishlist" key={b.bookDetailID}>
             <div className="grid-item">
-              <img src={b.smallThumbnail} height={75} />
+              <img src={b.smallThumbnail} />
             </div>
-            <div className="grid-item">{b.title}</div>
-            <div className="grid-item">{b.authors}</div>
+            <div className="grid-item title">{b.title}</div>
+            <div className="grid-item author">{b.authors}</div>
             {/* add button here to delete
             add button here to allow editing to transfer to literary history */}
           </div>
