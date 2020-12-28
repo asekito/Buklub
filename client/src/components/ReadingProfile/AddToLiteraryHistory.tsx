@@ -138,7 +138,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
                     ) as HTMLFormElement).value = b.title;
                   }}
                 >
-                  <button type="button">{b.title}</button>
+                  <button type="button">{`${b.title} by ${b.authors}`}</button>
                 </li>
               ))}
             </ul>
@@ -306,11 +306,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             onChange={(e) => changeHandler(e)}
           />
         </div>
-        <input
-          type="submit"
-          value="Add Book"
-          onClick={(e) => submitHandler(e)}
-        />
+        <input type="submit" value="Submit" onClick={(e) => submitHandler(e)} />
       </form>
     </div>
   );
