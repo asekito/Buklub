@@ -6,3 +6,85 @@
   padding: 3em;
   font-family: "Poppins";
 }
+
+.book-search > label {
+  margin: 10px;
+}
+
+.book-search > input {
+  width: 30em;
+  height: 1.8em;
+  font-size: 1em;
+  padding: 0 1em;
+}
+
+.potential-books.add-book-hx {
+  position: fixed;
+  /* max-height: 17em; */
+  /* overflow-y: scroll; */
+  width: 57%;
+  position: fixed;
+  left: 59%;
+  margin-left: -37.5%;
+}
+
+.potential-books.add-book-hx > ul {
+  list-style: none;
+  // text-align-last: start;
+  max-height: 17em;
+  overflow-y: scroll;
+  margin: 0;
+}
+
+.potential-books.add-book-hx > ul > li > button {
+  width: -webkit-fill-available;
+  padding: 7px 32px;
+  text-align-last: center;
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  padding: 0.7em;
+  cursor: pointer;
+}
+
+.add-book-hx.status {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-book-hx.status > label {
+  font-weight: 600;
+}
+
+.add-book-hx.status > select {
+  width: 10em;
+  height: 1.8em;
+  font-size: 1em;
+  text-align-last: center;
+}
+
+.add-book-hx.rating {
+  margin: 1.5em 0em;
+}
+
+.add-book-hx.rating > p {
+  margin: 0.5em 0;
+  font-weight: 600;
+}
+
+.add-book-hx.rating > div {
+  display: flex;
+  place-content: center;
+}
+
+.add-book-hx.rating > div > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.3em;
+}
+
+.add-book-hx.rating > div > div > label {
+  margin: -8px;
+}

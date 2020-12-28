@@ -102,12 +102,13 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       <h1>Add a book</h1>
       <form id="book-add">
         <div className="book-search">
-          <label htmlFor="book">Book</label>
+          {/* <label htmlFor="book">Book</label> */}
           <input
             name="book"
             onChange={(e) => bookSearchHandler(e)}
             autoComplete="off"
             id="add-search"
+            placeholder="Search for a book"
           />
         </div>
         <div className="potential-books add-book-hx">
@@ -151,83 +152,107 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
         <div className="add-book-hx rating">
           <p>Rating</p>
-          <label htmlFor="rating">0</label>
-          <input
-            type="radio"
-            name="rating"
-            value="0"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">1</label>
-          <input
-            type="radio"
-            name="rating"
-            value="1"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">2</label>
-          <input
-            type="radio"
-            name="rating"
-            value="2"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">3</label>
-          <input
-            type="radio"
-            name="rating"
-            value="3"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">4</label>
-          <input
-            type="radio"
-            name="rating"
-            value="4"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">5</label>
-          <input
-            type="radio"
-            name="rating"
-            value="5"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">6</label>
-          <input
-            type="radio"
-            name="rating"
-            value="6"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">7</label>
-          <input
-            type="radio"
-            name="rating"
-            value="7"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">8</label>
-          <input
-            type="radio"
-            name="rating"
-            value="8"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">9</label>
-          <input
-            type="radio"
-            name="rating"
-            value="9"
-            onChange={(e) => changeHandler(e)}
-          />
-          <label htmlFor="rating">10</label>
-          <input
-            type="radio"
-            name="rating"
-            value="10"
-            onChange={(e) => changeHandler(e)}
-          />
+          <div>
+            <div>
+              <label htmlFor="rating">0</label>
+              <input
+                type="radio"
+                name="rating"
+                value="0"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">1</label>
+              <input
+                type="radio"
+                name="rating"
+                value="1"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">2</label>
+              <input
+                type="radio"
+                name="rating"
+                value="2"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">3</label>
+              <input
+                type="radio"
+                name="rating"
+                value="3"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">4</label>
+              <input
+                type="radio"
+                name="rating"
+                value="4"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">5</label>
+              <input
+                type="radio"
+                name="rating"
+                value="5"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">6</label>
+              <input
+                type="radio"
+                name="rating"
+                value="6"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">7</label>
+              <input
+                type="radio"
+                name="rating"
+                value="7"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">8</label>
+              <input
+                type="radio"
+                name="rating"
+                value="8"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">9</label>
+              <input
+                type="radio"
+                name="rating"
+                value="9"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="rating">10</label>
+              <input
+                type="radio"
+                name="rating"
+                value="10"
+                onChange={(e) => changeHandler(e)}
+              />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -271,13 +296,12 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             name="endDate"
             onChange={(e) => changeHandler(e)}
           />
-
-          <input
-            type="submit"
-            value="Add Book"
-            onClick={(e) => submitHandler(e)}
-          />
         </div>
+        <input
+          type="submit"
+          value="Add Book"
+          onClick={(e) => submitHandler(e)}
+        />
       </form>
     </div>
   );
@@ -315,3 +339,17 @@ export interface IBook {
   smallThumbnail: string;
   thumbnail: string;
 }
+
+/* <div className="rating-labels">
+            <label htmlFor="rating">0</label>
+            <label htmlFor="rating">1</label>
+            <label htmlFor="rating">2</label>
+            <label htmlFor="rating">3</label>
+            <label htmlFor="rating">4</label>
+            <label htmlFor="rating">5</label>
+            <label htmlFor="rating">6</label>
+            <label htmlFor="rating">7</label>
+            <label htmlFor="rating">8</label>
+            <label htmlFor="rating">9</label>
+            <label htmlFor="rating">10</label>
+          </div> */
