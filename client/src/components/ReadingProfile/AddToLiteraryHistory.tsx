@@ -54,7 +54,8 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         }
 
         if (res.response) {
-          // cool idk what to do right here but we'll do something!
+          setAddToHistory(!addToHistory);
+          window.location.reload();
         }
 
         if (res.response && res.alreadyExists) {
@@ -138,7 +139,9 @@ const AddToLiteraryHistory: React.FC<Props> = ({
                     ) as HTMLFormElement).value = b.title;
                   }}
                 >
-                  <button type="button">{`${b.title} by ${b.authors}`}</button>
+                  <button type="button">{`${b.title} by ${
+                    b.authors ? b.authors : "Unknown"
+                  }`}</button>
                 </li>
               ))}
             </ul>
@@ -264,7 +267,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           </div>
         </div>
 
-        <div>
+        <div className="generic-input-duo">
           <label htmlFor="timesRead">Times read</label>
           <input
             type="number"
@@ -274,13 +277,18 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           />
         </div>
 
-        <label htmlFor="favorite">One of your favorites?</label>
-        <select name="favorite" onChange={(e) => changeHandler(e)}>
-          <option value="1">Yes</option>
-          <option value="0">No</option>
-        </select>
-        <div>
-          <label htmlFor="notes"></label>
+        <div className="generic-input-duo">
+          <label htmlFor="favorite">One of your favorites?</label>
+          <select name="favorite" onChange={(e) => changeHandler(e)}>
+            <option value="1">Yes</option>
+            <option value="0" selected>
+              No
+            </option>
+          </select>
+        </div>
+
+        <div className="book-notes">
+          <label htmlFor="notes">Notes</label>
           <textarea
             name="notes"
             cols={50}

@@ -96,3 +96,24 @@
 .add-book-hx.rating > div > div > label {
   margin: -8px;
 }
+
+.generic-input-duo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.generic-input-duo > input {
+  width: 6%;
+  align-self: center;
+}
+
+.generic-input-duo > label {
+  font-weight: 600;
+}
+
+.generic-input-duo > select {
+  width: 6%;
+  align-self: center;
+  // text-align: center;
+}
