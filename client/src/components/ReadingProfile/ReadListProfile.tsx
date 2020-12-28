@@ -41,11 +41,19 @@ const ReadListProfile: React.FC = () => {
       headers: {
         auth: token,
       },
-    }).then((res) => {
-      if (res.response && res.body.length > 0) {
-        setLitHistoryBooks(res.body);
-      }
-    });
+    })
+      .then((res) => {
+        if (res.response && res.body.length > 0) {
+          setLitHistoryBooks(res.body);
+        }
+
+        throw res;
+      })
+      .catch((err) => {
+        if (!err.response && err.error) {
+          window.location.reload();
+        }
+      });
 
     fetchCommand(`/api/literary-history-favorites`, {
       method: "GET",
@@ -66,7 +74,6 @@ const ReadListProfile: React.FC = () => {
 
   return (
     <div className="container">
-      {/* <h1>Read List</h1> */}
       <div>
         <div>
           <h3>Literary History</h3>
@@ -90,7 +97,7 @@ const ReadListProfile: React.FC = () => {
             onClick={(e) => bookClickHandler(b)}
           >
             <div className="grid-item">
-              <img src={b.smallThumbnail} height={65} />
+              <img src={b.smallThumbnail} height={75} />
             </div>
             <div className="grid-item title">{b.title}</div>
             <div className="grid-item">{b.authors}</div>
@@ -111,23 +118,23 @@ const ReadListProfile: React.FC = () => {
           </button>
         </div>
         <div className="grid-container-wishlist">
+          <div className="grid-item"></div>
           <div className="grid-item">Title</div>
           <div className="grid-item">Author</div>
         </div>
 
         {wishlist.map((b) => (
           <div className="grid-container-wishlist" key={b.bookDetailID}>
+            <div className="grid-item">
+              <img src={b.smallThumbnail} height={75} />
+            </div>
             <div className="grid-item">{b.title}</div>
             <div className="grid-item">{b.authors}</div>
+            {/* add button here to delete
+            add button here to allow editing to transfer to literary history */}
           </div>
         ))}
 
-        {/* {addToWishlist ? (
-          <AddToWishlist
-            addToWishlist={addToWishlist}
-            setAddToWishlist={setAddToWishlist}
-          />
-        ) : null} */}
         <Modal open={currentBookModal} onClose={setCurrentBookModal}>
           <LiteraryHistoryBook
             currentBook={currentBook}

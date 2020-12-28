@@ -61,6 +61,9 @@ app.get("/api/literary-history", async (req, res) => {
 
     return res.send({ response: true, body: formattedBody });
   } catch (err) {
+    if (err.name === "JsonWebTokenError") {
+      return res.status(401).send({ response: false, error: err });
+    }
     return res.status(400).send({ error: err });
   }
 });
