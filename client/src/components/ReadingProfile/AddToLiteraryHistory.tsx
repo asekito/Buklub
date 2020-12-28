@@ -101,6 +101,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   return (
     <div className="modal add-book-hx">
       <button
+        className="exit-modal"
         onClick={(e) => {
           e.preventDefault();
           setAddToHistory(!addToHistory);

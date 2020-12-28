@@ -82,13 +82,6 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item">{b.bookDetailBookStatusLabel}</div>
           </div>
         ))}
-        {/* {addToHistory ? (
-          <AddToLiteraryHistory
-            addToHistory={addToHistory}
-            setAddToHistory={setAddToHistory}
-            uid={uid}
-          />
-        ) : null} */}
         <Modal open={addToHistory} onClose={setAddToHistory}>
           <AddToLiteraryHistory
             addToHistory={addToHistory}
@@ -116,12 +109,19 @@ const ReadListProfile: React.FC = () => {
           </div>
         ))}
 
-        {addToWishlist ? (
+        {/* {addToWishlist ? (
           <AddToWishlist
             addToWishlist={addToWishlist}
             setAddToWishlist={setAddToWishlist}
           />
-        ) : null}
+        ) : null} */}
+        <Modal open={addToWishlist} onClose={setAddToWishlist}>
+          <AddToWishlist
+            addToWishlist={addToWishlist}
+            setAddToWishlist={setAddToWishlist}
+            // uid={uid}
+          />
+        </Modal>
       </div>
     </div>
   );

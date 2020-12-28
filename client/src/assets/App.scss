@@ -34,3 +34,51 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.modal {
+  background-color: white;
+  text-align: center;
+  margin: 1em 15em;
+  border-radius: 10px;
+  padding: 1.5em 3em 3em 3em;
+  font-family: "Poppins";
+  overflow-y: scroll;
+  max-height: -webkit-fill-available;
+}
+
+.exit-modal {
+  float: right;
+  background: #ddd;
+  border: none;
+  border-radius: 4px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  cursor: pointer;
+}
+
+.potential-books {
+  position: fixed;
+  width: 57%;
+  position: fixed;
+  left: 59%;
+  margin-left: -37.5%;
+}
+
+.potential-books > ul {
+  list-style: none;
+  // text-align-last: start;
+  max-height: 17em;
+  overflow-y: scroll;
+  margin: 0;
+}
+
+.potential-books > ul > li > button {
+  width: -webkit-fill-available;
+  padding: 7px 32px;
+  text-align-last: center;
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  padding: 0.7em;
+  cursor: pointer;
+}

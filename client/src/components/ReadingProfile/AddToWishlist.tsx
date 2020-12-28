@@ -1,8 +1,12 @@
 import * as React from "react";
 import fetchCommand from "../../../utils/fetching";
 import { IBook } from "./AddToLiteraryHistory";
+import "../../assets/AddToWishlist.scss";
 
-const AddToWishlist: React.FC<IAddWishlist> = () => {
+const AddToWishlist: React.FC<IAddWishlist> = ({
+  addToWishlist,
+  setAddToWishlist,
+}) => {
   const [bookSearch, setBookSearch] = React.useState<string>("");
   const [authorSearch, setAuthorSearch] = React.useState<string>("");
   const [potentialBooks, setPotentialBooks] = React.useState<IBook[]>([]);
@@ -46,11 +50,25 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ ...bookWish, token: token }),
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      if (res.response) {
+        setAddToWishlist(!addToWishlist);
+        window.location.reload();
+      }
+    });
   };
 
   return (
-    <div>
+    <div className="modal add-wishlist">
+      <button
+        className="exit-modal"
+        onClick={(e) => {
+          e.preventDefault();
+          setAddToWishlist(!addToWishlist);
+        }}
+      >
+        x
+      </button>
       <h1>Add to Wishlist</h1>
       <form id="wishlist-add">
         <label htmlFor="book">Book</label>
@@ -60,7 +78,7 @@ const AddToWishlist: React.FC<IAddWishlist> = () => {
           autoComplete="off"
           id="wish-search"
         />
-        <div>
+        <div className="potential-books">
           {potentialBooks.length > 0 ? (
             <ul>
               {potentialBooks.map((b, i) => (
