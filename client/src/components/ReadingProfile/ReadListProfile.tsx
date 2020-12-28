@@ -14,7 +14,7 @@ const ReadListProfile: React.FC = () => {
     []
   );
   const [wishlist, setWishlist] = React.useState<IBookItems[]>([]);
-  const [addToHistory, setAddToHistory] = React.useState<boolean>(true);
+  const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
   const [addToWishlist, setAddToWishlist] = React.useState<boolean>(false);
   const [uid, setUid] = React.useState<number>(-1);
   const history = useHistory();
