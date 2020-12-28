@@ -77,7 +77,10 @@ const ReadListProfile: React.FC = () => {
       <div>
         <div>
           <h3>Literary History</h3>
-          <button onClick={() => setAddToHistory(!addToHistory)}>
+          <button
+            className="add-book btn"
+            onClick={() => setAddToHistory(!addToHistory)}
+          >
             Add Book
           </button>
         </div>
@@ -87,7 +90,6 @@ const ReadListProfile: React.FC = () => {
           <div className="grid-item header">Author</div>
           <div className="grid-item header">Rating</div>
           <div className="grid-item header">Favorite</div>
-          <div className="grid-item header">Times Read</div>
           <div className="grid-item header">Status</div>
         </div>
         {litHistoryBooks.map((b) => (
@@ -105,7 +107,6 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item">
               {b.bookDetailBookFavorite ? "Yes" : "No"}
             </div>
-            <div className="grid-item">{b.bookDetailBookTimesRead}</div>
             <div className="grid-item">{b.bookDetailBookStatusLabel}</div>
           </div>
         ))}
@@ -113,14 +114,17 @@ const ReadListProfile: React.FC = () => {
       <div>
         <div>
           <h3>Wish List</h3>
-          <button onClick={() => setAddToWishlist(!addToWishlist)}>
+          <button
+            className="add-book btn"
+            onClick={() => setAddToWishlist(!addToWishlist)}
+          >
             Add Book
           </button>
         </div>
         <div className="grid-container-wishlist">
           <div className="grid-item"></div>
-          <div className="grid-item">Title</div>
-          <div className="grid-item">Author</div>
+          <div className="grid-item header">Title</div>
+          <div className="grid-item header">Author</div>
         </div>
 
         {wishlist.map((b) => (
