@@ -1,16 +1,62 @@
 .current-book-info {
   display: flex;
+  margin: 1em 2em;
+  padding: 2em 0em;
+  border-bottom: 1px solid #ddd;
 }
 
 .current-book-info > .image {
-  flex: 2;
+  flex: 1;
   text-align-last: left;
 }
 
 .current-book-info > .image > img {
-  height: 200px;
+  height: 260px;
 }
 
 .current-book-info > .info {
   flex: 2;
+  text-align: justify;
+}
+
+.current-book-info > .info > div {
+  margin: 0em 0em 1em;
+}
+
+.current-book-user-info {
+  margin: 1em 2em;
+}
+
+.current-book-user-info > h2 {
+  text-align: left;
+}
+
+.current-book-user-info > div {
+  margin: 1em 0em;
+}
+
+.basic-userbook-info {
+  display: grid;
+  grid-template-columns: 23em 23em;
+  justify-content: center;
+}
+
+.book-timeline {
+  display: grid;
+  grid-template-columns: 8em 8em;
+  justify-content: center;
+}
+
+.book-notes-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-notes-box {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 0.5em 1.6em;
+  min-height: 20em;
+  overflow-y: scroll;
+  max-height: 20em;
 }

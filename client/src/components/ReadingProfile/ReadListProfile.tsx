@@ -131,6 +131,7 @@ const ReadListProfile: React.FC = () => {
         <Modal open={currentBookModal} onClose={setCurrentBookModal}>
           <LiteraryHistoryBook
             currentBook={currentBook}
+            currentBookModal={currentBookModal}
             setCurrentBookModal={setCurrentBookModal}
           />
         </Modal>
