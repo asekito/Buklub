@@ -1,0 +1,16 @@
+.current-book-info {
+  display: flex;
+}
+
+.current-book-info > .image {
+  flex: 2;
+  text-align-last: left;
+}
+
+.current-book-info > .image > img {
+  height: 200px;
+}
+
+.current-book-info > .info {
+  flex: 2;
+}
