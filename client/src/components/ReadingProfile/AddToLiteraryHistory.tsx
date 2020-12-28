@@ -99,7 +99,16 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
   return (
     <div className="modal add-book-hx">
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setAddToHistory(!addToHistory);
+        }}
+      >
+        x
+      </button>
       <h1>Add a book</h1>
+
       <form id="book-add">
         <div className="book-search">
           {/* <label htmlFor="book">Book</label> */}
