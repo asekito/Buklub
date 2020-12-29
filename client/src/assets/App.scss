@@ -82,3 +82,14 @@ body {
   padding: 0.7em;
   cursor: pointer;
 }
+
+.book-search > label {
+  margin: 10px;
+}
+
+.book-search > input {
+  width: 30em;
+  height: 1.8em;
+  font-size: 1em;
+  padding: 0 1em;
+}
