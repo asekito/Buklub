@@ -30,3 +30,5 @@ require("./routes/ReadProfile/post-book-history");
 require("./routes/ReadProfile/get-books-history");
 require("./routes/ReadProfile/get-books-history-favorites");
 require("./routes/get-book-collection");
+
+require("./routes/post-contact-us");

@@ -1,7 +1,37 @@
 import * as React from "react";
+import fetchCommand from "../../utils/fetching";
 import "../assets/Home.scss";
 
 const Home = () => {
+  const [contactUs, setContactUs] = React.useState<IContactUs>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    comments: "",
+  });
+
+  const changeHandler = (e: any) => {
+    const { name, value } = e.target;
+    setContactUs({ ...contactUs, [name]: value });
+  };
+
+  const submitHandler = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const { firstName, lastName, email, comments } = contactUs;
+
+    if (!firstName || !lastName || !email || !comments) {
+      return alert("One or more of the fields are missing inputs.");
+    }
+
+    fetchCommand("/api/contact-us", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contactUs),
+    });
+  };
+
   return (
     <div className="container">
       <div id="about-section">
@@ -26,21 +56,38 @@ const Home = () => {
         <div>Have suggestions? Feedback? Questions?</div>
         <div>Contact us!</div>
         <div>
-          <form id="contact-us" autoComplete="off">
+          <form id="contact-us">
             <label htmlFor="firstname">First Name</label>
             <input
               type="text"
               name="firstName"
+              onChange={(e) => changeHandler(e)}
               // autoComplete="none"
               // aria-autocomplete="none"
             />
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" name="lastName" />
+            <input
+              type="text"
+              name="lastName"
+              onChange={(e) => changeHandler(e)}
+            />
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" />
+            <input
+              type="email"
+              name="email"
+              onChange={(e) => changeHandler(e)}
+            />
             <label htmlFor="comments">Your Thoughts</label>
-            <textarea name="comments"></textarea>
-            <input type="submit" value="Send" maxLength={250} />
+            <textarea
+              name="comments"
+              onChange={(e) => changeHandler(e)}
+            ></textarea>
+            <input
+              type="submit"
+              value="Send"
+              maxLength={250}
+              onClick={(e) => submitHandler(e)}
+            />
           </form>
         </div>
       </div>
@@ -49,3 +96,10 @@ const Home = () => {
 };
 
 export default Home;
+
+interface IContactUs {
+  firstName: string;
+  lastName: string;
+  email: string;
+  comments: string;
+}
