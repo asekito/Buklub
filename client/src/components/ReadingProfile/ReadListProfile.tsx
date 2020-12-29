@@ -111,6 +111,8 @@ const ReadListProfile: React.FC = () => {
           </div>
         ))}
       </div>
+      {/* ROOM FOR PAGINATION NAVIGATION STUFF */}
+
       <div className="history-container">
         <div>
           <h3>Wish List</h3>
