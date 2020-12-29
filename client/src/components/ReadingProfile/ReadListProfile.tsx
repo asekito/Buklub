@@ -41,11 +41,19 @@ const ReadListProfile: React.FC = () => {
       headers: {
         auth: token,
       },
-    }).then((res) => {
-      if (res.response && res.body.length > 0) {
-        setLitHistoryBooks(res.body);
-      }
-    });
+    })
+      .then((res) => {
+        if (res.response && res.body.length > 0) {
+          setLitHistoryBooks(res.body);
+        }
+
+        throw res;
+      })
+      .catch((err) => {
+        if (!err.response && err.error) {
+          window.location.reload();
+        }
+      });
 
     fetchCommand(`/api/literary-history-favorites`, {
       method: "GET",
@@ -66,11 +74,13 @@ const ReadListProfile: React.FC = () => {
 
   return (
     <div className="container">
-      {/* <h1>Read List</h1> */}
-      <div>
+      <div className="history-container">
         <div>
           <h3>Literary History</h3>
-          <button onClick={() => setAddToHistory(!addToHistory)}>
+          <button
+            className="add-book btn"
+            onClick={() => setAddToHistory(!addToHistory)}
+          >
             Add Book
           </button>
         </div>
@@ -80,7 +90,6 @@ const ReadListProfile: React.FC = () => {
           <div className="grid-item header">Author</div>
           <div className="grid-item header">Rating</div>
           <div className="grid-item header">Favorite</div>
-          <div className="grid-item header">Times Read</div>
           <div className="grid-item header">Status</div>
         </div>
         {litHistoryBooks.map((b) => (
@@ -90,47 +99,52 @@ const ReadListProfile: React.FC = () => {
             onClick={(e) => bookClickHandler(b)}
           >
             <div className="grid-item">
-              <img src={b.smallThumbnail} height={65} />
+              <img src={b.smallThumbnail} />
             </div>
             <div className="grid-item title">{b.title}</div>
-            <div className="grid-item">{b.authors}</div>
+            <div className="grid-item author">{b.authors}</div>
             <div className="grid-item">{b.bookDetailBookRating}</div>
             <div className="grid-item">
               {b.bookDetailBookFavorite ? "Yes" : "No"}
             </div>
-            <div className="grid-item">{b.bookDetailBookTimesRead}</div>
             <div className="grid-item">{b.bookDetailBookStatusLabel}</div>
           </div>
         ))}
       </div>
-      <div>
+      {/* ROOM FOR PAGINATION NAVIGATION STUFF */}
+
+      <div className="history-container">
         <div>
           <h3>Wish List</h3>
-          <button onClick={() => setAddToWishlist(!addToWishlist)}>
+          <button
+            className="add-book btn"
+            onClick={() => setAddToWishlist(!addToWishlist)}
+          >
             Add Book
           </button>
         </div>
         <div className="grid-container-wishlist">
-          <div className="grid-item">Title</div>
-          <div className="grid-item">Author</div>
+          <div className="grid-item"></div>
+          <div className="grid-item header">Title</div>
+          <div className="grid-item header">Author</div>
         </div>
 
         {wishlist.map((b) => (
           <div className="grid-container-wishlist" key={b.bookDetailID}>
-            <div className="grid-item">{b.title}</div>
-            <div className="grid-item">{b.authors}</div>
+            <div className="grid-item">
+              <img src={b.smallThumbnail} />
+            </div>
+            <div className="grid-item title">{b.title}</div>
+            <div className="grid-item author">{b.authors}</div>
+            {/* add button here to delete
+            add button here to allow editing to transfer to literary history */}
           </div>
         ))}
 
-        {/* {addToWishlist ? (
-          <AddToWishlist
-            addToWishlist={addToWishlist}
-            setAddToWishlist={setAddToWishlist}
-          />
-        ) : null} */}
         <Modal open={currentBookModal} onClose={setCurrentBookModal}>
           <LiteraryHistoryBook
             currentBook={currentBook}
+            currentBookModal={currentBookModal}
             setCurrentBookModal={setCurrentBookModal}
           />
         </Modal>

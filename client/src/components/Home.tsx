@@ -2,14 +2,46 @@ import * as React from "react";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Your Feed</h1>
+    <div className="container">
+      <div id="about-section">
+        <h1>About</h1>
+        <div>
+          "Buklub" is a web application service that allows you to track books
+          you've read, currently are reading, or decided to stop for whatever
+          reason. You can take notes on the books, track your progress, rate
+          them, and favorite them. If you have books that you've been wanting to
+          get your hands on but just haven't had the time to get them or get
+          started on them you can create a wishlist.
+        </div>
+        <div>
+          "Buklub" is for your averages book worm who loves to see the things
+          they've read and keep track of them through a free and easy to use
+          application.
+        </div>
+      </div>
+
+      <div id="contact-section">
+        <h1>Contact Us</h1>
+        <div>Have suggestions? Feedback? Questions?</div>
+        <div>Contact us!</div>
+        <form id="contact-us form">
+          <label htmlFor="firstname">First Name</label>
+          <input type="text" name="firstname" />
+          <label htmlFor="lastname">Last Name</label>
+          <input type="text" name="lastname" />
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" />
+          <textarea name="comments"></textarea>
+          <input type="submit" value="Send" />
+        </form>
+      </div>
+      {/* <h1>Your Feed</h1>
       <div>
         <h1>Recently Read</h1>
       </div>
       <div>
         <h1>Reading List</h1>
-      </div>
+      </div> */}
     </div>
   );
 };
