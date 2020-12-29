@@ -97,7 +97,26 @@ const Book = sequelize.define(
   },
   { timestamps: false }
 );
+
+const ContactUs = sequelize.define(
+  "contactUsComments",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    comments: DataTypes.STRING,
+  },
+  {
+    createdAt: true,
+    updatedAt: false,
+  }
+);
 // UserBookDetail.hasMany(Book, { foreignKey: "bookID" });
 // Book.belongsToMany(UserBookDetail);
 
-module.exports = { sequelize, User, UserBookDetail, Book, Op };
+module.exports = { sequelize, User, UserBookDetail, Book, ContactUs, Op };

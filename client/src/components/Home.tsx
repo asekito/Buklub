@@ -32,9 +32,10 @@ const Home = () => {
     })
       .then((res) => {
         if (res.response) {
-          return alert(
+          alert(
             "Thank you! Your response has been recorded and very much appreciated."
           );
+          return window.location.reload();
         }
 
         throw res.error;
