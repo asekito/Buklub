@@ -29,7 +29,19 @@ const Home = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(contactUs),
-    });
+    })
+      .then((res) => {
+        if (res.response) {
+          return alert(
+            "Thank you! Your response has been recorded and very much appreciated."
+          );
+        }
+
+        throw res.error;
+      })
+      .catch((err) => {
+        alert("There was an error in sending your comments. Please try again.");
+      });
   };
 
   return (

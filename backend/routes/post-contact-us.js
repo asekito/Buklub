@@ -10,8 +10,8 @@ const {
 app.post("/api/contact-us", (req, res) => {
   try {
     console.log(req.body);
-    res.status(200).send({ body: "Yas" });
+    res.status(200).send({ response: true });
   } catch (err) {
-    console.log(err);
+    res.status(400).send({ response: false, error: err });
   }
 });
