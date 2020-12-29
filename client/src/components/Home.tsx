@@ -1,4 +1,5 @@
 import * as React from "react";
+import "../assets/Home.scss";
 
 const Home = () => {
   return (
@@ -24,24 +25,25 @@ const Home = () => {
         <h1>Contact Us</h1>
         <div>Have suggestions? Feedback? Questions?</div>
         <div>Contact us!</div>
-        <form id="contact-us form">
-          <label htmlFor="firstname">First Name</label>
-          <input type="text" name="firstname" />
-          <label htmlFor="lastname">Last Name</label>
-          <input type="text" name="lastname" />
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" />
-          <textarea name="comments"></textarea>
-          <input type="submit" value="Send" />
-        </form>
+        <div>
+          <form id="contact-us" autoComplete="off">
+            <label htmlFor="firstname">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              // autoComplete="none"
+              // aria-autocomplete="none"
+            />
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" name="lastName" />
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" />
+            <label htmlFor="comments">Your Thoughts</label>
+            <textarea name="comments"></textarea>
+            <input type="submit" value="Send" maxLength={250} />
+          </form>
+        </div>
       </div>
-      {/* <h1>Your Feed</h1>
-      <div>
-        <h1>Recently Read</h1>
-      </div>
-      <div>
-        <h1>Reading List</h1>
-      </div> */}
     </div>
   );
 };
