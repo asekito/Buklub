@@ -25,17 +25,24 @@ const Home = () => {
         <h1>Contact Us</h1>
         <div>Have suggestions? Feedback? Questions?</div>
         <div>Contact us!</div>
-        <form id="contact-us">
-          <label htmlFor="firstname">First Name</label>
-          <input type="text" name="firstname" autoComplete="off" />
-          <label htmlFor="lastname">Last Name</label>
-          <input type="text" name="lastname" autoComplete="off" />
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" autoComplete="off" />
-          <label htmlFor="comments">Your Thoughts</label>
-          <textarea name="comments"></textarea>
-          <input type="submit" value="Send" />
-        </form>
+        <div>
+          <form id="contact-us" autoComplete="off">
+            <label htmlFor="firstname">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              // autoComplete="none"
+              // aria-autocomplete="none"
+            />
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" name="lastName" />
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" />
+            <label htmlFor="comments">Your Thoughts</label>
+            <textarea name="comments"></textarea>
+            <input type="submit" value="Send" maxLength={250} />
+          </form>
+        </div>
       </div>
     </div>
   );
