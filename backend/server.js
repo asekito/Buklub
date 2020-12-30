@@ -1,7 +1,14 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const { sequelize, User, UserBookDetail, Book, Op } = require("./dbConnect");
+const {
+  sequelize,
+  User,
+  UserBookDetail,
+  Book,
+  ContactUs,
+  Op,
+} = require("./dbConnect");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -20,6 +27,7 @@ module.exports = {
   jwt,
   UserBookDetail,
   Book,
+  ContactUs,
   Op,
 };
 
@@ -31,3 +39,5 @@ require("./routes/ReadProfile/get-books-history-favorites");
 require("./routes/ReadProfile/patch-book-history");
 require("./routes/ReadProfile/post-book-history");
 require("./routes/get-book-collection");
+
+require("./routes/post-contact-us");
