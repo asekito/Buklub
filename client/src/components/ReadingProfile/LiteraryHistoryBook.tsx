@@ -12,21 +12,33 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
 
   const editSaveHandler = () => {
     setNoteEditable(!noteEditable);
-    const editedNote = document.getElementById("book-notes-content")?.innerHTML; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
+    const editedNote = document.getElementById("book-notes-content")?.innerText; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
 
     if (editedNote !== currentBook?.bookDetailBookNotes) {
       // patch request to change the notes in the database
       // alert if they are sure they want to save?
-      console.log(editedNote);
+      const bookObject = {
+        userBookDetailID: currentBook?.bookDetailID,
+        userID: currentBook?.userID,
+        bookID: currentBook?.bookID,
+        bookRating: currentBook?.bookDetailBookRating,
+        status: currentBook?.bookDetailBookStatus,
+        favorite: currentBook?.bookDetailBookFavorite,
+        timesRead: currentBook?.bookDetailBookTimesRead,
+        notes: currentBook?.bookDetailBookNotes,
+        startDate: currentBook?.bookDetailBookStartDate,
+        bookDetailBookEndDate: currentBook?.bookDetailBookEndDate,
+        wishlist: currentBook?.bookDetailBookWishlist,
+      };
+
       fetchCommand("/api/literary-history", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userBookDetailID: currentBook?.bookDetailID,
-          userID: currentBook?.userID,
-          editedNote: editedNote,
+          ...bookObject,
+          notes: editedNote,
         }),
       }).then((res) => console.log(res));
     } else {

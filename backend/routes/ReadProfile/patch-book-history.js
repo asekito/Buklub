@@ -9,17 +9,14 @@ const {
 
 app.patch("/api/literary-history", async (req, res) => {
   try {
-    const { userBookDetailID, userID, editedNote } = req.body;
+    const { userBookDetailID, userID, bookID } = req.body;
 
-    await UserBookDetail.update(
-      { notes: editedNote },
-      {
-        where: {
-          id: userBookDetailID,
-          userID: userID,
-        },
-      }
-    );
+    await UserBookDetail.update(req.body, {
+      where: {
+        id: userBookDetailID,
+        userID: userID,
+      },
+    });
 
     res.status(200).send({ response: true });
   } catch (err) {
