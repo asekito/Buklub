@@ -191,4 +191,5 @@ export interface IBookItems {
   bookDetailBookStatusLabel: string;
   bookDetailBookStartDate: string;
   bookDetailBookEndDate: string;
+  bookDetailBookWishlist?: number;
 }

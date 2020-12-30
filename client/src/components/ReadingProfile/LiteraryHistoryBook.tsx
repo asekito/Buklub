@@ -1,5 +1,6 @@
 import * as React from "react";
 import { IBookItems } from "./ReadListProfile";
+import fetchCommand from "../../../utils/fetching";
 import "../../assets/LiteraryHistoryBook.scss";
 
 const LiteraryHistoryBook: React.FC<IProps> = ({
@@ -11,8 +12,54 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
 
   const editSaveHandler = () => {
     setNoteEditable(!noteEditable);
-    const originalText = document.getElementById("book-notes-content")
-      ?.innerHTML; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
+    const editedNote = document.getElementById("book-notes-content")?.innerText; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
+
+    if (editedNote !== currentBook?.bookDetailBookNotes) {
+      // patch request to change the notes in the database
+      // alert if they are sure they want to save?
+      const bookObject = {
+        userBookDetailID: currentBook?.bookDetailID,
+        userID: currentBook?.userID,
+        bookID: currentBook?.bookID,
+        bookRating: currentBook?.bookDetailBookRating,
+        status: currentBook?.bookDetailBookStatus,
+        favorite: currentBook?.bookDetailBookFavorite,
+        timesRead: currentBook?.bookDetailBookTimesRead,
+        notes: currentBook?.bookDetailBookNotes,
+        startDate: currentBook?.bookDetailBookStartDate,
+        bookDetailBookEndDate: currentBook?.bookDetailBookEndDate,
+        wishlist: currentBook?.bookDetailBookWishlist,
+      };
+
+      fetchCommand("/api/literary-history", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...bookObject,
+          notes: editedNote,
+        }),
+      }).then((res) => console.log(res));
+    }
+  };
+
+  const cancelHandler = () => {
+    // prompt with material ui if they wish to cancel?
+    if (
+      document.getElementById("book-notes-content")?.innerHTML !==
+      currentBook?.bookDetailBookNotes
+    ) {
+      if (confirm("Are you sure you want to dispose of all changes?")) {
+        setNoteEditable(false);
+        let element = document.getElementById("book-notes-content");
+        if (element && currentBook) {
+          element.innerHTML = currentBook.bookDetailBookNotes;
+        }
+      }
+    } else {
+      setNoteEditable(false);
+    }
   };
 
   return currentBook ? (
@@ -86,9 +133,17 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
           <div>
             <b>Notes:</b>
           </div>
-          <button onClick={() => editSaveHandler()}>
-            {noteEditable ? "Save" : "Edit"}
-          </button>
+          <div className="editing-buttons">
+            {noteEditable ? (
+              <button onClick={() => editSaveHandler()}>Save</button>
+            ) : (
+              <button onClick={() => setNoteEditable(true)}>Edit</button>
+            )}
+
+            {noteEditable ? (
+              <button onClick={() => cancelHandler()}>Cancel</button>
+            ) : null}
+          </div>
         </div>
 
         <div
@@ -102,6 +157,13 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
     </div>
   ) : null;
 };
+
+// const editingMode = (submitFunc, editStateFunc) => (
+//   <div>
+//     <button></button>
+//   </div>
+// );
+// const nonEditingMode = (editStateFunc) => {}
 
 export default LiteraryHistoryBook;
 
