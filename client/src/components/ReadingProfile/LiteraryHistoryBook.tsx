@@ -41,21 +41,24 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
           notes: editedNote,
         }),
       }).then((res) => console.log(res));
-    } else {
-      console.log("No changes were made");
     }
   };
 
   const cancelHandler = () => {
     // prompt with material ui if they wish to cancel?
     if (
-      confirm("Are you sure you wish to cancel? All edits will be disposed of.")
+      document.getElementById("book-notes-content")?.innerHTML !==
+      currentBook?.bookDetailBookNotes
     ) {
-      setNoteEditable(false);
-      let element = document.getElementById("book-notes-content");
-      if (element && currentBook) {
-        element.innerHTML = currentBook.bookDetailBookNotes;
+      if (confirm("Are you sure you want to dispose of all changes?")) {
+        setNoteEditable(false);
+        let element = document.getElementById("book-notes-content");
+        if (element && currentBook) {
+          element.innerHTML = currentBook.bookDetailBookNotes;
+        }
       }
+    } else {
+      setNoteEditable(false);
     }
   };
 
