@@ -12,11 +12,11 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
 
   const editSaveHandler = () => {
     setNoteEditable(!noteEditable);
-    const editedNote = document.getElementById("book-notes-content")?.innerText; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
+    const editedNote = document.getElementById("book-notes-content")?.innerText;
 
     if (editedNote !== currentBook?.bookDetailBookNotes) {
       // patch request to change the notes in the database
-      // alert if they are sure they want to save?
+      // alert if they are sure they want to save? material ui
       const bookObject = {
         userBookDetailID: currentBook?.bookDetailID,
         userID: currentBook?.userID,

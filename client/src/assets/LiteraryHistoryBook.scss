@@ -8,10 +8,12 @@
 .current-book-info > .image {
   flex: 1;
   text-align-last: left;
+  border-radius: 10px;
 }
 
 .current-book-info > .image > img {
   height: 260px;
+  border-radius: 10px;
 }
 
 .current-book-info > .info {
@@ -57,8 +59,9 @@
   text-align: left;
   padding: 0.5em 1.6em;
   min-height: 20em;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 20em;
   background: white;
   border-radius: 12px;
+  white-space: pre-wrap;
 }
