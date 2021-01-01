@@ -150,6 +150,8 @@ const ReadListProfile: React.FC = () => {
           <div className="grid-item"></div>
           <div className="grid-item header">Title</div>
           <div className="grid-item header">Author</div>
+          <div className="grid-item header"></div>
+          <div className="grid-item header"></div>
         </div>
 
         {wishlist.map((b) => (
@@ -159,8 +161,12 @@ const ReadListProfile: React.FC = () => {
             </div>
             <div className="grid-item title">{b.title}</div>
             <div className="grid-item author">{b.authors}</div>
-            {/* add button here to delete
-            add button here to allow editing to transfer to literary history */}
+            <div className="grid-item button">
+              <button>Edit</button>
+            </div>
+            <div className="grid-item button">
+              <button>Delete</button>
+            </div>
           </div>
         ))}
 
