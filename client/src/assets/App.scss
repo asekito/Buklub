@@ -42,8 +42,14 @@ body {
   border-radius: 10px;
   padding: 1.5em 3em 3em 3em;
   font-family: "Poppins";
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: -webkit-fill-available;
+}
+
+.modal::-webkit-scrollbar {
+  width: 10px;
+  background: #a0d2c4;
+  border-radius: 10px;
 }
 
 .exit-modal {
@@ -68,7 +74,7 @@ body {
   list-style: none;
   // text-align-last: start;
   max-height: 17em;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
 }
 

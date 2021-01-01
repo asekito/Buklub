@@ -3,45 +3,38 @@ import { IBookItems } from "./ReadListProfile";
 import fetchCommand from "../../../utils/fetching";
 import "../../assets/LiteraryHistoryBook.scss";
 
-const LiteraryHistoryBook: React.FC<IProps> = ({
+const LiteraryHistoryBook = ({
   currentBook,
+  setCurrentBook,
   currentBookModal,
   setCurrentBookModal,
-}) => {
+}: IProps) => {
   const [noteEditable, setNoteEditable] = React.useState<boolean>(false);
 
-  const editSaveHandler = () => {
+  const editSaveHandler = async () => {
     setNoteEditable(!noteEditable);
-    const editedNote = document.getElementById("book-notes-content")?.innerText; // or innerText or textcontent? figure out which is best to use -- especially important once mark up feature is starting
+    // patch request to change the notes in the database
+    // alert if they are sure they want to save? material ui
+    fetchCommand("/api/literary-history", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(currentBook),
+    })
+      .then((res) => {
+        if (res.response) {
+          // good do something here?
+          alert("Edits saved!");
+        }
 
-    if (editedNote !== currentBook?.bookDetailBookNotes) {
-      // patch request to change the notes in the database
-      // alert if they are sure they want to save?
-      const bookObject = {
-        userBookDetailID: currentBook?.bookDetailID,
-        userID: currentBook?.userID,
-        bookID: currentBook?.bookID,
-        bookRating: currentBook?.bookDetailBookRating,
-        status: currentBook?.bookDetailBookStatus,
-        favorite: currentBook?.bookDetailBookFavorite,
-        timesRead: currentBook?.bookDetailBookTimesRead,
-        notes: currentBook?.bookDetailBookNotes,
-        startDate: currentBook?.bookDetailBookStartDate,
-        bookDetailBookEndDate: currentBook?.bookDetailBookEndDate,
-        wishlist: currentBook?.bookDetailBookWishlist,
-      };
-
-      fetchCommand("/api/literary-history", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...bookObject,
-          notes: editedNote,
-        }),
-      }).then((res) => console.log(res));
-    }
+        if (!res.response) {
+          throw res;
+        }
+      })
+      .catch((err) => {
+        alert(err.error);
+      });
   };
 
   const cancelHandler = () => {
@@ -146,13 +139,23 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
           </div>
         </div>
 
-        <div
-          id="book-notes-content"
-          className="book-notes-box"
-          contentEditable={noteEditable}
-        >
-          {currentBook.bookDetailBookNotes}
-        </div>
+        {noteEditable ? (
+          <textarea
+            className="book-notes-box"
+            onChange={async (e: any) =>
+              setCurrentBook({
+                ...currentBook,
+                bookDetailBookNotes: e.target.value,
+              })
+            }
+          >
+            {currentBook.bookDetailBookNotes}
+          </textarea>
+        ) : (
+          <div id="book-notes-content" className="book-notes-box">
+            {currentBook.bookDetailBookNotes}
+          </div>
+        )}
       </div>
     </div>
   ) : null;
@@ -168,7 +171,8 @@ const LiteraryHistoryBook: React.FC<IProps> = ({
 export default LiteraryHistoryBook;
 
 interface IProps {
-  currentBook: IBookItems | undefined;
+  currentBook: IBookItems;
+  setCurrentBook: React.Dispatch<IBookItems>;
   currentBookModal: boolean;
   setCurrentBookModal: React.Dispatch<boolean>;
 }

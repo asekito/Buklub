@@ -22,6 +22,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     notes: "",
     startDate: "",
     endDate: "",
+    wishlist: 0,
   });
 
   const [bookSearch, setBookSearch] = React.useState<string>("");
@@ -330,7 +331,7 @@ interface Props {
   uid: number;
 }
 
-interface IBookHistory {
+export interface IBookHistory {
   userID: number;
   bookID: number | string;
   rating: number;
@@ -340,6 +341,7 @@ interface IBookHistory {
   notes?: string;
   startDate?: string;
   endDate?: string;
+  wishlist?: number;
 }
 
 export interface IBook {

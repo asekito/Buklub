@@ -19,7 +19,30 @@ const ReadListProfile: React.FC = () => {
   const [wishlist, setWishlist] = React.useState<IBookItems[]>([]);
   const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
   const [addToWishlist, setAddToWishlist] = React.useState<boolean>(false);
-  const [currentBook, setCurrentBook] = React.useState<IBookItems>();
+  const [currentBook, setCurrentBook] = React.useState<IBookItems>({
+    userID: 0,
+    userName: "",
+    bookID: 0,
+    googleBookID: 0,
+    title: "",
+    authors: "",
+    pageCount: 0,
+    description: "",
+    publisher: "",
+    publishedDate: "",
+    thumbnail: "",
+    smallThumbnail: "",
+    bookDetailID: 0,
+    bookDetailBookStatus: 0,
+    bookDetailBookFavorite: 0,
+    bookDetailBookTimesRead: 0,
+    bookDetailBookRating: 0,
+    bookDetailBookNotes: "",
+    bookDetailBookStatusLabel: "",
+    bookDetailBookStartDate: "",
+    bookDetailBookEndDate: "",
+    bookDetailBookWishlist: 0,
+  });
   const [currentBookModal, setCurrentBookModal] = React.useState<boolean>(
     false
   );
@@ -127,6 +150,8 @@ const ReadListProfile: React.FC = () => {
           <div className="grid-item"></div>
           <div className="grid-item header">Title</div>
           <div className="grid-item header">Author</div>
+          <div className="grid-item header"></div>
+          <div className="grid-item header"></div>
         </div>
 
         {wishlist.map((b) => (
@@ -136,14 +161,19 @@ const ReadListProfile: React.FC = () => {
             </div>
             <div className="grid-item title">{b.title}</div>
             <div className="grid-item author">{b.authors}</div>
-            {/* add button here to delete
-            add button here to allow editing to transfer to literary history */}
+            <div className="grid-item button">
+              <button>Edit</button>
+            </div>
+            <div className="grid-item button">
+              <button>Delete</button>
+            </div>
           </div>
         ))}
 
         <Modal open={currentBookModal} onClose={setCurrentBookModal}>
           <LiteraryHistoryBook
             currentBook={currentBook}
+            setCurrentBook={setCurrentBook}
             currentBookModal={currentBookModal}
             setCurrentBookModal={setCurrentBookModal}
           />
