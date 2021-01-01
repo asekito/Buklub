@@ -13,18 +13,28 @@ const LiteraryHistoryBook = ({
 
   const editSaveHandler = async () => {
     setNoteEditable(!noteEditable);
-
-    // if (editedNote !== currentBook.bookDetailBookNotes && editedNote) {
     // patch request to change the notes in the database
     // alert if they are sure they want to save? material ui
-
     fetchCommand("/api/literary-history", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(currentBook),
-    }).then((res) => console.log(res));
+    })
+      .then((res) => {
+        if (res.response) {
+          // good do something here?
+          alert("Edits saved!");
+        }
+
+        if (!res.response) {
+          throw res;
+        }
+      })
+      .catch((err) => {
+        alert(err.error);
+      });
   };
 
   const cancelHandler = () => {

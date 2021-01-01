@@ -9,7 +9,6 @@ const {
 
 app.patch("/api/literary-history", async (req, res) => {
   try {
-    console.log(req.body);
     const {
       bookDetailID,
       userID,
@@ -23,7 +22,7 @@ app.patch("/api/literary-history", async (req, res) => {
       bookDetailBookWishlist: wishlist,
     } = req.body;
 
-    await UserBookDetail.update(
+    const update = await UserBookDetail.update(
       {
         bookRating: bookRating,
         status: status,
