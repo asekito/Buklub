@@ -89,7 +89,10 @@ const LiteraryHistoryBook = ({
       </div>
 
       <div className="current-book-user-info">
-        <h2>Details</h2>
+        <div className="book-notes-header" style={{ alignItems: "center" }}>
+          <h2>Details</h2>
+          <button>Edit</button>
+        </div>
         <div className="basic-userbook-info">
           <div>
             {currentBook.bookDetailBookRating > -1
