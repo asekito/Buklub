@@ -10,6 +10,12 @@ const LiteraryHistoryBook = ({
   setCurrentBookModal,
 }: IProps) => {
   const [noteEditable, setNoteEditable] = React.useState<boolean>(false);
+  const [detailsEditable, setDetailsEditable] = React.useState<boolean>(false);
+
+  const editDetailHandler = async (e: any) => {
+    e.preventDefault();
+    setDetailsEditable(!detailsEditable);
+  };
 
   const editSaveHandler = async () => {
     setNoteEditable(!noteEditable);
@@ -37,21 +43,37 @@ const LiteraryHistoryBook = ({
       });
   };
 
-  const cancelHandler = () => {
+  const cancelHandler = (type: string) => {
     // prompt with material ui if they wish to cancel?
-    if (
-      document.getElementById("book-notes-content")?.innerHTML !==
-      currentBook?.bookDetailBookNotes
-    ) {
-      if (confirm("Are you sure you want to dispose of all changes?")) {
-        setNoteEditable(false);
-        let element = document.getElementById("book-notes-content");
-        if (element && currentBook) {
-          element.innerHTML = currentBook.bookDetailBookNotes;
+    if (type === "notes") {
+      if (
+        document.getElementById("book-notes-content")?.innerHTML !==
+        currentBook?.bookDetailBookNotes
+      ) {
+        if (
+          confirm(
+            "Are you sure you want to cancel editing the details?\nAny changes will note be saved."
+          )
+        ) {
+          setNoteEditable(false);
+          let element = document.getElementById("book-notes-content");
+          if (element && currentBook) {
+            element.innerHTML = currentBook.bookDetailBookNotes;
+          }
         }
+      } else {
+        setNoteEditable(false);
       }
-    } else {
-      setNoteEditable(false);
+    }
+
+    if (type === "details") {
+      if (
+        confirm(
+          "Are you sure you want to cancel editing the details?\nAny changes will note be saved."
+        )
+      ) {
+        setDetailsEditable(false);
+      }
     }
   };
 
@@ -91,37 +113,146 @@ const LiteraryHistoryBook = ({
       <div className="current-book-user-info">
         <div className="book-notes-header" style={{ alignItems: "center" }}>
           <h2>Details</h2>
-          <button>Edit</button>
+          {detailsEditable ? (
+            <div>
+              <button>Save</button>
+              <button onClick={() => cancelHandler("details")}>Cancel</button>
+            </div>
+          ) : (
+            <button onClick={(e) => editDetailHandler(e)}>Edit</button>
+          )}
         </div>
         <div className="basic-userbook-info">
           <div>
-            {currentBook.bookDetailBookRating > -1
-              ? `You rated this book ${currentBook.bookDetailBookRating}/10`
-              : null}
+            {detailsEditable ? (
+              <div>
+                You rated this book{" "}
+                {
+                  <select name="bookDetailBookRating">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                }
+                /10
+              </div>
+            ) : currentBook.bookDetailBookRating > -1 ? (
+              `You rated this book ${currentBook.bookDetailBookRating}/10`
+            ) : null}
           </div>
-          <div>Status: {currentBook.bookDetailBookStatusLabel}</div>
           <div>
-            {currentBook.bookDetailBookFavorite
-              ? "Favorited!"
-              : "Not favorited"}
+            {detailsEditable ? (
+              <div>
+                Status:{" "}
+                {
+                  <select
+                    name="bookDetailBookStatus"
+                    value={currentBook.bookDetailBookStatusLabel}
+                  >
+                    <option value="0">In-Progress</option>
+                    <option value="1">Completed</option>
+                    <option value="2">Abandoned</option>
+                    <option value="3">On Hold</option>
+                  </select>
+                }
+              </div>
+            ) : (
+              <div>Status: {currentBook.bookDetailBookStatusLabel}</div>
+            )}
           </div>
           <div>
-            {currentBook.bookDetailBookTimesRead
-              ? `You have read this book ${currentBook.bookDetailBookTimesRead} times`
-              : "You have not completed this book yet."}
+            {detailsEditable ? (
+              <div>
+                Favorite?{" "}
+                <select name="bookDetailBookFavorite">
+                  <option value="1">Yes</option>
+                  <option value="0" selected>
+                    No
+                  </option>
+                </select>
+              </div>
+            ) : (
+              <div>
+                {currentBook.bookDetailBookFavorite
+                  ? "Favorited!"
+                  : "Not favorited"}
+              </div>
+            )}
+          </div>
+          <div>
+            {detailsEditable ? (
+              <div>
+                Number of times read:{" "}
+                <input
+                  type="number"
+                  name="bookDetailBookTimesRead"
+                  value={currentBook.bookDetailBookTimesRead}
+                />
+              </div>
+            ) : (
+              <div>
+                {currentBook.bookDetailBookTimesRead
+                  ? `You have read this book ${currentBook.bookDetailBookTimesRead} times`
+                  : "You have not completed this book yet."}
+              </div>
+            )}
           </div>
         </div>
         <div>Reading timeline</div>
         <div className="book-timeline">
           <div>
-            {formatDate(currentBook.bookDetailBookStartDate)
-              ? formatDate(currentBook.bookDetailBookStartDate)
-              : "No start date."}
+            {detailsEditable ? (
+              <div>
+                Start Date:{" "}
+                <input
+                  type="date"
+                  value={
+                    currentBook.bookDetailBookStartDate
+                      ? currentBook.bookDetailBookStartDate
+                      : ""
+                  }
+                />
+              </div>
+            ) : (
+              <div>
+                {formatDate(currentBook.bookDetailBookStartDate)
+                  ? `Start Date: ${formatDate(
+                      currentBook.bookDetailBookStartDate
+                    )}`
+                  : "No Start Date."}
+              </div>
+            )}
           </div>
           <div>
-            {formatDate(currentBook.bookDetailBookEndDate)
-              ? formatDate(currentBook.bookDetailBookEndDate)
-              : "No end date."}
+            {detailsEditable ? (
+              <div>
+                End Date:{" "}
+                {
+                  <input
+                    type="date"
+                    value={
+                      currentBook.bookDetailBookEndDate
+                        ? currentBook.bookDetailBookEndDate
+                        : ""
+                    }
+                  />
+                }
+              </div>
+            ) : (
+              <div>
+                {formatDate(currentBook.bookDetailBookEndDate)
+                  ? `End Date: ${formatDate(currentBook.bookDetailBookEndDate)}`
+                  : "No End Date."}
+              </div>
+            )}
           </div>
         </div>
 
@@ -137,7 +268,7 @@ const LiteraryHistoryBook = ({
             )}
 
             {noteEditable ? (
-              <button onClick={() => cancelHandler()}>Cancel</button>
+              <button onClick={() => cancelHandler("notes")}>Cancel</button>
             ) : null}
           </div>
         </div>
