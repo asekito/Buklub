@@ -17,8 +17,21 @@ const LiteraryHistoryBook = ({
     setDetailsEditable(!detailsEditable);
   };
 
-  const editSaveHandler = async () => {
-    setNoteEditable(!noteEditable);
+  const changeHandler = (e: any) => {
+    const { name, value } = e.target;
+    console.log(currentBook);
+    console.log(name);
+    setCurrentBook({ ...currentBook, [name]: value });
+  };
+
+  const editSaveHandler = async (type: string) => {
+    if (type === "notes") {
+      setNoteEditable(!noteEditable);
+    }
+
+    if (type === "details") {
+      setDetailsEditable(!detailsEditable);
+    }
     // patch request to change the notes in the database
     // alert if they are sure they want to save? material ui
     fetchCommand("/api/literary-history", {
@@ -115,7 +128,7 @@ const LiteraryHistoryBook = ({
           <h2>Details</h2>
           {detailsEditable ? (
             <div>
-              <button>Save</button>
+              <button onClick={() => editSaveHandler("details")}>Save</button>
               <button onClick={() => cancelHandler("details")}>Cancel</button>
             </div>
           ) : (
@@ -128,7 +141,11 @@ const LiteraryHistoryBook = ({
               <div>
                 You rated this book{" "}
                 {
-                  <select name="bookDetailBookRating">
+                  <select
+                    name="bookDetailBookRating"
+                    value={currentBook.bookDetailBookRating}
+                    onChange={(e) => changeHandler(e)}
+                  >
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -156,6 +173,7 @@ const LiteraryHistoryBook = ({
                   <select
                     name="bookDetailBookStatus"
                     value={currentBook.bookDetailBookStatusLabel}
+                    onChange={(e) => changeHandler(e)}
                   >
                     <option value="0">In-Progress</option>
                     <option value="1">Completed</option>
@@ -172,7 +190,10 @@ const LiteraryHistoryBook = ({
             {detailsEditable ? (
               <div>
                 Favorite?{" "}
-                <select name="bookDetailBookFavorite">
+                <select
+                  name="bookDetailBookFavorite"
+                  onChange={(e) => changeHandler(e)}
+                >
                   <option value="1">Yes</option>
                   <option value="0" selected>
                     No
@@ -195,6 +216,7 @@ const LiteraryHistoryBook = ({
                   type="number"
                   name="bookDetailBookTimesRead"
                   value={currentBook.bookDetailBookTimesRead}
+                  onChange={(e) => changeHandler(e)}
                 />
               </div>
             ) : (
@@ -219,6 +241,8 @@ const LiteraryHistoryBook = ({
                       ? currentBook.bookDetailBookStartDate
                       : ""
                   }
+                  name="bookDetailBookStartDate"
+                  onChange={(e) => changeHandler(e)}
                 />
               </div>
             ) : (
@@ -243,6 +267,8 @@ const LiteraryHistoryBook = ({
                         ? currentBook.bookDetailBookEndDate
                         : ""
                     }
+                    name="bookDetailBookEndDate"
+                    onChange={(e) => changeHandler(e)}
                   />
                 }
               </div>
@@ -262,7 +288,7 @@ const LiteraryHistoryBook = ({
           </div>
           <div className="editing-buttons">
             {noteEditable ? (
-              <button onClick={() => editSaveHandler()}>Save</button>
+              <button onClick={() => editSaveHandler("notes")}>Save</button>
             ) : (
               <button onClick={() => setNoteEditable(true)}>Edit</button>
             )}
