@@ -50,7 +50,7 @@ const ReadListProfile: React.FC = () => {
     chosenWishlistBook,
     setChosenWishlistBook,
   ] = React.useState<IChosenWishlistBook>({
-    bookID: 0,
+    bookDetailID: 0,
     title: "",
   });
 
@@ -171,7 +171,11 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item button">
               <button
                 onClick={() => {
-                  setChosenWishlistBook({ bookID: b.bookID, title: b.title });
+                  console.log(b);
+                  setChosenWishlistBook({
+                    bookDetailID: b.bookDetailID,
+                    title: b.title,
+                  });
                   setAddToHistory(true);
                 }}
               >
@@ -241,6 +245,6 @@ export interface IBookItems {
 }
 
 export interface IChosenWishlistBook {
-  bookID: number;
+  bookDetailID: number;
   title: string;
 }

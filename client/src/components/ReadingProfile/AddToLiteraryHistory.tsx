@@ -72,15 +72,25 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       });
   };
 
-  React.useEffect(() => {
-    if (chosenWishlistBook.title) {
-      setLiteraryHistoryBook({
+  const wishlistSubmitHandler = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem("user");
+    fetchCommand("/api/literary-history", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         ...literaryHistoryBook,
-        bookID: chosenWishlistBook.bookID,
-        wishlist: 0,
-      });
-    }
-  }, []);
+        token: token,
+        bookDetailID: chosenWishlistBook.bookDetailID,
+      }),
+    }).then((res) => {
+      if (res.response) {
+        window.location.reload();
+      }
+    });
+  };
 
   React.useEffect(() => {
     setLiteraryHistoryBook({ ...literaryHistoryBook, userID: uid });
@@ -119,7 +129,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         onClick={(e) => {
           e.preventDefault();
           setAddToHistory(!addToHistory);
-          setChosenWishlistBook({ bookID: 0, title: "" });
+          setChosenWishlistBook({ bookDetailID: 0, title: "" });
         }}
       >
         x
@@ -339,7 +349,19 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             onChange={(e) => changeHandler(e)}
           />
         </div>
-        <input type="submit" value="Submit" onClick={(e) => submitHandler(e)} />
+        {chosenWishlistBook.title ? (
+          <input
+            type="submit"
+            value="Submit"
+            onClick={(e) => wishlistSubmitHandler(e)}
+          />
+        ) : (
+          <input
+            type="submit"
+            value="Submit"
+            onClick={(e) => submitHandler(e)}
+          />
+        )}
       </form>
     </div>
   );
