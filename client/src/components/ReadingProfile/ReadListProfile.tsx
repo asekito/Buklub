@@ -7,7 +7,7 @@ const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
 const LiteraryHistoryBook = React.lazy(() => import("./LiteraryHistoryBook"));
 import "../../assets/ReadListProfile.scss";
 import Modal from "@material-ui/core/Modal";
-import { IBook } from "./AddToLiteraryHistory";
+// import { IBook } from "./AddToLiteraryHistory";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -46,6 +46,13 @@ const ReadListProfile: React.FC = () => {
   const [currentBookModal, setCurrentBookModal] = React.useState<boolean>(
     false
   );
+  const [
+    chosenWishlistBook,
+    setChosenWishlistBook,
+  ] = React.useState<IChosenWishlistBook>({
+    bookID: 0,
+    title: "",
+  });
 
   const [uid, setUid] = React.useState<number>(-1);
 
@@ -162,7 +169,14 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item title">{b.title}</div>
             <div className="grid-item author">{b.authors}</div>
             <div className="grid-item button">
-              <button>Edit</button>
+              <button
+                onClick={() => {
+                  setChosenWishlistBook({ bookID: b.bookID, title: b.title });
+                  setAddToHistory(true);
+                }}
+              >
+                Edit
+              </button>
             </div>
             <div className="grid-item button">
               <button>Delete</button>
@@ -183,6 +197,8 @@ const ReadListProfile: React.FC = () => {
             addToHistory={addToHistory}
             setAddToHistory={setAddToHistory}
             uid={uid}
+            chosenWishlistBook={chosenWishlistBook}
+            setChosenWishlistBook={setChosenWishlistBook}
           />
         </Modal>
         <Modal open={addToWishlist} onClose={setAddToWishlist}>
@@ -222,4 +238,9 @@ export interface IBookItems {
   bookDetailBookStartDate: string;
   bookDetailBookEndDate: string;
   bookDetailBookWishlist?: number;
+}
+
+export interface IChosenWishlistBook {
+  bookID: number;
+  title: string;
 }

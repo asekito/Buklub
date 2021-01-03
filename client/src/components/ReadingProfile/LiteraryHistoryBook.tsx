@@ -19,8 +19,6 @@ const LiteraryHistoryBook = ({
 
   const changeHandler = (e: any) => {
     const { name, value } = e.target;
-    console.log(currentBook);
-    console.log(name);
     setCurrentBook({ ...currentBook, [name]: value });
   };
 

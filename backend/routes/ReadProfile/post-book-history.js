@@ -71,8 +71,8 @@ app.post("/api/literary-history", async (req, res) => {
         favorite: favorite,
         timesRead: timesRead,
         notes: notes,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: startDate || null,
+        endDate: endDate || null,
         wishlist: wishlist || null,
       },
       { transaction }

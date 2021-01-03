@@ -3,11 +3,14 @@ import fetchCommand from "../../../utils/fetching";
 // import { TextField } from "@material-ui/core";
 // import { Autocomplete } from "@material-ui/lab";
 import "../../assets/AddToLiteraryHistory.scss";
+import { IChosenWishlistBook } from "./ReadListProfile";
 
 const AddToLiteraryHistory: React.FC<Props> = ({
   addToHistory,
   setAddToHistory,
   uid,
+  chosenWishlistBook,
+  setChosenWishlistBook,
 }) => {
   const [
     literaryHistoryBook,
@@ -70,6 +73,16 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   };
 
   React.useEffect(() => {
+    if (chosenWishlistBook.title) {
+      setLiteraryHistoryBook({
+        ...literaryHistoryBook,
+        bookID: chosenWishlistBook.bookID,
+        wishlist: 0,
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
     setLiteraryHistoryBook({ ...literaryHistoryBook, userID: uid });
   }, [uid]);
 
@@ -106,6 +119,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         onClick={(e) => {
           e.preventDefault();
           setAddToHistory(!addToHistory);
+          setChosenWishlistBook({ bookID: 0, title: "" });
         }}
       >
         x
@@ -115,14 +129,22 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       <form id="book-add">
         <div className="book-search">
           {/* <label htmlFor="book">Book</label> */}
-          <input
-            name="book"
-            onChange={(e) => bookSearchHandler(e)}
-            autoComplete="off"
-            id="add-search"
-            placeholder="Search for a book"
-          />
-          *
+          {chosenWishlistBook.title ? (
+            <div>
+              <h2>{chosenWishlistBook.title}</h2>
+            </div>
+          ) : (
+            <div>
+              <input
+                name="book"
+                onChange={(e) => bookSearchHandler(e)}
+                autoComplete="off"
+                id="add-search"
+                placeholder="Search for a book"
+              />
+              *
+            </div>
+          )}
         </div>
         <div className="potential-books add-book-hx">
           {potentialBooks.length > 0 ? (
@@ -329,6 +351,8 @@ interface Props {
   addToHistory: boolean;
   setAddToHistory: React.Dispatch<boolean>;
   uid: number;
+  chosenWishlistBook: IChosenWishlistBook;
+  setChosenWishlistBook: React.Dispatch<IChosenWishlistBook>;
 }
 
 export interface IBookHistory {
