@@ -35,7 +35,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   const changeHandler = (e: any) => {
     const { name, value } = e.target;
     setLiteraryHistoryBook({ ...literaryHistoryBook, [name]: value });
-  };∆
+  };
 
   const bookSearchHandler = (e: any) => {
     const { value } = e.target;
@@ -64,7 +64,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
         if (res.response && res.alreadyExists) {
           alert("You already have this book in your literary history.");
-          // console.log(res.item);
         }
       })
       .catch((err) => {
@@ -98,7 +97,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
 
   React.useEffect(() => {
     if (bookSearch.length > 1 || authorSearch.length > 1) {
-      // const abortController = new AbortController();
       const title = encodeURI(bookSearch);
       const author = encodeURI(authorSearch);
       fetchCommand(`/api/book-search/book/?title=${title}&author=${author}`, {
@@ -111,7 +109,6 @@ const AddToLiteraryHistory: React.FC<Props> = ({
           await setPotentialBooks(res.body);
         })
         .catch((err) => console.log(err));
-      // abortController.abort();
     }
   }, [bookSearch]);
 

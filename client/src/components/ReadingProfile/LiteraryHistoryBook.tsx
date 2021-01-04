@@ -32,12 +32,13 @@ const LiteraryHistoryBook = ({
     }
     // patch request to change the notes in the database
     // alert if they are sure they want to save? material ui
+    const token = localStorage.getItem("user");
     fetchCommand("/api/literary-history", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(currentBook),
+      body: JSON.stringify({ ...currentBook, token: token }),
     })
       .then((res) => {
         if (res.response) {
