@@ -35,7 +35,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   const changeHandler = (e: any) => {
     const { name, value } = e.target;
     setLiteraryHistoryBook({ ...literaryHistoryBook, [name]: value });
-  };
+  };∆
 
   const bookSearchHandler = (e: any) => {
     const { value } = e.target;
