@@ -45,7 +45,7 @@ app.get("/api/literary-history", async (req, res) => {
           ],
           through: {
             where: {
-              wishlist: null,
+              wishlist: 0,
             },
           },
         },

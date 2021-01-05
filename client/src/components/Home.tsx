@@ -1,8 +1,16 @@
 import * as React from "react";
 import fetchCommand from "../../utils/fetching";
 import "../assets/Home.scss";
+import authCheck from "../../utils/token-check";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
+  const history = useHistory();
+
+  React.useEffect(() => {
+    authCheck(history, "");
+  }, []);
+
   const [contactUs, setContactUs] = React.useState<IContactUs>({
     firstName: "",
     lastName: "",

@@ -7,7 +7,7 @@ const AddToWishlist = React.lazy(() => import("./AddToWishlist"));
 const LiteraryHistoryBook = React.lazy(() => import("./LiteraryHistoryBook"));
 import "../../assets/ReadListProfile.scss";
 import Modal from "@material-ui/core/Modal";
-import { IBook } from "./AddToLiteraryHistory";
+// import { IBook } from "./AddToLiteraryHistory";
 
 const ReadListProfile: React.FC = () => {
   // just grab top 10 of database for this page
@@ -46,6 +46,13 @@ const ReadListProfile: React.FC = () => {
   const [currentBookModal, setCurrentBookModal] = React.useState<boolean>(
     false
   );
+  const [
+    chosenWishlistBook,
+    setChosenWishlistBook,
+  ] = React.useState<IChosenWishlistBook>({
+    bookDetailID: 0,
+    title: "",
+  });
 
   const [uid, setUid] = React.useState<number>(-1);
 
@@ -93,6 +100,36 @@ const ReadListProfile: React.FC = () => {
   const bookClickHandler = (b: IBookItems) => {
     setCurrentBook(b);
     setCurrentBookModal(!currentBookModal);
+  };
+
+  const deleteHandler = (e: React.MouseEvent, bookDetailID: number) => {
+    if (
+      confirm(
+        "Are you sure you wish to delete this book from your wishlist?\nYou cannot undo this."
+      )
+    ) {
+      const token = localStorage.getItem("user");
+
+      fetchCommand(`/api/literary-history/${bookDetailID}`, {
+        method: "DELETE",
+        headers: {
+          auth: token,
+        },
+      })
+        .then((res) => {
+          if (!res.response) {
+            throw res;
+          }
+
+          if (res.response) {
+            alert("Book was successfully deleted.");
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          alert(err.error);
+        });
+    }
   };
 
   return (
@@ -162,10 +199,27 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item title">{b.title}</div>
             <div className="grid-item author">{b.authors}</div>
             <div className="grid-item button">
-              <button>Edit</button>
+              <button
+                onClick={() => {
+                  setChosenWishlistBook({
+                    bookDetailID: b.bookDetailID,
+                    title: b.title,
+                  });
+                  setAddToHistory(true);
+                }}
+              >
+                Edit
+              </button>
             </div>
             <div className="grid-item button">
-              <button>Delete</button>
+              <button
+                onClick={(e) => {
+                  deleteHandler(e, b.bookDetailID);
+                  console.log(b);
+                }}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
@@ -183,6 +237,8 @@ const ReadListProfile: React.FC = () => {
             addToHistory={addToHistory}
             setAddToHistory={setAddToHistory}
             uid={uid}
+            chosenWishlistBook={chosenWishlistBook}
+            setChosenWishlistBook={setChosenWishlistBook}
           />
         </Modal>
         <Modal open={addToWishlist} onClose={setAddToWishlist}>
@@ -222,4 +278,9 @@ export interface IBookItems {
   bookDetailBookStartDate: string;
   bookDetailBookEndDate: string;
   bookDetailBookWishlist?: number;
+}
+
+export interface IChosenWishlistBook {
+  bookDetailID: number;
+  title: string;
 }
