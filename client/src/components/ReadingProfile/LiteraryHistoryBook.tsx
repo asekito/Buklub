@@ -89,6 +89,36 @@ const LiteraryHistoryBook = ({
     }
   };
 
+  const deleteHandler = (e: React.MouseEvent) => {
+    if (
+      confirm(
+        "Are you sure you wish to delete this from your history?\nYou cannot undo this."
+      )
+    ) {
+      const token = localStorage.getItem("user");
+
+      fetchCommand(`/api/literary-history/${currentBook.bookDetailID}`, {
+        method: "DELETE",
+        headers: {
+          auth: token,
+        },
+      })
+        .then((res) => {
+          if (!res.response) {
+            throw res;
+          }
+
+          if (res.response) {
+            alert("Book was successfully deleted from your history.");
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          alert(err.error);
+        });
+    }
+  };
+
   return currentBook ? (
     <div className="modal">
       <button
@@ -315,6 +345,7 @@ const LiteraryHistoryBook = ({
             {currentBook.bookDetailBookNotes}
           </div>
         )}
+        <button onClick={(e) => deleteHandler(e)}>Delete</button>
       </div>
     </div>
   ) : null;

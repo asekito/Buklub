@@ -103,27 +103,33 @@ const ReadListProfile: React.FC = () => {
   };
 
   const deleteHandler = (e: React.MouseEvent, bookDetailID: number) => {
-    const token = localStorage.getItem("user");
+    if (
+      confirm(
+        "Are you sure you wish to delete this book from your wishlist?\nYou cannot undo this."
+      )
+    ) {
+      const token = localStorage.getItem("user");
 
-    fetchCommand(`/api/literary-history/${bookDetailID}`, {
-      method: "DELETE",
-      headers: {
-        auth: token,
-      },
-    })
-      .then((res) => {
-        if (!res.response) {
-          throw res;
-        }
-
-        if (res.response) {
-          alert("Book was successfully deleted.");
-          window.location.reload();
-        }
+      fetchCommand(`/api/literary-history/${bookDetailID}`, {
+        method: "DELETE",
+        headers: {
+          auth: token,
+        },
       })
-      .catch((err) => {
-        alert(err.error);
-      });
+        .then((res) => {
+          if (!res.response) {
+            throw res;
+          }
+
+          if (res.response) {
+            alert("Book was successfully deleted.");
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          alert(err.error);
+        });
+    }
   };
 
   return (
