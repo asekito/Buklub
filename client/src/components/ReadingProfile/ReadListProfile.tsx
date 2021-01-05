@@ -102,6 +102,30 @@ const ReadListProfile: React.FC = () => {
     setCurrentBookModal(!currentBookModal);
   };
 
+  const deleteHandler = (e: React.MouseEvent, bookDetailID: number) => {
+    const token = localStorage.getItem("user");
+
+    fetchCommand(`/api/literary-history/${bookDetailID}`, {
+      method: "DELETE",
+      headers: {
+        auth: token,
+      },
+    })
+      .then((res) => {
+        if (!res.response) {
+          throw res;
+        }
+
+        if (res.response) {
+          alert("Book was successfully deleted.");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        alert(err.error);
+      });
+  };
+
   return (
     <div className="container">
       <div className="history-container">
@@ -171,7 +195,6 @@ const ReadListProfile: React.FC = () => {
             <div className="grid-item button">
               <button
                 onClick={() => {
-                  console.log(b);
                   setChosenWishlistBook({
                     bookDetailID: b.bookDetailID,
                     title: b.title,
@@ -183,7 +206,14 @@ const ReadListProfile: React.FC = () => {
               </button>
             </div>
             <div className="grid-item button">
-              <button>Delete</button>
+              <button
+                onClick={(e) => {
+                  deleteHandler(e, b.bookDetailID);
+                  console.log(b);
+                }}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

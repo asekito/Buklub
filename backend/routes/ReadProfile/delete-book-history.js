@@ -7,13 +7,13 @@ const {
   UserBookDetail,
 } = require("../../server.js");
 
-app.delete("/api/literary-history/:bookID", async (req, res) => {
+app.delete("/api/literary-history/:bookDetailID", async (req, res) => {
   try {
     const { auth } = req.headers;
-    const { bookID } = req.params;
+    const { bookDetailID } = req.params;
 
     if (!auth) {
-      throw new Error("Authorization denied for deletion.");
+      throw new Error("Authorization denied for deletion. Try again later.");
     } else {
       jwt.verify(auth, process.env.ACCESS_TOKEN_SECRET);
     }
@@ -22,14 +22,20 @@ app.delete("/api/literary-history/:bookID", async (req, res) => {
 
     // check if user exists decodedToken.user (the id)
 
-    await UserBookDetail.destroy({
+    const deletedBook = await UserBookDetail.destroy({
       where: {
+        id: bookDetailID,
         userID: decodedToken.user,
-        bookID: bookID,
       },
     });
 
-    return res.status(200).send({ response: true });
+    console.log(deletedBook);
+
+    if (deletedBook) {
+      return res.status(200).send({ response: true });
+    } else {
+      throw new Error("Could not successfully delete book. Try again later.");
+    }
   } catch (err) {
     res.status(400).send({ response: false, error: err.toString() });
   }

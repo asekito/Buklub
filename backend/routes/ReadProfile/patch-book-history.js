@@ -30,7 +30,7 @@ app.patch("/api/literary-history", async (req, res) => {
       endDate,
       wishlist,
     } = req.body;
-    console.log(req.body);
+
     if (!token) {
       throw new Error("Authorization denied.");
     } else {
@@ -67,7 +67,6 @@ app.patch("/api/literary-history", async (req, res) => {
         },
       }
     );
-    console.log(update);
 
     res.status(200).send({ response: true });
   } catch (err) {

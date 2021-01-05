@@ -52,7 +52,7 @@ app.get("/api/literary-history", async (req, res) => {
       ],
       order: [[Book, "title", "asc"]],
     });
-    console.log(litHistory);
+
     if (litHistory.length === 0 || !litHistory[0]["books.title"]) {
       return res.status(201).send({ response: false, body: [] });
     }
