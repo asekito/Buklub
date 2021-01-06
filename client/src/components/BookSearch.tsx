@@ -1,5 +1,6 @@
 import * as React from "react";
 import fetchCommand from "../../utils/fetching";
+import "../assets/BookSearch.scss";
 
 const BookSearch = () => {
   const [search, setSearch] = React.useState({
@@ -39,7 +40,7 @@ const BookSearch = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Book Search</h1>
       <form name="pageSearch">
         <label htmlFor="bookSearch">Title</label>
@@ -66,46 +67,46 @@ const BookSearch = () => {
       </form>
       {searchResult.length > 0 ? (
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Description</th>
-                <th>Total Pages</th>
-                <th>Publisher</th>
-                <th>Published Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchResult.map((data: BookFromDb) => {
-                let smallLink = "";
-                let link = "";
+          <div className="grid-container-search">
+            <div className="grid-item header"></div>
+            <div className="grid-item header">Title</div>
+            <div className="grid-item header">Author</div>
+            <div className="grid-item header">Description</div>
+            <div className="grid-item header">Total Pages</div>
+            <div className="grid-item header">Publisher</div>
+            <div className="grid-item header">Published Date</div>
+          </div>
+          {searchResult.map((data: BookFromDb) => {
+            let smallLink = "";
+            let link = "";
 
-                if (data.imageLinks) {
-                  smallLink = data.imageLinks.smallThumbnail;
-                  link = data.imageLinks.thumbnail;
-                } else {
-                  smallLink = data.smallThumbnail;
-                  link = data.thumbnail;
-                }
-                return (
-                  <tr>
-                    <img src={link} alt="book-image" />
-                    <td>{data.title}</td>
-                    <td>{data.authors}</td>
-                    <td>{data.description ? data.description : ""}</td>
-                    <td>{data.pageCount > 0 ? data.pageCount : "Unknown"}</td>
-                    <td>{data.publisher ? data.publisher : "Unknown"}</td>
-                    <td>
-                      {data.publishedDate ? data.publishedDate : "Unknown"}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+            if (data.imageLinks) {
+              smallLink = data.imageLinks.smallThumbnail;
+              link = data.imageLinks.thumbnail;
+            } else {
+              smallLink = data.smallThumbnail;
+              link = data.thumbnail;
+            }
+            return (
+              <div className="grid-container-search">
+                <img src={link} alt="book image" />
+                <div className="grid-item">{data.title}</div>
+                <div className="grid-item">{data.authors}</div>
+                <div className="grid-item">
+                  {data.description ? data.description : ""}
+                </div>
+                <div className="grid-item">
+                  {data.pageCount > 0 ? data.pageCount : "Unknown"}
+                </div>
+                <div className="grid-item">
+                  {data.publisher ? data.publisher : "Unknown"}
+                </div>
+                <div className="grid-item">
+                  {data.publishedDate ? data.publishedDate : "Unknown"}
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : null}
     </div>

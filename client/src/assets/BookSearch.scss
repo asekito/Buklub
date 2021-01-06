@@ -1,0 +1,16 @@
+.grid-container-search {
+  display: grid;
+  grid-template-columns: 4em 17em 11em 28em 6em 7em 9em;
+  justify-content: center;
+}
+
+.grid-item {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 1em;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.grid-container-search > img {
+  height: 100px;
+}
