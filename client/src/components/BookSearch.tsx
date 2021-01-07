@@ -1,14 +1,18 @@
 import * as React from "react";
 import fetchCommand from "../../utils/fetching";
 import "../assets/BookSearch.scss";
+import Modal from "@material-ui/core/Modal";
+const BookInformationModal = React.lazy(() => import("./BookInformationModal"));
 
 const BookSearch = () => {
   const [search, setSearch] = React.useState({
     title: "",
     author: "",
   });
-
   const [searchResult, setSearchResult] = React.useState([]);
+  const [currentBookModal, setCurrentBookModal] = React.useState<boolean>(
+    false
+  );
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -88,7 +92,10 @@ const BookSearch = () => {
               link = data.thumbnail;
             }
             return (
-              <div className="grid-container-search">
+              <div
+                className="grid-container-search"
+                onClick={() => setCurrentBookModal(!currentBookModal)}
+              >
                 <img src={link} alt="book image" />
                 <div className="grid-item">{data.title}</div>
                 <div className="grid-item">{data.authors}</div>
@@ -109,9 +116,9 @@ const BookSearch = () => {
           })}
         </div>
       ) : null}
-      {/*
-        Modal here
-      */}
+      <Modal open={currentBookModal} onClose={setCurrentBookModal}>
+        <BookInformationModal />
+      </Modal>
     </div>
   );
 };
