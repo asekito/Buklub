@@ -42,7 +42,7 @@ const BookSearch = () => {
   return (
     <div className="container">
       <h1>Book Search</h1>
-      <form name="pageSearch">
+      <form name="pageSearch" className="book-search-form">
         <label htmlFor="bookSearch">Title</label>
         <input
           type="text"
@@ -72,9 +72,9 @@ const BookSearch = () => {
             <div className="grid-item header">Title</div>
             <div className="grid-item header">Author</div>
             <div className="grid-item header">Description</div>
-            <div className="grid-item header">Total Pages</div>
+            {/* <div className="grid-item header">Total Pages</div> */}
             <div className="grid-item header">Publisher</div>
-            <div className="grid-item header">Published Date</div>
+            {/* <div className="grid-item header">Published Date</div> */}
           </div>
           {searchResult.map((data: BookFromDb) => {
             let smallLink = "";
@@ -92,23 +92,26 @@ const BookSearch = () => {
                 <img src={link} alt="book image" />
                 <div className="grid-item">{data.title}</div>
                 <div className="grid-item">{data.authors}</div>
-                <div className="grid-item">
+                <div className="grid-item description">
                   {data.description ? data.description : ""}
                 </div>
-                <div className="grid-item">
+                {/* <div className="grid-item">
                   {data.pageCount > 0 ? data.pageCount : "Unknown"}
-                </div>
+                </div> */}
                 <div className="grid-item">
                   {data.publisher ? data.publisher : "Unknown"}
                 </div>
-                <div className="grid-item">
+                {/* <div className="grid-item">
                   {data.publishedDate ? data.publishedDate : "Unknown"}
-                </div>
+                </div> */}
               </div>
             );
           })}
         </div>
       ) : null}
+      {/*
+        Modal here
+      */}
     </div>
   );
 };
