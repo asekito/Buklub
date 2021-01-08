@@ -117,7 +117,10 @@ const BookSearch = () => {
         </div>
       ) : null}
       <Modal open={currentBookModal} onClose={setCurrentBookModal}>
-        <BookInformationModal />
+        <BookInformationModal
+          currentBookModal={currentBookModal}
+          setCurrentBookmodal={setCurrentBookModal}
+        />
       </Modal>
     </div>
   );
