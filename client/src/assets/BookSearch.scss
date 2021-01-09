@@ -1,0 +1,52 @@
+.grid-container-search {
+  display: grid;
+  grid-template-columns: 6em 17em 11em 33em 8em; // 7em 9em;
+  justify-content: center;
+}
+
+.grid-item {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 1em;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.grid-item.description {
+  font-size: 0.9em;
+}
+
+.grid-container-search > img {
+  height: 100px;
+}
+
+.grid-container-search > img {
+  height: 100px;
+  padding: 1em;
+}
+
+.grid-item.header {
+  font-weight: 600;
+}
+
+.book-search-form {
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  text-align-last: center;
+  align-items: center;
+}
+
+.book-search-form > input {
+  margin-bottom: 1em;
+  border-radius: 0.3em;
+  border: 0.1em solid #464646;
+  padding: 0.3em 0.5em;
+}
+
+.book-search-form > input[type="submit"] {
+  margin-top: 1em;
+  border-radius: 0.3em;
+  border: 0.1em solid #989898;
+  padding: 0.1em 0.3em;
+  cursor: pointer;
+}
