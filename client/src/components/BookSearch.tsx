@@ -2,9 +2,13 @@ import * as React from "react";
 import fetchCommand from "../../utils/fetching";
 import "../assets/BookSearch.scss";
 import Modal from "@material-ui/core/Modal";
+import authCheck from "../../utils/token-check";
+import { useHistory } from "react-router-dom";
 const BookInformationModal = React.lazy(() => import("./BookInformationModal"));
 
 const BookSearch = () => {
+  const history = useHistory();
+  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
   const [search, setSearch] = React.useState({
     title: "",
     author: "",
@@ -13,6 +17,63 @@ const BookSearch = () => {
   const [currentBookModal, setCurrentBookModal] = React.useState<boolean>(
     false
   );
+  const [currentBook, setCurrentBook] = React.useState<BookFromDb>({
+    id: 0,
+    googleBookID: "",
+    title: "",
+    authors: "",
+    publishedDate: "",
+    publisher: "",
+    smallThumbnail: "",
+    description: "",
+    thumbnail: "",
+    pageCount: 0,
+    imageLinks: { smallThumbnail: "", thumbnail: "" },
+  });
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("user")
+      ? localStorage.getItem("user")
+      : null;
+    fetchCommand("/api/auth-check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token }),
+    }).then((res) => {
+      if (res.response && res.uid) {
+        setLoggedIn(true);
+      }
+
+      if (res.error && res.error.name === "JsonWebTokenError") {
+        setLoggedIn(false);
+      }
+    });
+  }, []);
+
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem("user")
+  //     ? localStorage.getItem("user")
+  //     : null;
+
+  //   fetchCommand("/api/auth-check", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ token: token }),
+  // }).then((res) => {
+  //   console.log(res, "hi");
+  //   if (res.response && res.uid) {
+  //     setLoggedIn(true);
+  //   }
+
+  //   if (res.error && res.error.name === "JsonWebTokenError") {
+  //     setLoggedIn(false);
+  //   }
+  // });
+  // }, []);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -83,20 +144,23 @@ const BookSearch = () => {
           {searchResult.map((data: BookFromDb) => {
             let smallLink = "";
             let link = "";
-
-            if (data.imageLinks) {
-              smallLink = data.imageLinks.smallThumbnail;
-              link = data.imageLinks.thumbnail;
-            } else {
-              smallLink = data.smallThumbnail;
-              link = data.thumbnail;
-            }
+            console.log(data);
+            // if (data.imageLinks) {
+            //   smallLink = data.imageLinks.smallThumbnail;
+            //   link = data.imageLinks.thumbnail;
+            // } else {
+            //   smallLink = data.smallThumbnail;
+            //   link = data.thumbnail;
+            // }
             return (
               <div
                 className="grid-container-search"
-                onClick={() => setCurrentBookModal(!currentBookModal)}
+                onClick={() => {
+                  setCurrentBookModal(!currentBookModal);
+                  setCurrentBook(data);
+                }}
               >
-                <img src={link} alt="book image" />
+                <img src={data.smallThumbnail} alt="book image" />
                 <div className="grid-item">{data.title}</div>
                 <div className="grid-item">{data.authors}</div>
                 <div className="grid-item description">
@@ -120,6 +184,8 @@ const BookSearch = () => {
         <BookInformationModal
           currentBookModal={currentBookModal}
           setCurrentBookmodal={setCurrentBookModal}
+          currentBook={currentBook}
+          loggedIn={loggedIn}
         />
       </Modal>
     </div>
@@ -133,7 +199,7 @@ type search = {
   author: string;
 };
 
-interface BookFromDb {
+export interface BookFromDb {
   id: number;
   googleBookID: string;
   title: string;
