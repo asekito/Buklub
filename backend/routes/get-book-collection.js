@@ -2,9 +2,8 @@ const { app, sequelize, jwt, Book, Op } = require("../server");
 const fetch = require("node-fetch");
 
 app.get("/api/book/:bookID", async (req, res) => {
-  console.log("hit");
   try {
-    const { bookID } = req.query;
+    const { bookID } = req.params;
     // const { title, author } = req.query;
 
     // if (title.length === 0 && author.length === 0) {
@@ -24,7 +23,7 @@ app.get("/api/book/:bookID", async (req, res) => {
     // }
 
     const existingInDatabase = await Book.findAll({
-      where: { bookID: bookID },
+      where: { id: bookID },
     });
 
     if (existingInDatabase.length > 0) {

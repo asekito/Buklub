@@ -37,8 +37,8 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     }
     fetchCommand;
   }, []);
-  console.log(existingBookID);
 
+  const [bookModalInfo, setBookModalInfo] = React.useState<IBook>();
   const [bookSearch, setBookSearch] = React.useState<string>("");
   const [authorSearch, setAuthorSearch] = React.useState<string>("");
   const [potentialBooks, setPotentialBooks] = React.useState<IBook[]>([]);
@@ -129,7 +129,13 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     if (existingBookID > 0) {
       fetchCommand(`/api/book/${existingBookID}`, {
         method: "GET",
-      }).then((res) => console.log(res));
+      }).then(async (res) => {
+        setLiteraryHistoryBook({
+          ...literaryHistoryBook,
+          bookID: existingBookID,
+        });
+        await setBookModalInfo(res.body);
+      });
     }
   }, []);
 
@@ -163,7 +169,9 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             <div>
               <h2>{chosenWishlistBook.title}</h2>
             </div>
-          ) : existingBookID > 0 ? null : (
+          ) : existingBookID > 0 ? (
+            bookModalInfo?.title
+          ) : (
             <div>
               <input
                 name="book"
