@@ -121,7 +121,6 @@ const BookSearch = () => {
           {searchResult.map((data: BookFromDb) => {
             let smallLink = "";
             let link = "";
-            console.log(data);
             // if (data.imageLinks) {
             //   smallLink = data.imageLinks.smallThumbnail;
             //   link = data.imageLinks.thumbnail;

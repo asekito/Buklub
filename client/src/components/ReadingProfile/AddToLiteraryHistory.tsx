@@ -17,7 +17,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     literaryHistoryBook,
     setLiteraryHistoryBook,
   ] = React.useState<IBookHistory>({
-    userID: 0,
+    userID: uid,
     bookID: 0,
     rating: 0,
     status: 0,
@@ -37,6 +37,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     }
     fetchCommand;
   }, []);
+  console.log(existingBookID);
 
   const [bookSearch, setBookSearch] = React.useState<string>("");
   const [authorSearch, setAuthorSearch] = React.useState<string>("");

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { BookFromDb } from "./BookSearch";
 import Modal from "@material-ui/core/Modal";
+import authCheck from "../../utils/token-check";
+import { useHistory } from "react-router-dom";
 const AddToLiteraryHistory = React.lazy(
   () => import("../components/ReadingProfile/AddToLiteraryHistory")
 );
@@ -13,10 +15,16 @@ const BookInformationModal: React.FC<IProps> = ({
   currentBook,
   loggedIn,
 }) => {
-  const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
+  const history = useHistory();
+  const [addToHistory, setAddToHistory] = React.useState<boolean>(true);
+  const [uid, setUid] = React.useState<number>(-1);
+
   const AddToHistory = () => {
+    authCheck(history, "login").then((res) => setUid(res.uid));
     setAddToHistory(!addToHistory);
   };
+
+  // React.useEffect(() => {}, []);
 
   return (
     <div className="modal">
@@ -48,7 +56,7 @@ const BookInformationModal: React.FC<IProps> = ({
       </div>
       {loggedIn ? (
         <div>
-          <button>Add To History</button>
+          <button onClick={() => AddToHistory()}>Add To History</button>
           <button>Add To Wishlist</button>
         </div>
       ) : (
@@ -61,7 +69,7 @@ const BookInformationModal: React.FC<IProps> = ({
           uid={uid}
           chosenWishlistBook={null}
           setChosenWishlistBook={null}
-          existingBookID={-1}
+          existingBookID={currentBook.id}
         />
       </Modal>
     </div>
