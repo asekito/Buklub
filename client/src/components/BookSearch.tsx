@@ -52,29 +52,6 @@ const BookSearch = () => {
     });
   }, []);
 
-  // React.useEffect(() => {
-  //   const token = localStorage.getItem("user")
-  //     ? localStorage.getItem("user")
-  //     : null;
-
-  //   fetchCommand("/api/auth-check", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ token: token }),
-  // }).then((res) => {
-  //   console.log(res, "hi");
-  //   if (res.response && res.uid) {
-  //     setLoggedIn(true);
-  //   }
-
-  //   if (res.error && res.error.name === "JsonWebTokenError") {
-  //     setLoggedIn(false);
-  //   }
-  // });
-  // }, []);
-
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;

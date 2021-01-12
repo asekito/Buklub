@@ -11,6 +11,12 @@ const NavBar = () => {
     }
   };
 
+  const user = localStorage.getItem("user")
+    ? localStorage.getItem("user")
+    : null;
+
+  console.log(user);
+
   return (
     <div id="navigation-top">
       <h1 className="header">Buklub</h1>
@@ -23,13 +29,13 @@ const NavBar = () => {
               </Link>
             </li>
           )}
-          {localStorage.getItem("user") ? null : (
+          {user === null ? (
             <li>
               <Link className="nav-item" to="/register">
                 Sign Up
               </Link>
             </li>
-          )}
+          ) : null}
           <li>
             <Link className="nav-item" to="/">
               Home
@@ -45,13 +51,13 @@ const NavBar = () => {
               Randomizer
             </Link>
           </li>
-          {localStorage.getItem("user") ? (
+          {user === null ? null : (
             <li>
               <Link className="nav-item" to="/read-list">
                 Read List Profile
               </Link>
             </li>
-          ) : null}
+          )}
           {localStorage.getItem("user") ? (
             <li onClick={handleLogout}>
               <a className="nav-item" href="">
