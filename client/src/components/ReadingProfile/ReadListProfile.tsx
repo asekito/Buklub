@@ -239,6 +239,7 @@ const ReadListProfile: React.FC = () => {
             uid={uid}
             chosenWishlistBook={chosenWishlistBook}
             setChosenWishlistBook={setChosenWishlistBook}
+            existingBookID={-1}
           />
         </Modal>
         <Modal open={addToWishlist} onClose={setAddToWishlist}>

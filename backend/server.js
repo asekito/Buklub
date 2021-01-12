@@ -41,6 +41,7 @@ require("./routes/ReadProfile/get-books-history-favorites");
 require("./routes/ReadProfile/patch-book-history");
 require("./routes/ReadProfile/post-book-history");
 
+require("./routes/get-books-collection");
 require("./routes/get-book-collection");
 
 require("./routes/post-contact-us");

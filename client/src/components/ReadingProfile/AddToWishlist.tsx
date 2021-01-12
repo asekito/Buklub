@@ -16,7 +16,7 @@ const AddToWishlist: React.FC<IAddWishlist> = ({
     if (bookSearch.length > 1 || authorSearch.length > 1) {
       const title = encodeURI(bookSearch);
       const author = encodeURI(authorSearch);
-      fetchCommand(`/api/book-search/book/?title=${title}&author=${author}`, {
+      fetchCommand(`/api/book-search/books/?title=${title}&author=${author}`, {
         method: "GET",
       })
         .then(async (res) => {

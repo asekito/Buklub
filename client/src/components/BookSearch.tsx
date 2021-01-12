@@ -67,7 +67,7 @@ const BookSearch = () => {
     const titleEncoded = encodeURI(title);
     const authorEncoded = encodeURI(author);
     fetchCommand(
-      `/api/book-search/book?title=${titleEncoded}&author=${
+      `/api/book-search/books/?title=${titleEncoded}&author=${
         authorEncoded || ""
       }`,
       { method: "GET" }

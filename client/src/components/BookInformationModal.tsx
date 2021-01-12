@@ -1,5 +1,9 @@
 import * as React from "react";
 import { BookFromDb } from "./BookSearch";
+import Modal from "@material-ui/core/Modal";
+const AddToLiteraryHistory = React.lazy(
+  () => import("../components/ReadingProfile/AddToLiteraryHistory")
+);
 
 // import { IBookItems } from "./ReadingProfile/ReadListProfile";
 
@@ -9,10 +13,10 @@ const BookInformationModal: React.FC<IProps> = ({
   currentBook,
   loggedIn,
 }) => {
-  // React.useEffect(() => {
-  //   authCheck(history, "login");
-  // }, []);
-  React.useEffect(() => {}, []);
+  const [addToHistory, setAddToHistory] = React.useState<boolean>(false);
+  const AddToHistory = () => {
+    setAddToHistory(!addToHistory);
+  };
 
   return (
     <div className="modal">
@@ -50,6 +54,16 @@ const BookInformationModal: React.FC<IProps> = ({
       ) : (
         <div>Must be logged in to add to your history.</div>
       )}
+      <Modal open={addToHistory} onClose={setAddToHistory}>
+        <AddToLiteraryHistory
+          addToHistory={addToHistory}
+          setAddToHistory={setAddToHistory}
+          uid={uid}
+          chosenWishlistBook={null}
+          setChosenWishlistBook={null}
+          existingBookID={-1}
+        />
+      </Modal>
     </div>
   );
 };

@@ -11,6 +11,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
   uid,
   chosenWishlistBook,
   setChosenWishlistBook,
+  existingBookID,
 }) => {
   const [
     literaryHistoryBook,
@@ -27,6 +28,15 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     endDate: "",
     wishlist: 0,
   });
+  React.useEffect(() => {
+    if (existingBookID > 0) {
+      setLiteraryHistoryBook({
+        ...literaryHistoryBook,
+        bookID: existingBookID,
+      });
+    }
+    fetchCommand;
+  }, []);
 
   const [bookSearch, setBookSearch] = React.useState<string>("");
   const [authorSearch, setAuthorSearch] = React.useState<string>("");
@@ -82,7 +92,9 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       body: JSON.stringify({
         ...literaryHistoryBook,
         token: token,
-        bookDetailID: chosenWishlistBook.bookDetailID,
+        bookDetailID: chosenWishlistBook
+          ? chosenWishlistBook?.bookDetailID
+          : null,
       }),
     }).then((res) => {
       if (res.response) {
@@ -99,7 +111,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     if (bookSearch.length > 1 || authorSearch.length > 1) {
       const title = encodeURI(bookSearch);
       const author = encodeURI(authorSearch);
-      fetchCommand(`/api/book-search/book/?title=${title}&author=${author}`, {
+      fetchCommand(`/api/book-search/books/?title=${title}&author=${author}`, {
         method: "GET",
       })
         .then(async (res) => {
@@ -111,6 +123,14 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         .catch((err) => console.log(err));
     }
   }, [bookSearch]);
+
+  React.useEffect(() => {
+    if (existingBookID > 0) {
+      fetchCommand(`/api/book/${existingBookID}`, {
+        method: "GET",
+      }).then((res) => console.log(res));
+    }
+  }, []);
 
   React.useEffect(() => {
     if (bookSearch.length === 0) {
@@ -126,7 +146,9 @@ const AddToLiteraryHistory: React.FC<Props> = ({
         onClick={(e) => {
           e.preventDefault();
           setAddToHistory(!addToHistory);
-          setChosenWishlistBook({ bookDetailID: 0, title: "" });
+          if (setChosenWishlistBook) {
+            setChosenWishlistBook({ bookDetailID: 0, title: "" });
+          }
         }}
       >
         x
@@ -136,11 +158,11 @@ const AddToLiteraryHistory: React.FC<Props> = ({
       <form id="book-add">
         <div className="book-search">
           {/* <label htmlFor="book">Book</label> */}
-          {chosenWishlistBook.title ? (
+          {chosenWishlistBook ? (
             <div>
               <h2>{chosenWishlistBook.title}</h2>
             </div>
-          ) : (
+          ) : existingBookID > 0 ? null : (
             <div>
               <input
                 name="book"
@@ -346,7 +368,7 @@ const AddToLiteraryHistory: React.FC<Props> = ({
             onChange={(e) => changeHandler(e)}
           />
         </div>
-        {chosenWishlistBook.title ? (
+        {chosenWishlistBook ? (
           <input
             type="submit"
             value="Submit"
@@ -370,8 +392,9 @@ interface Props {
   addToHistory: boolean;
   setAddToHistory: React.Dispatch<boolean>;
   uid: number;
-  chosenWishlistBook: IChosenWishlistBook;
-  setChosenWishlistBook: React.Dispatch<IChosenWishlistBook>;
+  chosenWishlistBook?: IChosenWishlistBook | null;
+  setChosenWishlistBook?: React.Dispatch<IChosenWishlistBook> | null;
+  existingBookID: number;
 }
 
 export interface IBookHistory {

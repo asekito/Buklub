@@ -1,58 +1,57 @@
 const { app, sequelize, jwt, Book, Op } = require("../server");
 const fetch = require("node-fetch");
 
-app.get("/api/book/:bookID", async (req, res) => {
+app.get("/api/book-search/books", async (req, res) => {
   console.log("hit");
   try {
-    const { bookID } = req.query;
-    // const { title, author } = req.query;
+    const { title, author } = req.query;
 
-    // if (title.length === 0 && author.length === 0) {
-    //   return res.status(400).send({
-    //     error: "Need to have at least title or author fields for search.",
-    //   });
-    // }
+    if (title.length === 0 && author.length === 0) {
+      return res.status(400).send({
+        error: "Need to have at least title or author fields for search.",
+      });
+    }
 
-    // let whereClause = {};
+    let whereClause = {};
 
-    // if (title.length > 0) {
-    //   whereClause.title = { [Op.substring]: title };
-    // }
+    if (title.length > 0) {
+      whereClause.title = { [Op.substring]: title };
+    }
 
-    // if (author.length > 0) {
-    //   whereClause.authors = { [Op.substring]: author };
-    // }
+    if (author.length > 0) {
+      whereClause.authors = { [Op.substring]: author };
+    }
 
     const existingInDatabase = await Book.findAll({
-      where: { bookID: bookID },
+      where: whereClause,
     });
 
     if (existingInDatabase.length > 0) {
       return res.status(200).send({ body: existingInDatabase });
     }
 
-    // const googleData = await fetch(
-    //   `https://www.googleapis.com/books/v1/volumes?q=${encodeURI(
-    //     title
-    //   )}+inauthor:${encodeURI(author) || ""}&key=${process.env.BOOK_API_KEY}`
-    // )
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     if (res.totalItems > 0) {
-    //       addGoogleBooksIntoDb(res.items);
-    //       return res.items;
-    //     }
-    //   });
+    const googleData = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=${encodeURI(
+        title
+      )}+inauthor:${encodeURI(author) || ""}&key=${process.env.BOOK_API_KEY}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.totalItems > 0) {
+          addGoogleBooksIntoDb(res.items);
+          return res.items;
+        }
+      });
 
-    // const test = await Book.findAll({
-    //   where: whereClause,
-    // });
+    const test = await Book.findAll({
+      where: whereClause,
+    });
 
-    // if (test.length > 0) {
-    // return res.status(201).send({ body: test });
-    // } else {
-    throw new Error("Could not find book matching criteria.");
-    // }
+    if (test.length > 0) {
+      return res.status(201).send({ body: test });
+    } else {
+      throw new Error("Could not find book matching criteria.");
+    }
   } catch (error) {
     res.status(400).send({ error: error.toString() });
   }
