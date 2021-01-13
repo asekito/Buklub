@@ -129,12 +129,12 @@ const AddToLiteraryHistory: React.FC<Props> = ({
     if (existingBookID > 0) {
       fetchCommand(`/api/book/${existingBookID}`, {
         method: "GET",
-      }).then(async (res) => {
+      }).then((res) => {
         setLiteraryHistoryBook({
           ...literaryHistoryBook,
           bookID: existingBookID,
         });
-        await setBookModalInfo(res.body);
+        setBookModalInfo(res.body);
       });
     }
   }, []);
