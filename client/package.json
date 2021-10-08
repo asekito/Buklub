@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "webpack serve --progress"
+    "start:dev": "webpack serve --progress",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
